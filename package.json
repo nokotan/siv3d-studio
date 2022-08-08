@@ -1,0 +1,25 @@
+{
+  "name": "siv3d-studio",
+  "version": "0.0.1",
+  "description": "",
+  "main": "out/index.js",
+  "scripts": {
+    "compile": "tsc",
+    "serve": "cd vscode/vscode-web && http-server"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/decompress": "^4.2.4",
+    "@types/node": "^18.6.4",
+    "http-server": "^14.1.1",
+    "typescript": "^4.7.4"
+  },
+  "dependencies": {
+    "decompress": "^4.2.1",
+    "decompress-targz": "^4.1.1",
+    "http-proxy-agent": "^5.0.0",
+    "https-proxy-agent": "^5.0.1"
+  }
+}
