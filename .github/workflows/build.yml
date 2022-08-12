@@ -26,6 +26,7 @@ jobs:
       with:
         node-version: 16.x
         cache: 'npm'
+    - run: npm install
     - run: npm run compile
     - run: node out/main.js
     - name: Deploy
