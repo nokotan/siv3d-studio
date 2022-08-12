@@ -45,6 +45,11 @@ async function download(downloadUrl: string, destination: string, message: strin
 		const httpLibrary = downloadUrl.startsWith('https') ? https : http;
 
 		httpLibrary.get(downloadUrl, getAgent(downloadUrl), res => {
+			if (res.statusCode === 302 && res.headers.location) {
+				download(res.headers.location, destination, "").then(() => resolve(destination));
+				return;
+			}
+
 			const total = Number(res.headers['content-length']);
 			let received = 0;
 			let timeout: NodeJS.Timeout | undefined;
@@ -128,6 +133,28 @@ export async function downloadAndUnzipVSCode(quality: 'stable' | 'insider'): Pro
 
 	}
 	return { type: 'static', location: downloadedPath, quality, version: info.version };
+}
+
+export async function downloadAndUnzipExtensions(extensionName: string, extensionUrl: string): Promise<void> {
+	
+	const folderName = `vscode-web/addon/${extensionName}`;
+
+	const downloadedPath = path.resolve(vscodeTestDir, folderName);
+
+	const tmpArchiveName = `${extensionName}-tmp`;
+	try {
+		await download(extensionUrl, tmpArchiveName, `Downloading ${extensionName}`);
+		await unzip(tmpArchiveName, downloadedPath, `Unpacking ${extensionName}`);
+	} catch (err) {
+		console.error(err);
+		throw Error(`Failed to download and unpack ${extensionName}`);
+	} finally {
+		try {
+			fs.unlink(tmpArchiveName);
+		} catch (e) {
+			// ignore
+		}
+	}
 }
 
 export async function fetch(api: string): Promise<string> {
