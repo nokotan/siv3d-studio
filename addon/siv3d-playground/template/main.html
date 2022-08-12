@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <style>
+    body {
+      background-color: green;
+    }
+    canvas {
+      background-color: white;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="canvas" width="320px" height="240px" tabindex="-1"></canvas>
+
+  <script>
+    var Module = {
+      canvas: (function() {
+        var canvas = document.querySelector('canvas');
+        canvas.addEventListener("webglcontextlost", function(e) { alert('WebGL context lost. You will need to reload the page.'); e.preventDefault(); }, false);
+        return canvas;
+      })(),
+      dynamicLibraries: ["main.wasm"]
+    }
+  </script>
+  <script src="Siv3D.js"></script>
+</body>
+</html>
