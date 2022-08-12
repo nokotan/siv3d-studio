@@ -5,11 +5,11 @@
   "main": "out/index.js",
   "scripts": {
     "compile": "tsc",
-    "serve": "cd vscode/vscode-web && http-server"
+    "serve": "cd vscode/vscode-web && http-server --cors"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "@types/decompress": "^4.2.4",
     "@types/node": "^18.6.4",
