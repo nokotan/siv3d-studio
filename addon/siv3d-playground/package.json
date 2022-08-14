@@ -1,7 +1,7 @@
 {
   "name": "siv3d-playground",
   "description": "Siv3D playground for VS Code",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "publisher": "KamenokoSoft",
   "license": "MIT",
   "enabledApiProposals": [
