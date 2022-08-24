@@ -16,8 +16,8 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.showPreview = void 0;
 const vscode = __webpack_require__(1);
 const path = __webpack_require__(3);
-function showPreview(workspaceRoot, htmlUrl) {
-    PreviewPalel.createOrShow(workspaceRoot, htmlUrl);
+function showPreview(workspaceRoot, htmlUrl, previewTabName) {
+    PreviewPalel.createOrShow(workspaceRoot, htmlUrl, previewTabName);
 }
 exports.showPreview = showPreview;
 class PreviewPalel {
@@ -33,19 +33,22 @@ class PreviewPalel {
         // This happens when the user closes the panel or when the panel is closed programmatically
         this._panel.onDidDispose(() => this.dispose(), null, this._disposables);
     }
-    static createOrShow(workspaceRoot, htmlUrl) {
+    static createOrShow(workspaceRoot, htmlUrl, previewTabName) {
         const column = vscode.window.activeTextEditor
             ? vscode.window.activeTextEditor.viewColumn
             : undefined;
         // If we already have a panel, show it.
         if (PreviewPalel.currentPanel) {
-            PreviewPalel.currentPanel._panel.reveal(column);
+            PreviewPalel.currentPanel._panel.reveal();
+            PreviewPalel.currentPanel._htmlUrl = htmlUrl;
+            PreviewPalel.currentPanel._clear();
+            PreviewPalel.currentPanel._update();
             return;
         }
         const parentFolder = path.dirname(vscode.workspace.asRelativePath(htmlUrl));
         const parentFolderUrl = parentFolder === "." ? workspaceRoot : vscode.Uri.parse(`${workspaceRoot.toString()}/${parentFolder}`);
         // Otherwise, create a new panel.
-        const panel = vscode.window.createWebviewPanel(PreviewPalel.viewType, 'Emcc Preview', column || vscode.ViewColumn.One, {
+        const panel = vscode.window.createWebviewPanel(PreviewPalel.viewType, previewTabName, column || vscode.ViewColumn.One, {
             enableScripts: true,
             localResourceRoots: [
                 parentFolderUrl
@@ -53,6 +56,10 @@ class PreviewPalel {
             retainContextWhenHidden: true
         });
         PreviewPalel.currentPanel = new PreviewPalel(panel, parentFolderUrl, htmlUrl);
+    }
+    _clear() {
+        const webview = this._panel.webview;
+        webview.html = "<html></html>";
     }
     async _update() {
         const webview = this._panel.webview;
@@ -9158,9 +9165,9 @@ function activate(context) {
     }
     const disposable = vscode.tasks.registerTaskProvider("emcc", new taskProvider_1.CustomBuildTaskProvider(workspaceRoot));
     context.subscriptions.push(disposable);
-    context.subscriptions.push(vscode.commands.registerCommand("emcc.preview.show", (selectedFile) => {
+    context.subscriptions.push(vscode.commands.registerCommand("emcc.preview.show", (selectedFile, previewTabName) => {
         if (selectedFile instanceof vscode.Uri) {
-            (0, previewProvider_1.showPreview)(workspaceRoot, selectedFile);
+            (0, previewProvider_1.showPreview)(workspaceRoot, selectedFile, previewTabName || "Emcc Preview");
         }
     }));
 }

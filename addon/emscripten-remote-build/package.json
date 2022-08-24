@@ -8,7 +8,7 @@
     "url": "https://github.com/nokotan/emscripten-remote-build"
   },
   "license": "MIT",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "engines": {
     "vscode": "^1.68.0"
   },
@@ -17,7 +17,8 @@
   ],
   "activationEvents": [
     "onCommand:workbench.action.tasks.runTask",
-    "onCommand:emcc.preview.show"
+    "onCommand:emcc.preview.show",
+    "onCommand:emcc.compile.run"
   ],
   "main": "./dist/extension.node.js",
   "browser": "./dist/extension.web.js",
@@ -27,8 +28,21 @@
   "contributes": {
     "commands": [
       {
+        "command": "emcc.compile.run",
+        "title": "Run Compile",
+        "icon": "$(run)",
+        "category": "navigation"
+      },
+      {
         "command": "emcc.preview.show",
         "title": "Run HTML",
+        "icon": "$(preview)",
+        "category": "emcc"
+      },
+      {
+        "command": "emcc.preview.reload",
+        "title": "Reload HTML Page",
+        "icon": "$(debug-restart)",
         "category": "emcc"
       }
     ],
@@ -38,6 +52,13 @@
           "command": "emcc.preview.show",
           "when": "resourceLangId == html",
           "group": "z_commands"
+        }
+      ],
+      "editor/title": [
+        {
+          "command": "emcc.preview.show",
+          "when": "view == emccPreview",
+          "group": "navigation"
         }
       ]
     },

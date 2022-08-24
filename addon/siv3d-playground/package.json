@@ -1,7 +1,7 @@
 {
   "name": "siv3d-playground",
   "description": "Siv3D playground for VS Code",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "publisher": "KamenokoSoft",
   "license": "MIT",
   "enabledApiProposals": [
@@ -26,7 +26,25 @@
         "view": "terminal",
         "contents": "In order to run and debug you'll need to create a local workspace."
       }
-    ]
+    ],
+    "commands": [
+      {
+        "command": "siv3d-playground.compile.run",
+        "title": "Run Compile",
+        "icon": "$(run)",
+        "category": "navigation"
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "siv3d-playground.compile.run",
+          "args": "emcc build",
+          "when": "resourceLangId == cpp",
+          "group": "navigation"
+        }
+      ]
+    }
   },
   "scripts": {
     "compile": "yarn webpack-cli --config extension.webpack.config --mode production",
