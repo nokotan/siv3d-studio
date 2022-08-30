@@ -13,13 +13,17 @@ module.exports = require("vscode");
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.showPreview = void 0;
+exports.reloadPreview = exports.showPreview = void 0;
 const vscode = __webpack_require__(1);
 const path = __webpack_require__(3);
 function showPreview(workspaceRoot, htmlUrl, previewTabName) {
     PreviewPalel.createOrShow(workspaceRoot, htmlUrl, previewTabName);
 }
 exports.showPreview = showPreview;
+function reloadPreview() {
+    PreviewPalel.reload();
+}
+exports.reloadPreview = reloadPreview;
 class PreviewPalel {
     constructor(panel, parent, htmlUrl) {
         this._disposables = [];
@@ -32,6 +36,19 @@ class PreviewPalel {
         // Listen for when the panel is disposed
         // This happens when the user closes the panel or when the panel is closed programmatically
         this._panel.onDidDispose(() => this.dispose(), null, this._disposables);
+        this._panel.onDidChangeViewState(({ webviewPanel }) => {
+            this.setPreviewActiveContext(webviewPanel.active);
+        }, this);
+        this.setPreviewActiveContext(true);
+    }
+    static reload() {
+        // If we already have a panel, show it.
+        if (PreviewPalel.currentPanel) {
+            PreviewPalel.currentPanel._panel.reveal();
+            PreviewPalel.currentPanel._clear();
+            PreviewPalel.currentPanel._update();
+            return;
+        }
     }
     static createOrShow(workspaceRoot, htmlUrl, previewTabName) {
         const column = vscode.window.activeTextEditor
@@ -39,10 +56,8 @@ class PreviewPalel {
             : undefined;
         // If we already have a panel, show it.
         if (PreviewPalel.currentPanel) {
-            PreviewPalel.currentPanel._panel.reveal();
             PreviewPalel.currentPanel._htmlUrl = htmlUrl;
-            PreviewPalel.currentPanel._clear();
-            PreviewPalel.currentPanel._update();
+            PreviewPalel.reload();
             return;
         }
         const parentFolder = path.dirname(vscode.workspace.asRelativePath(htmlUrl));
@@ -53,7 +68,8 @@ class PreviewPalel {
             localResourceRoots: [
                 parentFolderUrl
             ],
-            retainContextWhenHidden: true
+            retainContextWhenHidden: true,
+            enableFindWidget: true
         });
         PreviewPalel.currentPanel = new PreviewPalel(panel, parentFolderUrl, htmlUrl);
     }
@@ -84,9 +100,14 @@ class PreviewPalel {
                 x.dispose();
             }
         }
+        this.setPreviewActiveContext(false);
+    }
+    setPreviewActiveContext(value) {
+        vscode.commands.executeCommand('setContext', PreviewPalel.emccPreviewActiveContextKey, value);
     }
 }
 PreviewPalel.viewType = 'emccPreview';
+PreviewPalel.emccPreviewActiveContextKey = 'emccPreviewFocus';
 
 
 /***/ }),
@@ -9167,8 +9188,11 @@ function activate(context) {
     context.subscriptions.push(disposable);
     context.subscriptions.push(vscode.commands.registerCommand("emcc.preview.show", (selectedFile, previewTabName) => {
         if (selectedFile instanceof vscode.Uri) {
-            (0, previewProvider_1.showPreview)(workspaceRoot, selectedFile, previewTabName || "Emcc Preview");
+            const tabName = typeof previewTabName === "string" ? previewTabName : "Emcc Preview";
+            (0, previewProvider_1.showPreview)(workspaceRoot, selectedFile, tabName);
         }
+    }), vscode.commands.registerCommand("emcc.preview.reload", (selectedFile, previewTabName) => {
+        (0, previewProvider_1.reloadPreview)();
     }));
 }
 exports.activate = activate;
