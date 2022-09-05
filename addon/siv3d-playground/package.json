@@ -30,7 +30,7 @@
     "commands": [
       {
         "command": "siv3d-playground.compile.run",
-        "title": "Run Compile",
+        "title": "Compile & Run",
         "icon": "$(debug-start)",
         "category": "navigation"
       }

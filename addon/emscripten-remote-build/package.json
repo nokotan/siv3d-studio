@@ -30,7 +30,7 @@
     "commands": [
       {
         "command": "emcc.compile.run",
-        "title": "Run Compile",
+        "title": "Compile",
         "icon": "$(debug-start)",
         "category": "navigation"
       },
