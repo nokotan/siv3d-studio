@@ -16,8 +16,8 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.reloadPreview = exports.showPreview = void 0;
 const vscode = __webpack_require__(1);
 const path = __webpack_require__(3);
-function showPreview(workspaceRoot, htmlUrl, previewTabName) {
-    PreviewPalel.createOrShow(workspaceRoot, htmlUrl, previewTabName);
+function showPreview(workspaceRoot, storageRoot, htmlUrl, previewTabName) {
+    PreviewPalel.createOrShow(workspaceRoot, storageRoot, htmlUrl, previewTabName);
 }
 exports.showPreview = showPreview;
 function reloadPreview() {
@@ -25,12 +25,14 @@ function reloadPreview() {
 }
 exports.reloadPreview = reloadPreview;
 class PreviewPalel {
-    constructor(panel, parent, htmlUrl) {
+    constructor(_panel, _parentUrl, _htmlUrl, _storageRoot) {
+        this._panel = _panel;
+        this._parentUrl = _parentUrl;
+        this._htmlUrl = _htmlUrl;
+        this._storageRoot = _storageRoot;
         this._disposables = [];
-        this._panel = panel;
-        this._parentUrl = parent;
-        this._htmlUrl = htmlUrl;
         this.textDecoder = new TextDecoder();
+        this.textEncoder = new TextEncoder();
         // Set the webview's initial html content
         this._update();
         // Listen for when the panel is disposed
@@ -50,7 +52,7 @@ class PreviewPalel {
             return;
         }
     }
-    static createOrShow(workspaceRoot, htmlUrl, previewTabName) {
+    static createOrShow(workspaceRoot, storageRoot, htmlUrl, previewTabName) {
         const column = vscode.window.activeTextEditor
             ? vscode.window.activeTextEditor.viewColumn
             : undefined;
@@ -66,12 +68,13 @@ class PreviewPalel {
         const panel = vscode.window.createWebviewPanel(PreviewPalel.viewType, previewTabName, column || vscode.ViewColumn.One, {
             enableScripts: true,
             localResourceRoots: [
-                parentFolderUrl
+                parentFolderUrl,
+                storageRoot
             ],
             retainContextWhenHidden: true,
             enableFindWidget: true
         });
-        PreviewPalel.currentPanel = new PreviewPalel(panel, parentFolderUrl, htmlUrl);
+        PreviewPalel.currentPanel = new PreviewPalel(panel, parentFolderUrl, htmlUrl, storageRoot);
     }
     _clear() {
         const webview = this._panel.webview;
@@ -88,7 +91,13 @@ class PreviewPalel {
             }
             return `src="${blobUrl}"`;
         });
+        content = content.replace("location.reload()", "(function () { const vscode = acquireVsCodeApi(); vscode.postMessage('emcc.preview.reload'); })()");
         webview.html = content;
+        webview.onDidReceiveMessage((e) => {
+            if (e === 'emcc.preview.reload') {
+                vscode.commands.executeCommand("emcc.preview.reload");
+            }
+        });
     }
     dispose() {
         PreviewPalel.currentPanel = undefined;
@@ -9189,9 +9198,9 @@ function activate(context) {
     context.subscriptions.push(vscode.commands.registerCommand("emcc.preview.show", (selectedFile, previewTabName) => {
         if (selectedFile instanceof vscode.Uri) {
             const tabName = typeof previewTabName === "string" ? previewTabName : "Emcc Preview";
-            (0, previewProvider_1.showPreview)(workspaceRoot, selectedFile, tabName);
+            (0, previewProvider_1.showPreview)(workspaceRoot, context.storageUri, selectedFile, tabName);
         }
-    }), vscode.commands.registerCommand("emcc.preview.reload", (selectedFile, previewTabName) => {
+    }), vscode.commands.registerCommand("emcc.preview.reload", () => {
         (0, previewProvider_1.reloadPreview)();
     }));
 }
