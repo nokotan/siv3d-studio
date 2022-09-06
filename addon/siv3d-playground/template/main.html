@@ -134,6 +134,10 @@
         },
         dynamicLibraries: ["main.wasm"],
         setFramebufferSize: function(width, height) {
+          const canvas = Module['canvas'];
+          canvas.width = width;
+          canvas.height = height;
+
           if (!GLFW.active) return;
           let resizeNeeded = true;
 
@@ -145,10 +149,6 @@
           }
 
           if (resizeNeeded) {
-            const canvas = Module['canvas'];
-            canvas.width = GLFW.active.width;
-            canvas.height = GLFW.active.height;
-
             GLFW.onWindowSizeChanged();
             GLFW.onFramebufferSizeChanged();
           }
