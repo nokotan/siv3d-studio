@@ -1,0 +1,61 @@
+{
+  "name": "siv3d-playground",
+  "description": "Siv3D playground for VS Code",
+  "version": "0.0.17",
+  "publisher": "KamenokoSoft",
+  "license": "MIT",
+  "enabledApiProposals": [
+    "fileSearchProvider",
+    "textSearchProvider"
+  ],
+  "private": true,
+  "activationEvents": [
+    "onFileSystem:memfs"
+  ],
+  "browser": "./dist/extension",
+  "engines": {
+    "vscode": "^1.48.0"
+  },
+  "contributes": {
+    "viewsWelcome": [
+      {
+        "view": "debug",
+        "contents": "In order to run and debug you'll need to create a local workspace."
+      },
+      {
+        "view": "terminal",
+        "contents": "In order to run and debug you'll need to create a local workspace."
+      }
+    ],
+    "commands": [
+      {
+        "command": "siv3d-playground.compile.run",
+        "title": "Compile & Run",
+        "icon": "$(debug-start)",
+        "category": "navigation"
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "siv3d-playground.compile.run",
+          "args": "emcc build",
+          "when": "resourceLangId == cpp",
+          "group": "navigation"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "compile": "yarn webpack-cli --config extension.webpack.config --mode production",
+    "watch": "yarn webpack-cli --config extension.webpack.config --mode production --watch --info-verbosity verbose",
+    "prepublish": "yarn webpack-cli --config extension.webpack.config --mode production"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.68.0",
+    "ts-loader": "^9.3.1",
+    "typescript": "^4.7.4",
+    "webpack": "^5.73.0",
+    "webpack-cli": "^4.10.0"
+  }
+}

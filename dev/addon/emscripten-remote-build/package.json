@@ -1,0 +1,125 @@
+{
+  "name": "emscripten-remote-build",
+  "displayName": "Emscripte Remote Build",
+  "publisher": "KamenokoSoft",
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nokotan/emscripten-remote-build"
+  },
+  "license": "MIT",
+  "version": "0.0.4",
+  "engines": {
+    "vscode": "^1.68.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:workbench.action.tasks.runTask",
+    "onCommand:emcc.preview.show",
+    "onCommand:emcc.compile.run",
+    "onWebviewPanel:emccPreview"
+  ],
+  "main": "./dist/extension.node.js",
+  "browser": "./dist/extension.web.js",
+  "capabilities": {
+    "virtualWorkspaces": true
+  },
+  "contributes": {
+    "commands": [
+      {
+        "command": "emcc.compile.run",
+        "title": "Compile",
+        "icon": "$(debug-start)",
+        "category": "navigation"
+      },
+      {
+        "command": "emcc.preview.show",
+        "title": "Run HTML",
+        "icon": "$(preview)",
+        "category": "emcc"
+      },
+      {
+        "command": "emcc.preview.reload",
+        "title": "Reload HTML Page",
+        "icon": "$(debug-restart)",
+        "category": "emcc"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "emcc.preview.show",
+          "when": "resourceLangId == html",
+          "group": "z_commands"
+        }
+      ],
+      "editor/title": [
+        {
+          "command": "emcc.preview.reload",
+          "when": "emccPreviewFocus",
+          "group": "navigation"
+        }
+      ]
+    },
+    "taskDefinitions": [
+      {
+        "type": "emcc",
+        "properties": {
+          "files": {
+            "type": "array",
+            "description": "files to build"
+          },
+          "flags": {
+            "type": "array",
+            "description": "compiler flags"
+          },
+          "outputName": {
+            "type": "string",
+            "description": "output file name"
+          }
+        }
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "npm run compile:web && npm run compile:node",
+    "compile:web": "webpack --config-name web",
+    "compile:node": "webpack --config-name node",
+    "watch": "webpack --watch",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "npm run compile-tests && npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js",
+    "vscode:pack": "vsce package -o ./extension"
+  },
+  "devDependencies": {
+    "@types/glob": "^7.2.0",
+    "@types/mocha": "^9.1.1",
+    "@types/node": "16.x",
+    "@types/node-fetch": "^2.6.2",
+    "@types/pako": "^2.0.0",
+    "@types/vscode": "^1.68.0",
+    "@typescript-eslint/eslint-plugin": "^5.30.0",
+    "@typescript-eslint/parser": "^5.30.0",
+    "@vscode/test-electron": "^2.1.5",
+    "eslint": "^8.18.0",
+    "glob": "^8.0.3",
+    "mocha": "^10.0.0",
+    "path-browserify": "^1.0.1",
+    "ts-loader": "^9.3.1",
+    "typescript": "^4.7.4",
+    "vsce": "^2.10.0",
+    "webpack": "^5.73.0",
+    "webpack-cli": "^4.10.0"
+  },
+  "dependencies": {
+    "base64-js": "^1.5.1",
+    "node-fetch": "^3.2.6",
+    "pako": "^2.0.4"
+  }
+}

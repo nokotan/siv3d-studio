@@ -1,0 +1,56 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Node.js CI
+
+on:
+  push:
+    branches: [ "main" ]
+    tags: [ v** ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+          cache: 'npm'
+      - run: npm install
+      - run: npm run compile
+      - run: |
+          npm pack
+          mv emscripten-remote-build-*.tgz emscripten-remote-build.tgz
+      - uses: actions/upload-artifact@v2
+        with:
+          name: emscripten-remote-build-npm-package
+          path: emscripten-remote-build.tgz
+
+      - uses: actions/create-release@v1
+        if: ${{ contains(github.ref, 'tags/v') }}
+        id: create-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+      - uses: actions/upload-release-asset@v1
+        if: ${{ contains(github.ref, 'tags/v') }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create-release.outputs.upload_url }}
+          asset_path: emscripten-remote-build.tgz
+          asset_name: emscripten-remote-build.tgz
+          asset_content_type: application/gzip
