@@ -6,32 +6,61 @@ name: Node.js CI
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    tags: [ "v*" ]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [16.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+          cache: 'npm'
+      - run: npm install
+      - run: npm run compile
+      - run: node out/main.js
+      - name: Save App Bundle
+        uses: actions/upload-artifact@v2
+        with:
+          name: siv3d-studio-app-bundle
+          path: vscode/vscode-web
+
+  deploy-development:
+    if: ${{ !contains(github.ref, 'tags/v') }}
+    runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Use Node.js 16.x
-      uses: actions/setup-node@v3
-      with:
-        node-version: 16.x
-        cache: 'npm'
-    - run: npm install
-    - run: npm run compile
-    - run: node out/main.js
-    - name: Deploy
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: vscode/vscode-web
-        keep_files: true
+      - run: mkdir dev
+      - name: Restore Bundles
+        uses: actions/download-artifact@v2
+        with:
+          name: siv3d-studio-app-bundle
+          path: dev
+      - run: sed -i -e "s|/siv3d-studio|/siv3d-studio/dev|g" index.html
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: .
+          keep_files: true
+
+  deploy:
+    if: ${{ contains(github.ref, 'tags/v') }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Restore Bundles
+        uses: actions/download-artifact@v2
+        with:
+          name: siv3d-studio-app-bundle
+          path: .
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: .
+          keep_files: true
