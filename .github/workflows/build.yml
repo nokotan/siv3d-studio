@@ -29,6 +29,7 @@ jobs:
           path: vscode/vscode-web
 
   deploy-development:
+    needs: [ build ]
     if: ${{ !contains(github.ref, 'tags/v') }}
     runs-on: ubuntu-latest
 
@@ -48,6 +49,7 @@ jobs:
           keep_files: true
 
   deploy:
+    needs: [ build ]
     if: ${{ contains(github.ref, 'tags/v') }}
     runs-on: ubuntu-latest
 
