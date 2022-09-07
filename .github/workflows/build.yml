@@ -40,7 +40,7 @@ jobs:
         with:
           name: siv3d-studio-app-bundle
           path: dev
-      - run: sed -i -e "s|/siv3d-studio|/siv3d-studio/dev|g" index.html
+      - run: sed -i -e "s|/siv3d-studio|/siv3d-studio/dev|g" dev/index.html
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
