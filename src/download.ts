@@ -14,6 +14,7 @@ import { URL } from 'url';
 
 import * as decompress from 'decompress';
 import * as decompressTargz from 'decompress-targz';
+import { execSync } from 'child_process';
 
 export interface Static {
 	readonly type: 'static';
@@ -144,6 +145,28 @@ export async function downloadAndUnzipExtensions(extensionName: string, extensio
 	const tmpArchiveName = `${extensionName}-tmp`;
 	try {
 		await download(extensionUrl, tmpArchiveName, `Downloading ${extensionName}`);
+		await unzip(tmpArchiveName, downloadedPath, `Unpacking ${extensionName}`);
+	} catch (err) {
+		console.error(err);
+		throw Error(`Failed to download and unpack ${extensionName}`);
+	} finally {
+		try {
+			fs.unlink(tmpArchiveName);
+		} catch (e) {
+			// ignore
+		}
+	}
+}
+
+export async function fetchExtensionsFromRepository(extensionName: string, extensionRepository: string): Promise<void> {
+	
+	const folderName = `vscode-web/addon/${extensionName}`;
+	const downloadedPath = path.resolve(vscodeTestDir, folderName);
+	const tmpArchiveName = path.resolve(extensionName, `${extensionName}.tgz`);
+	
+	try {
+		execSync(`git clone ${extensionRepository} ${extensionName}`);
+		execSync(`cd ${extensionName} && npm pack && mv ${extensionName}-*.tgz ${extensionName}.tgz`);
 		await unzip(tmpArchiveName, downloadedPath, `Unpacking ${extensionName}`);
 	} catch (err) {
 		console.error(err);

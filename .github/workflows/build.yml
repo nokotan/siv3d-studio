@@ -7,6 +7,12 @@ on:
   push:
     branches: [ "main" ]
     tags: [ "v*" ]
+  workflow_dispatch:
+    inputs:
+      name:
+        description: Trigger reason
+        required: true
+        default: 'Auto-Update'
 
 jobs:
   build:
@@ -21,7 +27,12 @@ jobs:
           cache: 'npm'
       - run: npm install
       - run: npm run compile
-      - run: node out/main.js
+
+      - if: ${{ contains(github.ref, 'tags/v') }}
+        run: node out/main.js --release
+      - if: ${{ !contains(github.ref, 'tags/v') }}
+        run: node out/main.js
+
       - name: Save App Bundle
         uses: actions/upload-artifact@v2
         with:
