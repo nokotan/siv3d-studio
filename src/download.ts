@@ -163,10 +163,10 @@ export async function fetchExtensionsFromRepository(extensionName: string, exten
 	const folderName = `vscode-web/addon/${extensionName}`;
 	const downloadedPath = path.resolve(vscodeTestDir, folderName);
 	const tmpArchiveName = path.resolve(extensionName, `${extensionName}.tgz`);
-	
+
 	try {
 		execSync(`git clone ${extensionRepository} ${extensionName}`);
-		execSync(`cd ${extensionName} && npm pack && mv ${extensionName}-*.tgz ${extensionName}.tgz`);
+		execSync(`cd ${extensionName} && npm install && npm pack && mv ${extensionName}-*.tgz ${extensionName}.tgz`);
 		await unzip(tmpArchiveName, downloadedPath, `Unpacking ${extensionName}`);
 	} catch (err) {
 		console.error(err);
