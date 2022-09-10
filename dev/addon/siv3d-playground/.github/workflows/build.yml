@@ -37,6 +37,14 @@ jobs:
           name: siv3d-playground-npm-package
           path: siv3d-playground.tgz
 
+      - name: Trigger workflow
+        if: ${{ github.event_name == 'push' && !contains(github.ref, 'tags/v') }}
+        run: |
+          curl -X POST \
+            -H "Authorization: Bearer ${{ secrets.REPO_GITHUB_TOKEN }}" -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/nokotan/siv3d-studio/actions/workflows/build.yml/dispatches" \
+            -d '{ "ref": "main", "inputs": { "name": "Update siv3d-playground" }'
+
       - uses: actions/create-release@v1
         if: ${{ contains(github.ref, 'tags/v') }}
         id: create-release

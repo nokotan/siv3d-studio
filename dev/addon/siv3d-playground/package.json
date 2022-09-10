@@ -49,7 +49,7 @@
   "scripts": {
     "compile": "yarn webpack-cli --config extension.webpack.config --mode production",
     "watch": "yarn webpack-cli --config extension.webpack.config --mode production --watch --info-verbosity verbose",
-    "prepublish": "yarn webpack-cli --config extension.webpack.config --mode production"
+    "prepack": "npm run compile"
   },
   "devDependencies": {
     "@types/vscode": "^1.68.0",
