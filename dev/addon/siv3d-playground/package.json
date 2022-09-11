@@ -17,6 +17,18 @@
     "vscode": "^1.48.0"
   },
   "contributes": {
+    "configuration": [
+      {
+        "title": "Siv3D Playground Settings",
+        "properties": {
+          "siv3d-playground.siv3d-assets-download-url": {
+            "type": "string",
+            "default": "https://siv3d-assets.kamenokosoft.com/v6/dev",
+            "description": "Download URL of Siv3D for Web Assets"
+          }
+        }
+      }
+    ],
     "viewsWelcome": [
       {
         "view": "debug",
