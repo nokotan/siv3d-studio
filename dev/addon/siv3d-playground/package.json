@@ -23,7 +23,7 @@
         "properties": {
           "siv3d-playground.siv3d-assets-download-url": {
             "type": "string",
-            "default": "https://siv3d-assets.kamenokosoft.com/v6/dev",
+            "default": "https://siv3d-assets.kamenokosoft.com/v6",
             "description": "Download URL of Siv3D for Web Assets"
           }
         }
