@@ -95,6 +95,7 @@
     "pretest": "npm run compile-tests && npm run compile && npm run lint",
     "lint": "eslint src --ext ts",
     "test": "node ./out/test/runTest.js",
+    "prepack": "npm run compile",
     "vscode:pack": "vsce package -o ./extension"
   },
   "devDependencies": {

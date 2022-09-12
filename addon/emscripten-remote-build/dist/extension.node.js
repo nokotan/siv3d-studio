@@ -92,11 +92,11 @@ class PreviewPalel {
             }
             return `src="${blobUrl}"`;
         });
-        content = content.replace("location.reload()", "(function () { const vscode = acquireVsCodeApi(); vscode.postMessage('emcc.preview.reload'); })()");
+        content = content.replace("location.reload()", "(function () { const vscode = acquireVsCodeApi(); vscode.postMessage({ command: 'emcc.preview.reload' }); })()");
         webview.html = content;
-        webview.onDidReceiveMessage((e) => {
-            if (e === 'emcc.preview.reload') {
-                vscode.commands.executeCommand("emcc.preview.reload");
+        webview.onDidReceiveMessage(e => {
+            if (e.command === 'emcc.preview.reload') {
+                vscode.commands.executeCommand('emcc.preview.reload');
             }
         });
     }

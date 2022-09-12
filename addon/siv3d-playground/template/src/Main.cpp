@@ -1,9 +1,5 @@
 # include <Siv3D.hpp> // OpenSiv3D v0.6
 
-# if defined(SIV3D_WEBGPU_BACKEND)
-SIV3D_SET(EngineOption::Renderer::WebGPU)
-# endif
-
 void Main()
 {
 	// 背景の色を設定 | Set background color

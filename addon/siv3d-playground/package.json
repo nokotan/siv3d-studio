@@ -1,7 +1,7 @@
 {
   "name": "siv3d-playground",
   "description": "Siv3D playground for VS Code",
-  "version": "0.0.17",
+  "version": "0.0.18",
   "publisher": "KamenokoSoft",
   "license": "MIT",
   "enabledApiProposals": [
@@ -17,6 +17,18 @@
     "vscode": "^1.48.0"
   },
   "contributes": {
+    "configuration": [
+      {
+        "title": "Siv3D Playground Settings",
+        "properties": {
+          "siv3d-playground.siv3d-assets-download-url": {
+            "type": "string",
+            "default": "https://siv3d-assets.kamenokosoft.com/v6",
+            "description": "Download URL of Siv3D for Web Assets"
+          }
+        }
+      }
+    ],
     "viewsWelcome": [
       {
         "view": "debug",
@@ -49,7 +61,7 @@
   "scripts": {
     "compile": "yarn webpack-cli --config extension.webpack.config --mode production",
     "watch": "yarn webpack-cli --config extension.webpack.config --mode production --watch --info-verbosity verbose",
-    "prepublish": "yarn webpack-cli --config extension.webpack.config --mode production"
+    "prepack": "npm run compile"
   },
   "devDependencies": {
     "@types/vscode": "^1.68.0",
