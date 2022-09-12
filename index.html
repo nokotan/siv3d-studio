@@ -38,22 +38,33 @@
 	<script src="./out/vs/loader.js"></script>
 	<script src="./out/vs/webPackagePaths.js"></script>
 	<script>
-		let baseUrl = 'https://nokotan.github.io/siv3d-studio/';
+		const baseUrl = 'https://nokotan.github.io/siv3d-studio/';
 		Object.keys(self.webPackagePaths).map(function (key, index) {
 			self.webPackagePaths[key] = `${baseUrl}/node_modules/${key}/${self.webPackagePaths[key]}`;
 		});
+
+		// Set up nls if the user is not using the default language (English)
+		const nlsConfig = {};
+		const locale = window.localStorage.getItem('vscode.nls.locale') || navigator.language;
+		if (!locale.startsWith('en')) {
+			nlsConfig['vs/nls'] = {
+				availableLanguages: {
+					'*': locale
+				},
+				translationServiceUrl: ''
+			};
+		}
+
 		require.config({
 			baseUrl: `${baseUrl}/out`,
 			recordStats: true,
 			trustedTypesPolicy: window.trustedTypes?.createPolicy('amdLoader', {
 				createScriptURL(value) {
-					if (value.startsWith(baseUrl)) {
-						return value;
-					}
-					throw new Error(`Invalid script url: ${value}`)
+					return value;
 				}
 			}),
-			paths: self.webPackagePaths
+			paths: self.webPackagePaths,
+			...nlsConfig
 		});
 	</script>
 	<script>
