@@ -9346,7 +9346,7 @@ const previewProvider_1 = __webpack_require__(2);
 const taskProvider_1 = __webpack_require__(4);
 const nls = __webpack_require__(39);
 // The example uses the file message format.
-const localize = nls.config({ messageFormat: nls.MessageFormat.file })();
+const localize = nls.config({ messageFormat: nls.MessageFormat.file })((__webpack_require__(3).join)("/", 'extension.ts'));
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 function activate(context) {
