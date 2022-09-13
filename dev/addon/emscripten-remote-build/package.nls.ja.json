@@ -1,8 +1,8 @@
 {
-    "emcc.compile.run.title": "コンパイル",
-    "emcc.preview.show.title": "HTML を実行",
-    "emcc.preview.reload.title": "HTML ページをリロード",
-    "emcc.taskDefinitions.properties.files.description": "ビルドに含めるファイル",
-    "emcc.taskDefinitions.properties.flags.description": "コンパイラオプション",
-    "emcc.taskDefinitions.properties.outputName.description": "出力ファイル名"
+	"emcc.compile.run.title": "コンパイル",
+	"emcc.preview.show.title": "HTML を実行",
+	"emcc.preview.reload.title": "HTML ページをリロード",
+	"emcc.taskDefinitions.properties.files.description": "ビルドに含めるファイル",
+	"emcc.taskDefinitions.properties.flags.description": "コンパイラオプション",
+	"emcc.taskDefinitions.properties.outputName.description": "出力ファイル名"
 }

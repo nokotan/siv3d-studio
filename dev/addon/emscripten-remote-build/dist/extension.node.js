@@ -16540,8 +16540,8 @@ const vscode = __webpack_require__(1);
 const previewProvider_1 = __webpack_require__(2);
 const taskProvider_1 = __webpack_require__(4);
 const nls = __webpack_require__(72);
-// The example uses the file message format.
-const localize = nls.config({ messageFormat: nls.MessageFormat.file })();
+nls.config({ messageFormat: nls.MessageFormat.bundle, bundleFormat: nls.BundleFormat.standalone })();
+const localize = nls.loadMessageBundle();
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 function activate(context) {
@@ -16553,6 +16553,7 @@ function activate(context) {
     if (!workspaceRoot) {
         return;
     }
+    localize("emscripten-remote-build.unused", "Hello");
     const disposable = vscode.tasks.registerTaskProvider("emcc", new taskProvider_1.CustomBuildTaskProvider(workspaceRoot));
     context.subscriptions.push(disposable);
     context.subscriptions.push(vscode.commands.registerCommand("emcc.preview.show", (selectedFile, previewTabName) => {
