@@ -30,19 +30,19 @@
     "commands": [
       {
         "command": "emcc.compile.run",
-        "title": "Compile",
+        "title": "%emcc.compile.run.title%",
         "icon": "$(debug-start)",
         "category": "navigation"
       },
       {
         "command": "emcc.preview.show",
-        "title": "Run HTML",
+        "title": "%emcc.preview.show.title%",
         "icon": "$(preview)",
         "category": "emcc"
       },
       {
         "command": "emcc.preview.reload",
-        "title": "Reload HTML Page",
+        "title": "%emcc.preview.reload.title%",
         "icon": "$(debug-restart)",
         "category": "emcc"
       }
@@ -69,15 +69,15 @@
         "properties": {
           "files": {
             "type": "array",
-            "description": "files to build"
+            "description": "%emcc.taskDefinitions.properties.files.description%"
           },
           "flags": {
             "type": "array",
-            "description": "compiler flags"
+            "description": "%emcc.taskDefinitions.properties.flags.description%"
           },
           "outputName": {
             "type": "string",
-            "description": "output file name"
+            "description": "%emcc.taskDefinitions.properties.outputName.description%"
           }
         }
       }

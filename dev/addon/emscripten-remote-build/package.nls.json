@@ -1,0 +1,8 @@
+{
+    "emcc.compile.run.title": "Compile",
+    "emcc.preview.show.title": "Run HTML",
+    "emcc.preview.reload.title": "Reload HTML Page",
+    "emcc.taskDefinitions.properties.files.description": "files to build",
+    "emcc.taskDefinitions.properties.flags.description": "compiler flags",
+    "emcc.taskDefinitions.properties.outputName.description": "output file name"
+}
