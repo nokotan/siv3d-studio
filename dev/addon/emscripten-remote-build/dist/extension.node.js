@@ -1528,12 +1528,25 @@ async function parseJSONResponse(response) {
 exports.parseJSONResponse = parseJSONResponse;
 async function sendRequestJSON(content, to) {
     const url = await getServiceURL(to);
-    const response = await commonFetch(url, {
-        method: "POST",
-        body: JSON.stringify(content),
-        // headers: new Headers({ "Content-Type": "application/json" })
-    });
-    return parseJSONResponse(response);
+    try {
+        const response = await commonFetch(url, {
+            method: "POST",
+            body: JSON.stringify(content),
+            // headers: new Headers({ "Content-Type": "application/json" })
+        });
+        return parseJSONResponse(response);
+    }
+    catch (e) {
+        if (e instanceof TypeError) {
+            return {
+                success: false,
+                message: "Unable to connect to compile server. Please retry in several seconds."
+            };
+        }
+        else {
+            throw e;
+        }
+    }
 }
 exports.sendRequestJSON = sendRequestJSON;
 async function sendRequest(content, to) {
