@@ -1426,9 +1426,11 @@ class EmscriptenService {
                 return "";
             }
         };
-        for (const task of result.tasks) {
-            const fileRef = findInputFileFromFileName(task.file);
-            items[task.file] = { fileRef, console: task.console };
+        if (result.tasks) {
+            for (const task of result.tasks) {
+                const fileRef = findInputFileFromFileName(task.file);
+                items[task.file] = { fileRef, console: task.console };
+            }
         }
         if (result.wasmBindgenJs) {
             items["wasm_bindgen.js"] = {
