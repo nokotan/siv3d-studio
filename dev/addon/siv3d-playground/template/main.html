@@ -126,6 +126,9 @@
 
           return canvas;
         })(),
+        onAbort: function(e) {
+          Module["onRuntimeExit"]();
+        },
         onAlert: function (text) {
           document.querySelector(".error-text").textContent = text;
         },
