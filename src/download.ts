@@ -161,11 +161,16 @@ export async function downloadAndUnzipExtensions(extensionName: string, extensio
 export async function fetchExtensionsFromRepository(extensionName: string, extensionRepository: string): Promise<void> {
 	
 	const folderName = `vscode-web/addon/${extensionName}`;
+	const repositoryName = path.resolve(extensionRoot, extensionName);
 	const downloadedPath = path.resolve(vscodeTestDir, folderName);
 	const tmpArchiveName = path.resolve(extensionName, `${extensionName}.tgz`);
 
 	try {
-		execSync(`git clone ${extensionRepository} ${extensionName}`);
+		if (!existsSync(repositoryName)) {
+			execSync(`git clone ${extensionRepository} ${extensionName}`);
+		} else {
+			execSync(`cd ${extensionName} && git stash && git pull --rebase && git stash pop`)
+		}
 		execSync(`cd ${extensionName} && npm install && npm pack && mv ${extensionName}-*.tgz ${extensionName}.tgz`);
 		await unzip(tmpArchiveName, downloadedPath, `Unpacking ${extensionName}`);
 	} catch (err) {
