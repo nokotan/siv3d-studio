@@ -2055,7 +2055,7 @@ async function sendRequestJSON(content, to) {
         if (e instanceof TypeError) {
             return {
                 success: false,
-                message: "Unable to connect to compile server. Please retry in several seconds."
+                message: "The build server is too busy! 🦄 Please retry in several seconds."
             };
         }
         else {
