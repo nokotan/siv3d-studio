@@ -5,8 +5,8 @@ async function main() {
     await downloadAndUnzipVSCode("stable");
 
     if (process.argv.includes("--release")) {
-        await downloadAndUnzipExtensions("siv3d-playground", "https://github.com/nokotan/siv3d-web-playground/releases/download/v0.0.18/siv3d-playground.tgz");
-        await downloadAndUnzipExtensions("emscripten-remote-build", "https://github.com/nokotan/emscripten-remote-build/releases/download/v0.0.5/emscripten-remote-build.tgz");
+        await downloadAndUnzipExtensions("siv3d-playground", "https://github.com/nokotan/siv3d-web-playground/releases/download/v0.0.19/siv3d-playground.tgz");
+        await downloadAndUnzipExtensions("emscripten-remote-build", "https://github.com/nokotan/emscripten-remote-build/releases/download/v0.0.6/emscripten-remote-build.tgz");
     } else {
         await fetchExtensionsFromRepository("siv3d-playground", "https://github.com/nokotan/siv3d-web-playground.git");
         await fetchExtensionsFromRepository("emscripten-remote-build", "https://github.com/nokotan/emscripten-remote-build.git");
