@@ -1942,9 +1942,11 @@ class EmscriptenService {
                 return "";
             }
         };
-        for (const task of result.tasks) {
-            const fileRef = findInputFileFromFileName(task.file);
-            items[task.file] = { fileRef, console: task.console };
+        if (result.tasks) {
+            for (const task of result.tasks) {
+                const fileRef = findInputFileFromFileName(task.file);
+                items[task.file] = { fileRef, console: task.console };
+            }
         }
         if (result.wasmBindgenJs) {
             items["wasm_bindgen.js"] = {
@@ -2041,12 +2043,25 @@ async function parseJSONResponse(response) {
 exports.parseJSONResponse = parseJSONResponse;
 async function sendRequestJSON(content, to) {
     const url = await getServiceURL(to);
-    const response = await commonFetch(url, {
-        method: "POST",
-        body: JSON.stringify(content),
-        // headers: new Headers({ "Content-Type": "application/json" })
-    });
-    return parseJSONResponse(response);
+    try {
+        const response = await commonFetch(url, {
+            method: "POST",
+            body: JSON.stringify(content),
+            // headers: new Headers({ "Content-Type": "application/json" })
+        });
+        return parseJSONResponse(response);
+    }
+    catch (e) {
+        if (e instanceof TypeError) {
+            return {
+                success: false,
+                message: "The build server is too busy! 🦄 Please retry in several seconds."
+            };
+        }
+        else {
+            throw e;
+        }
+    }
 }
 exports.sendRequestJSON = sendRequestJSON;
 async function sendRequest(content, to) {
@@ -9142,6 +9157,168 @@ class X86Service {
 exports.X86Service = X86Service;
 
 
+/***/ }),
+/* 39 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+
+/* --------------------------------------------------------------------------------------------
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License. See License.txt in the project root for license information.
+ * ------------------------------------------------------------------------------------------ */
+var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.config = exports.loadMessageBundle = exports.BundleFormat = exports.MessageFormat = void 0;
+var ral_1 = __webpack_require__(40);
+var common_1 = __webpack_require__(41);
+var common_2 = __webpack_require__(41);
+Object.defineProperty(exports, "MessageFormat", ({ enumerable: true, get: function () { return common_2.MessageFormat; } }));
+Object.defineProperty(exports, "BundleFormat", ({ enumerable: true, get: function () { return common_2.BundleFormat; } }));
+function loadMessageBundle(_file) {
+    return function (key, message) {
+        var args = [];
+        for (var _i = 2; _i < arguments.length; _i++) {
+            args[_i - 2] = arguments[_i];
+        }
+        if (typeof key === 'number') {
+            throw new Error("Browser implementation does currently not support externalized strings.");
+        }
+        else {
+            return common_1.localize.apply(void 0, __spreadArray([key, message], args, false));
+        }
+    };
+}
+exports.loadMessageBundle = loadMessageBundle;
+function config(options) {
+    var _a;
+    (0, common_1.setPseudo)(((_a = options === null || options === void 0 ? void 0 : options.locale) === null || _a === void 0 ? void 0 : _a.toLowerCase()) === 'pseudo');
+    return loadMessageBundle;
+}
+exports.config = config;
+ral_1.default.install(Object.freeze({
+    loadMessageBundle: loadMessageBundle,
+    config: config
+}));
+//# sourceMappingURL=main.js.map
+
+/***/ }),
+/* 40 */
+/***/ ((__unused_webpack_module, exports) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var _ral;
+function RAL() {
+    if (_ral === undefined) {
+        throw new Error("No runtime abstraction layer installed");
+    }
+    return _ral;
+}
+(function (RAL) {
+    function install(ral) {
+        if (ral === undefined) {
+            throw new Error("No runtime abstraction layer provided");
+        }
+        _ral = ral;
+    }
+    RAL.install = install;
+})(RAL || (RAL = {}));
+exports["default"] = RAL;
+//# sourceMappingURL=ral.js.map
+
+/***/ }),
+/* 41 */
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+/* --------------------------------------------------------------------------------------------
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License. See License.txt in the project root for license information.
+ * ------------------------------------------------------------------------------------------ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.config = exports.loadMessageBundle = exports.localize = exports.format = exports.setPseudo = exports.isPseudo = exports.isDefined = exports.BundleFormat = exports.MessageFormat = void 0;
+var ral_1 = __webpack_require__(40);
+var MessageFormat;
+(function (MessageFormat) {
+    MessageFormat["file"] = "file";
+    MessageFormat["bundle"] = "bundle";
+    MessageFormat["both"] = "both";
+})(MessageFormat = exports.MessageFormat || (exports.MessageFormat = {}));
+var BundleFormat;
+(function (BundleFormat) {
+    // the nls.bundle format
+    BundleFormat["standalone"] = "standalone";
+    BundleFormat["languagePack"] = "languagePack";
+})(BundleFormat = exports.BundleFormat || (exports.BundleFormat = {}));
+var LocalizeInfo;
+(function (LocalizeInfo) {
+    function is(value) {
+        var candidate = value;
+        return candidate && isDefined(candidate.key) && isDefined(candidate.comment);
+    }
+    LocalizeInfo.is = is;
+})(LocalizeInfo || (LocalizeInfo = {}));
+function isDefined(value) {
+    return typeof value !== 'undefined';
+}
+exports.isDefined = isDefined;
+exports.isPseudo = false;
+function setPseudo(pseudo) {
+    exports.isPseudo = pseudo;
+}
+exports.setPseudo = setPseudo;
+function format(message, args) {
+    var result;
+    if (exports.isPseudo) {
+        // FF3B and FF3D is the Unicode zenkaku representation for [ and ]
+        message = '\uFF3B' + message.replace(/[aouei]/g, '$&$&') + '\uFF3D';
+    }
+    if (args.length === 0) {
+        result = message;
+    }
+    else {
+        result = message.replace(/\{(\d+)\}/g, function (match, rest) {
+            var index = rest[0];
+            var arg = args[index];
+            var replacement = match;
+            if (typeof arg === 'string') {
+                replacement = arg;
+            }
+            else if (typeof arg === 'number' || typeof arg === 'boolean' || arg === void 0 || arg === null) {
+                replacement = String(arg);
+            }
+            return replacement;
+        });
+    }
+    return result;
+}
+exports.format = format;
+function localize(_key, message) {
+    var args = [];
+    for (var _i = 2; _i < arguments.length; _i++) {
+        args[_i - 2] = arguments[_i];
+    }
+    return format(message, args);
+}
+exports.localize = localize;
+function loadMessageBundle(file) {
+    return (0, ral_1.default)().loadMessageBundle(file);
+}
+exports.loadMessageBundle = loadMessageBundle;
+function config(opts) {
+    return (0, ral_1.default)().config(opts);
+}
+exports.config = config;
+//# sourceMappingURL=common.js.map
+
 /***/ })
 /******/ 	]);
 /************************************************************************/
@@ -9163,7 +9340,7 @@ exports.X86Service = X86Service;
 /******/ 		};
 /******/ 	
 /******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 		__webpack_modules__[moduleId].call(module.exports, module, module.exports, __webpack_require__);
 /******/ 	
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
@@ -9182,6 +9359,9 @@ exports.deactivate = exports.activate = void 0;
 const vscode = __webpack_require__(1);
 const previewProvider_1 = __webpack_require__(2);
 const taskProvider_1 = __webpack_require__(4);
+const nls = __webpack_require__(39);
+nls.config({ messageFormat: nls.MessageFormat.bundle, bundleFormat: nls.BundleFormat.standalone })();
+const localize = nls.loadMessageBundle();
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 function activate(context) {
@@ -9193,6 +9373,7 @@ function activate(context) {
     if (!workspaceRoot) {
         return;
     }
+    localize("emscripten-remote-build.unused", "Hello");
     const disposable = vscode.tasks.registerTaskProvider("emcc", new taskProvider_1.CustomBuildTaskProvider(workspaceRoot));
     context.subscriptions.push(disposable);
     context.subscriptions.push(vscode.commands.registerCommand("emcc.preview.show", (selectedFile, previewTabName) => {
