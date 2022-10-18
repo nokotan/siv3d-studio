@@ -1986,9 +1986,6 @@
 			"opt.mimetypes",
 			"opt.icon"
 		],
-		"vs/workbench/services/themes/browser/workbenchThemeService": [
-			"error.cannotloadtheme"
-		],
 		"vs/workbench/services/label/common/labelService": [
 			"vscode.extension.contributes.resourceLabelFormatters",
 			"vscode.extension.contributes.resourceLabelFormatters.scheme",
@@ -2003,6 +2000,9 @@
 			"temporaryWorkspace",
 			"workspaceNameVerbose",
 			"workspaceName"
+		],
+		"vs/workbench/services/themes/browser/workbenchThemeService": [
+			"error.cannotloadtheme"
 		],
 		"vs/workbench/services/extensionManagement/browser/extensionEnablementService": [
 			"extensionsDisabled",
@@ -2262,6 +2262,18 @@
 			"notebook.outputFontSize",
 			"notebook.outputFontFamily"
 		],
+		"vs/workbench/contrib/testing/browser/testing.contribution": [
+			"test",
+			{
+				"key": "miViewTesting",
+				"comment": [
+					"&& denotes a mnemonic"
+				]
+			},
+			"noTestProvidersRegistered",
+			"searchForAdditionalTestExtensions",
+			"testExplorer"
+		],
 		"vs/workbench/contrib/interactive/browser/interactive.contribution": [
 			"interactive.open",
 			"interactive.open",
@@ -2277,18 +2289,6 @@
 			"interactive.inactiveCodeBorder",
 			"interactiveWindow.alwaysScrollOnNewCell",
 			"interactiveWindow.restore"
-		],
-		"vs/workbench/contrib/testing/browser/testing.contribution": [
-			"test",
-			{
-				"key": "miViewTesting",
-				"comment": [
-					"&& denotes a mnemonic"
-				]
-			},
-			"noTestProvidersRegistered",
-			"searchForAdditionalTestExtensions",
-			"testExplorer"
 		],
 		"vs/workbench/contrib/logs/common/logs.contribution": [
 			"userDataSyncLog",
@@ -3311,6 +3311,32 @@
 		"vs/workbench/contrib/webviewPanel/browser/webviewPanel.contribution": [
 			"webview.editor.label"
 		],
+		"vs/workbench/contrib/output/browser/output.contribution": [
+			"outputViewIcon",
+			"output",
+			"output",
+			{
+				"key": "miToggleOutput",
+				"comment": [
+					"&& denotes a mnemonic"
+				]
+			},
+			"logViewer",
+			"switchToOutput.label",
+			"clearOutput.label",
+			"outputCleared",
+			"toggleAutoScroll",
+			"outputScrollOff",
+			"outputScrollOn",
+			"openActiveLogOutputFile",
+			"showLogs",
+			"extensionLogs",
+			"selectlog",
+			"openLogFile",
+			"selectlogFile",
+			"output",
+			"output.smartScroll.enabled"
+		],
 		"vs/workbench/contrib/extensions/browser/extensionsViewlet": [
 			"installed",
 			"select and install local extensions",
@@ -3362,6 +3388,16 @@
 			"extensionsToReload",
 			"malicious warning",
 			"reloadNow"
+		],
+		"vs/workbench/contrib/output/browser/outputView": [
+			"output model title",
+			"channel",
+			"output",
+			"outputViewWithInputAriaLabel",
+			"outputViewAriaLabel",
+			"outputChannels",
+			"logChannel",
+			"logChannel"
 		],
 		"vs/workbench/contrib/extensions/browser/extensions.contribution": [
 			"manageExtensionsQuickAccessPlaceholder",
@@ -3516,42 +3552,6 @@
 			"workbench.extensions.action.addToWorkspaceFolderIgnoredRecommendations",
 			"extensions",
 			"extensions"
-		],
-		"vs/workbench/contrib/output/browser/output.contribution": [
-			"outputViewIcon",
-			"output",
-			"output",
-			{
-				"key": "miToggleOutput",
-				"comment": [
-					"&& denotes a mnemonic"
-				]
-			},
-			"logViewer",
-			"switchToOutput.label",
-			"clearOutput.label",
-			"outputCleared",
-			"toggleAutoScroll",
-			"outputScrollOff",
-			"outputScrollOn",
-			"openActiveLogOutputFile",
-			"showLogs",
-			"extensionLogs",
-			"selectlog",
-			"openLogFile",
-			"selectlogFile",
-			"output",
-			"output.smartScroll.enabled"
-		],
-		"vs/workbench/contrib/output/browser/outputView": [
-			"output model title",
-			"channel",
-			"output",
-			"outputViewWithInputAriaLabel",
-			"outputViewAriaLabel",
-			"outputChannels",
-			"logChannel",
-			"logChannel"
 		],
 		"vs/workbench/contrib/terminal/browser/terminal.contribution": [
 			"tasksQuickAccessPlaceholder",
@@ -4292,19 +4292,6 @@
 			"settings profiles",
 			"profile"
 		],
-		"vs/workbench/services/textMate/browser/abstractTextMateService": [
-			"alreadyDebugging",
-			"stop",
-			"progress1",
-			"progress2",
-			"invalid.language",
-			"invalid.scopeName",
-			"invalid.path.0",
-			"invalid.injectTo",
-			"invalid.embeddedLanguages",
-			"invalid.tokenTypes",
-			"invalid.path.1"
-		],
 		"vs/workbench/services/textfile/browser/textFileService": [
 			"textFileCreate.source",
 			"textFileOverwrite.source",
@@ -4322,11 +4309,21 @@
 				]
 			}
 		],
+		"vs/workbench/services/textMate/browser/abstractTextMateService": [
+			"alreadyDebugging",
+			"stop",
+			"progress1",
+			"progress2",
+			"invalid.language",
+			"invalid.scopeName",
+			"invalid.path.0",
+			"invalid.injectTo",
+			"invalid.embeddedLanguages",
+			"invalid.tokenTypes",
+			"invalid.path.1"
+		],
 		"vs/workbench/services/extensions/common/remoteExtensionHost": [
 			"remote extension host Log"
-		],
-		"vs/workbench/services/extensions/browser/webWorkerExtensionHost": [
-			"name"
 		],
 		"vs/workbench/services/extensions/common/abstractExtensionService": [
 			"looping",
@@ -4334,6 +4331,9 @@
 			"extensionService.autoRestart",
 			"extensionService.crash",
 			"restart"
+		],
+		"vs/workbench/services/extensions/browser/webWorkerExtensionHost": [
+			"name"
 		],
 		"vs/workbench/services/extensions/common/extensionsUtil": [
 			"overwritingExtension",
@@ -4416,11 +4416,6 @@
 			"preview",
 			"pinned"
 		],
-		"vs/workbench/services/workingCopy/common/workingCopyHistoryService": [
-			"default.source",
-			"moved.source",
-			"renamed.source"
-		],
 		"vs/workbench/services/workspaces/browser/abstractWorkspaceEditingService": [
 			"save",
 			"saveWorkspace",
@@ -4454,26 +4449,6 @@
 			"current",
 			"sessions placeholder",
 			"log placeholder"
-		],
-		"vs/platform/telemetry/common/telemetryService": [
-			"telemetry.telemetryLevelMd",
-			"telemetry.docsStatement",
-			"telemetry.docsAndPrivacyStatement",
-			"telemetry.restart",
-			"telemetry.crashReports",
-			"telemetry.errors",
-			"telemetry.usage",
-			"telemetry.telemetryLevel.tableDescription",
-			"telemetry.telemetryLevel.deprecated",
-			"telemetryConfigurationTitle",
-			"telemetry.telemetryLevel.default",
-			"telemetry.telemetryLevel.error",
-			"telemetry.telemetryLevel.crash",
-			"telemetry.telemetryLevel.off",
-			"telemetryConfigurationTitle",
-			"telemetry.enableTelemetry",
-			"telemetry.enableTelemetryMd",
-			"enableTelemetryDeprecated"
 		],
 		"vs/workbench/contrib/files/browser/editors/textFileEditor": [
 			"textFileEditor",
@@ -4511,6 +4486,26 @@
 		"vs/base/common/actions": [
 			"submenu.empty"
 		],
+		"vs/platform/telemetry/common/telemetryService": [
+			"telemetry.telemetryLevelMd",
+			"telemetry.docsStatement",
+			"telemetry.docsAndPrivacyStatement",
+			"telemetry.restart",
+			"telemetry.crashReports",
+			"telemetry.errors",
+			"telemetry.usage",
+			"telemetry.telemetryLevel.tableDescription",
+			"telemetry.telemetryLevel.deprecated",
+			"telemetryConfigurationTitle",
+			"telemetry.telemetryLevel.default",
+			"telemetry.telemetryLevel.error",
+			"telemetry.telemetryLevel.crash",
+			"telemetry.telemetryLevel.off",
+			"telemetryConfigurationTitle",
+			"telemetry.enableTelemetry",
+			"telemetry.enableTelemetryMd",
+			"enableTelemetryDeprecated"
+		],
 		"vs/workbench/contrib/extensions/common/runtimeExtensionsInput": [
 			"extensionsInputName"
 		],
@@ -4523,10 +4518,6 @@
 			"vscode.extension.contributes.terminal.types.icon",
 			"vscode.extension.contributes.terminal.types.icon.light",
 			"vscode.extension.contributes.terminal.types.icon.dark"
-		],
-		"vs/workbench/contrib/terminal/browser/terminalProfileResolverService": [
-			"terminalProfileMigration",
-			"migrateToProfile"
 		],
 		"vs/workbench/contrib/terminal/common/terminalContextKey": [
 			"terminalFocusContextKey",
@@ -4542,6 +4533,11 @@
 			"isSplitTerminalContextKey",
 			"inTerminalRunCommandPickerContextKey",
 			"terminalShellIntegrationEnabled"
+		],
+		"vs/workbench/services/workingCopy/common/workingCopyHistoryService": [
+			"default.source",
+			"moved.source",
+			"renamed.source"
 		],
 		"vs/workbench/common/contextkeys": [
 			"workbenchState",
@@ -4603,9 +4599,9 @@
 			"resourceSet",
 			"isFileSystemResource"
 		],
-		"vs/workbench/contrib/terminal/browser/terminalConfigHelper": [
-			"useWslExtension.title",
-			"install"
+		"vs/workbench/contrib/terminal/browser/terminalProfileResolverService": [
+			"terminalProfileMigration",
+			"migrateToProfile"
 		],
 		"vs/workbench/contrib/terminal/browser/terminalInstance": [
 			"terminal.integrated.a11yPromptLabel",
@@ -4644,6 +4640,10 @@
 			"terminated.exitCodeOnly",
 			"launchFailed.errorMessage"
 		],
+		"vs/workbench/contrib/terminal/browser/terminalConfigHelper": [
+			"useWslExtension.title",
+			"install"
+		],
 		"vs/workbench/contrib/tasks/common/tasks": [
 			"tasks.taskRunningContext",
 			"tasksCategory",
@@ -4655,100 +4655,6 @@
 			"tasks.taskCommandsRegistered",
 			"tasks.processExecutionSupported",
 			"tasks.serverlessWebContext"
-		],
-		"vs/workbench/contrib/tasks/browser/abstractTaskService": [
-			"ConfigureTaskRunnerAction.label",
-			"tasks",
-			"TaskService.pickBuildTaskForLabel",
-			"runTask.arg",
-			"runTask.label",
-			"runTask.type",
-			"runTask.task",
-			"taskServiceOutputPrompt",
-			"showOutput",
-			"TaskServer.folderIgnored",
-			"TaskService.providerUnavailable",
-			"TaskService.noTestTask1",
-			"TaskService.noTestTask2",
-			"TaskService.noBuildTask1",
-			"TaskService.noBuildTask2",
-			"TaskServer.noTask",
-			"TaskService.associate",
-			"TaskService.attachProblemMatcher.continueWithout",
-			"TaskService.attachProblemMatcher.never",
-			"TaskService.attachProblemMatcher.neverType",
-			"TaskService.attachProblemMatcher.learnMoreAbout",
-			"selectProblemMatcher",
-			"customizeParseErrors",
-			"tasksJsonComment",
-			"moreThanOneBuildTask",
-			"TaskSystem.saveBeforeRun.prompt.title",
-			"saveBeforeRun.save",
-			"saveBeforeRun.dontSave",
-			"detail",
-			"TaskSystem.activeSame.noBackground",
-			"terminateTask",
-			"restartTask",
-			"TaskSystem.active",
-			"TaskSystem.restartFailed",
-			"unexpectedTaskType",
-			"TaskService.providerUnavailable",
-			"TaskService.noConfiguration",
-			"TaskSystem.configurationErrors",
-			{
-				"key": "TaskSystem.invalidTaskJsonOther",
-				"comment": [
-					"Message notifies of an error in one of several places there is tasks related json, not necessarily in a file named tasks.json"
-				]
-			},
-			"TasksSystem.locationWorkspaceConfig",
-			"TaskSystem.versionWorkspaceFile",
-			"TasksSystem.locationUserConfig",
-			"TaskSystem.versionSettings",
-			"TaskSystem.configurationErrors",
-			"taskService.ignoreingFolder",
-			"TaskSystem.invalidTaskJson",
-			"TerminateAction.label",
-			"TaskSystem.unknownError",
-			"configureTask",
-			"recentlyUsed",
-			"configured",
-			"detected",
-			"TaskService.ignoredFolder",
-			"TaskService.notAgain",
-			"TaskService.requestTrust",
-			"TaskService.pickRunTask",
-			"TaskService.noEntryToRun",
-			"TaskService.noEntryToRun",
-			"TaskService.fetchingBuildTasks",
-			"TaskService.pickBuildTask",
-			"TaskService.noBuildTask",
-			"TaskService.fetchingTestTasks",
-			"TaskService.pickTestTask",
-			"TaskService.noTestTaskTerminal",
-			"TaskService.taskToTerminate",
-			"TaskService.noTaskRunning",
-			"TaskService.terminateAllRunningTasks",
-			"TerminateAction.noProcess",
-			"TerminateAction.failed",
-			"TaskService.taskToRestart",
-			"TaskService.noTaskToRestart",
-			"TaskService.template",
-			"taskQuickPick.userSettings",
-			"TaskService.createJsonFile",
-			"TaskService.openJsonFile",
-			"TaskService.pickTask",
-			"TaskService.defaultBuildTaskExists",
-			"TaskService.pickTask",
-			"TaskService.pickDefaultBuildTask",
-			"TaskService.defaultTestTaskExists",
-			"TaskService.pickDefaultTestTask",
-			"TaskService.pickShowTask",
-			"TaskService.noTaskIsRunning",
-			"taskService.upgradeVersion",
-			"taskService.upgradeVersionPlural",
-			"taskService.openDiff",
-			"taskService.openDiffs"
 		],
 		"vs/workbench/contrib/debug/common/debug": [
 			"debugType",
@@ -5016,6 +4922,100 @@
 			"chartsOrange",
 			"chartsGreen",
 			"chartsPurple"
+		],
+		"vs/workbench/contrib/tasks/browser/abstractTaskService": [
+			"ConfigureTaskRunnerAction.label",
+			"tasks",
+			"TaskService.pickBuildTaskForLabel",
+			"runTask.arg",
+			"runTask.label",
+			"runTask.type",
+			"runTask.task",
+			"taskServiceOutputPrompt",
+			"showOutput",
+			"TaskServer.folderIgnored",
+			"TaskService.providerUnavailable",
+			"TaskService.noTestTask1",
+			"TaskService.noTestTask2",
+			"TaskService.noBuildTask1",
+			"TaskService.noBuildTask2",
+			"TaskServer.noTask",
+			"TaskService.associate",
+			"TaskService.attachProblemMatcher.continueWithout",
+			"TaskService.attachProblemMatcher.never",
+			"TaskService.attachProblemMatcher.neverType",
+			"TaskService.attachProblemMatcher.learnMoreAbout",
+			"selectProblemMatcher",
+			"customizeParseErrors",
+			"tasksJsonComment",
+			"moreThanOneBuildTask",
+			"TaskSystem.saveBeforeRun.prompt.title",
+			"saveBeforeRun.save",
+			"saveBeforeRun.dontSave",
+			"detail",
+			"TaskSystem.activeSame.noBackground",
+			"terminateTask",
+			"restartTask",
+			"TaskSystem.active",
+			"TaskSystem.restartFailed",
+			"unexpectedTaskType",
+			"TaskService.providerUnavailable",
+			"TaskService.noConfiguration",
+			"TaskSystem.configurationErrors",
+			{
+				"key": "TaskSystem.invalidTaskJsonOther",
+				"comment": [
+					"Message notifies of an error in one of several places there is tasks related json, not necessarily in a file named tasks.json"
+				]
+			},
+			"TasksSystem.locationWorkspaceConfig",
+			"TaskSystem.versionWorkspaceFile",
+			"TasksSystem.locationUserConfig",
+			"TaskSystem.versionSettings",
+			"TaskSystem.configurationErrors",
+			"taskService.ignoreingFolder",
+			"TaskSystem.invalidTaskJson",
+			"TerminateAction.label",
+			"TaskSystem.unknownError",
+			"configureTask",
+			"recentlyUsed",
+			"configured",
+			"detected",
+			"TaskService.ignoredFolder",
+			"TaskService.notAgain",
+			"TaskService.requestTrust",
+			"TaskService.pickRunTask",
+			"TaskService.noEntryToRun",
+			"TaskService.noEntryToRun",
+			"TaskService.fetchingBuildTasks",
+			"TaskService.pickBuildTask",
+			"TaskService.noBuildTask",
+			"TaskService.fetchingTestTasks",
+			"TaskService.pickTestTask",
+			"TaskService.noTestTaskTerminal",
+			"TaskService.taskToTerminate",
+			"TaskService.noTaskRunning",
+			"TaskService.terminateAllRunningTasks",
+			"TerminateAction.noProcess",
+			"TerminateAction.failed",
+			"TaskService.taskToRestart",
+			"TaskService.noTaskToRestart",
+			"TaskService.template",
+			"taskQuickPick.userSettings",
+			"TaskService.createJsonFile",
+			"TaskService.openJsonFile",
+			"TaskService.pickTask",
+			"TaskService.defaultBuildTaskExists",
+			"TaskService.pickTask",
+			"TaskService.pickDefaultBuildTask",
+			"TaskService.defaultTestTaskExists",
+			"TaskService.pickDefaultTestTask",
+			"TaskService.pickShowTask",
+			"TaskService.noTaskIsRunning",
+			"taskService.upgradeVersion",
+			"taskService.upgradeVersionPlural",
+			"taskService.openDiff",
+			"taskService.openDiffs"
 		],
 		"vs/workbench/api/common/extHostExtensionService": [
 			"extensionTestError1",
@@ -5334,6 +5334,11 @@
 		"vs/editor/browser/widget/codeEditorWidget": [
 			"cursors.maximum"
 		],
+		"vs/editor/browser/widget/diffEditorWidget": [
+			"diffInsertIcon",
+			"diffRemoveIcon",
+			"diff.tooLarge"
+		],
 		"vs/editor/contrib/anchorSelect/browser/anchorSelect": [
 			"selectionAnchor",
 			"anchorSet",
@@ -5341,11 +5346,6 @@
 			"goToSelectionAnchor",
 			"selectFromAnchorToCursor",
 			"cancelSelectionAnchor"
-		],
-		"vs/editor/browser/widget/diffEditorWidget": [
-			"diffInsertIcon",
-			"diffRemoveIcon",
-			"diff.tooLarge"
 		],
 		"vs/editor/contrib/bracketMatching/browser/bracketMatching": [
 			"overviewRulerBracketMatchForeground",
@@ -5470,6 +5470,11 @@
 				]
 			}
 		],
+		"vs/editor/contrib/fontZoom/browser/fontZoom": [
+			"EditorFontZoomIn.label",
+			"EditorFontZoomOut.label",
+			"EditorFontZoomReset.label"
+		],
 		"vs/editor/contrib/folding/browser/folding": [
 			"maximum fold ranges",
 			"unfoldAction.label",
@@ -5492,11 +5497,6 @@
 			"foldLevelAction.label",
 			"foldBackgroundBackground",
 			"editorGutter.foldingControlForeground"
-		],
-		"vs/editor/contrib/fontZoom/browser/fontZoom": [
-			"EditorFontZoomIn.label",
-			"EditorFontZoomOut.label",
-			"EditorFontZoomReset.label"
 		],
 		"vs/editor/contrib/format/browser/formatActions": [
 			"formatDocument.label",
@@ -5623,16 +5623,12 @@
 			"editor.reindentlines",
 			"editor.reindentselectedlines"
 		],
-		"vs/editor/contrib/inPlaceReplace/browser/inPlaceReplace": [
-			"InPlaceReplaceAction.previous.label",
-			"InPlaceReplaceAction.next.label"
-		],
 		"vs/editor/contrib/lineSelection/browser/lineSelection": [
 			"expandLineSelection"
 		],
-		"vs/editor/contrib/linkedEditing/browser/linkedEditing": [
-			"linkedEditing.label",
-			"editorLinkedEditingBackground"
+		"vs/editor/contrib/inPlaceReplace/browser/inPlaceReplace": [
+			"InPlaceReplaceAction.previous.label",
+			"InPlaceReplaceAction.next.label"
 		],
 		"vs/editor/contrib/linesOperations/browser/linesOperations": [
 			"lines.copyUp",
@@ -5688,6 +5684,10 @@
 			"editor.transformToTitlecase",
 			"editor.transformToSnakecase",
 			"editor.transformToKebabcase"
+		],
+		"vs/editor/contrib/linkedEditing/browser/linkedEditing": [
+			"linkedEditing.label",
+			"editorLinkedEditingBackground"
 		],
 		"vs/editor/contrib/links/browser/links": [
 			"invalid.url",
@@ -6231,14 +6231,6 @@
 		"vs/workbench/browser/quickaccess": [
 			"inQuickOpen"
 		],
-		"vs/workbench/browser/parts/views/viewPaneContainer": [
-			"views",
-			"viewMoveUp",
-			"viewMoveLeft",
-			"viewMoveDown",
-			"viewMoveRight",
-			"viewsMove"
-		],
 		"vs/workbench/browser/parts/views/treeView": [
 			"no-dataprovider",
 			"treeView.enableCollapseAll",
@@ -6263,6 +6255,14 @@
 			"explorerViewletCompressedFirstFocus",
 			"explorerViewletCompressedLastFocus",
 			"viewHasSomeCollapsibleItem"
+		],
+		"vs/workbench/browser/parts/views/viewPaneContainer": [
+			"views",
+			"viewMoveUp",
+			"viewMoveLeft",
+			"viewMoveDown",
+			"viewMoveRight",
+			"viewsMove"
 		],
 		"vs/workbench/contrib/remote/browser/remoteExplorer": [
 			"ports",
@@ -6389,6 +6389,26 @@
 				]
 			},
 			"selectAll"
+		],
+		"vs/workbench/browser/parts/editor/editorCommands": [
+			"editorCommand.activeEditorMove.description",
+			"editorCommand.activeEditorMove.arg.name",
+			"editorCommand.activeEditorMove.arg.description",
+			"editorCommand.activeEditorCopy.description",
+			"editorCommand.activeEditorCopy.arg.name",
+			"editorCommand.activeEditorCopy.arg.description",
+			"toggleInlineView",
+			"compare",
+			"splitEditorInGroup",
+			"joinEditorInGroup",
+			"toggleJoinEditorInGroup",
+			"toggleSplitEditorInGroupLayout",
+			"focusLeftSideEditor",
+			"focusRightSideEditor",
+			"focusOtherSideEditor",
+			"toggleEditorGroupLock",
+			"lockEditorGroup",
+			"unlockEditorGroup"
 		],
 		"vs/workbench/browser/parts/editor/editorActions": [
 			"splitEditor",
@@ -6525,26 +6545,6 @@
 			"workbench.action.toggleEditorType",
 			"workbench.action.reopenTextEditor"
 		],
-		"vs/workbench/browser/parts/editor/editorCommands": [
-			"editorCommand.activeEditorMove.description",
-			"editorCommand.activeEditorMove.arg.name",
-			"editorCommand.activeEditorMove.arg.description",
-			"editorCommand.activeEditorCopy.description",
-			"editorCommand.activeEditorCopy.arg.name",
-			"editorCommand.activeEditorCopy.arg.description",
-			"toggleInlineView",
-			"compare",
-			"splitEditorInGroup",
-			"joinEditorInGroup",
-			"toggleJoinEditorInGroup",
-			"toggleSplitEditorInGroupLayout",
-			"focusLeftSideEditor",
-			"focusRightSideEditor",
-			"focusOtherSideEditor",
-			"toggleEditorGroupLock",
-			"lockEditorGroup",
-			"unlockEditorGroup"
-		],
 		"vs/workbench/browser/parts/editor/editorQuickAccess": [
 			"noViewResults",
 			"entryAriaLabelWithGroupDirty",
@@ -6557,6 +6557,20 @@
 			"workbench.editor.autoLockGroups",
 			"workbench.editor.defaultBinaryEditor",
 			"editor.editorAssociations"
+		],
+		"vs/workbench/browser/parts/editor/editorGroupView": [
+			"ariaLabelGroupActions",
+			"emptyEditorGroup",
+			"groupLabel",
+			"groupAriaLabel"
+		],
+		"vs/workbench/browser/parts/editor/editorDropTarget": [
+			"dropIntoEditorPrompt"
+		],
+		"vs/workbench/browser/parts/auxiliarybar/auxiliaryBarPart": [
+			"move second side bar left",
+			"move second side bar right",
+			"hideAuxiliaryBar"
 		],
 		"vs/workbench/browser/parts/activitybar/activitybarPart": [
 			"settingsViewBarIcon",
@@ -6574,11 +6588,6 @@
 			"accounts",
 			"accounts"
 		],
-		"vs/workbench/browser/parts/auxiliarybar/auxiliaryBarPart": [
-			"move second side bar left",
-			"move second side bar right",
-			"hideAuxiliaryBar"
-		],
 		"vs/workbench/browser/parts/panel/panelPart": [
 			"pinned view containers",
 			"resetLocation",
@@ -6586,15 +6595,6 @@
 			"panel.emptyMessage",
 			"moreActions",
 			"hidePanel"
-		],
-		"vs/workbench/browser/parts/editor/editorGroupView": [
-			"ariaLabelGroupActions",
-			"emptyEditorGroup",
-			"groupLabel",
-			"groupAriaLabel"
-		],
-		"vs/workbench/browser/parts/editor/editorDropTarget": [
-			"dropIntoEditorPrompt"
 		],
 		"vs/workbench/browser/parts/statusbar/statusbarActions": [
 			"hide",
@@ -6794,16 +6794,6 @@
 			"editorColors.semanticHighlighting.rules",
 			"semanticTokenColors"
 		],
-		"vs/workbench/services/themes/common/productIconThemeSchema": [
-			"schema.id",
-			"schema.id.formatError",
-			"schema.src",
-			"schema.font-path",
-			"schema.font-format",
-			"schema.font-weight",
-			"schema.font-style",
-			"schema.iconDefinitions"
-		],
 		"vs/workbench/services/themes/browser/productIconThemeData": [
 			"error.parseicondefs",
 			"defaultTheme",
@@ -6817,6 +6807,16 @@
 			"error.fontId",
 			"error.icon.font",
 			"error.icon.fontCharacter"
+		],
+		"vs/workbench/services/themes/common/productIconThemeSchema": [
+			"schema.id",
+			"schema.id.formatError",
+			"schema.src",
+			"schema.font-path",
+			"schema.font-format",
+			"schema.font-weight",
+			"schema.font-style",
+			"schema.iconDefinitions"
 		],
 		"vs/workbench/services/extensionManagement/browser/extensionBisect": [
 			"bisect.singular",
@@ -7544,60 +7544,6 @@
 			"notebook.diff.ignoreMetadata",
 			"notebook.diff.ignoreOutputs"
 		],
-		"vs/editor/contrib/peekView/browser/peekView": [
-			"inReferenceSearchEditor",
-			"label.close",
-			"peekViewTitleBackground",
-			"peekViewTitleForeground",
-			"peekViewTitleInfoForeground",
-			"peekViewBorder",
-			"peekViewResultsBackground",
-			"peekViewResultsMatchForeground",
-			"peekViewResultsFileForeground",
-			"peekViewResultsSelectionBackground",
-			"peekViewResultsSelectionForeground",
-			"peekViewEditorBackground",
-			"peekViewEditorGutterBackground",
-			"peekViewResultsMatchHighlight",
-			"peekViewEditorMatchHighlight",
-			"peekViewEditorMatchHighlightBorder"
-		],
-		"vs/workbench/contrib/interactive/browser/interactiveEditor": [
-			"interactiveInputPlaceHolder"
-		],
-		"vs/workbench/contrib/notebook/browser/notebookIcons": [
-			"selectKernelIcon",
-			"executeIcon",
-			"executeAboveIcon",
-			"executeBelowIcon",
-			"stopIcon",
-			"deleteCellIcon",
-			"executeAllIcon",
-			"editIcon",
-			"stopEditIcon",
-			"moveUpIcon",
-			"moveDownIcon",
-			"clearIcon",
-			"splitCellIcon",
-			"successStateIcon",
-			"errorStateIcon",
-			"pendingStateIcon",
-			"executingStateIcon",
-			"collapsedIcon",
-			"expandedIcon",
-			"openAsTextIcon",
-			"revertIcon",
-			"renderOutputIcon",
-			"mimetypeIcon"
-		],
-		"vs/workbench/contrib/files/browser/fileConstants": [
-			"saveAs",
-			"save",
-			"saveWithoutFormatting",
-			"saveAll",
-			"removeFolderFromWorkspace",
-			"newUntitledFile"
-		],
 		"vs/workbench/contrib/testing/browser/icons": [
 			"testViewIcon",
 			"testingRunIcon",
@@ -7618,6 +7564,14 @@
 			"testingQueuedIcon",
 			"testingSkippedIcon",
 			"testingUnsetIcon"
+		],
+		"vs/workbench/contrib/files/browser/fileConstants": [
+			"saveAs",
+			"save",
+			"saveWithoutFormatting",
+			"saveAll",
+			"removeFolderFromWorkspace",
+			"newUntitledFile"
 		],
 		"vs/workbench/contrib/testing/browser/testingDecorations": [
 			"peekTestOutout",
@@ -7733,6 +7687,10 @@
 			"testTrust",
 			"testError"
 		],
+		"vs/workbench/contrib/testing/browser/testingConfigurationUi": [
+			"testConfigurationUi.pick",
+			"updateTestConfiguration"
+		],
 		"vs/workbench/contrib/testing/browser/testExplorerActions": [
 			"hideTest",
 			"unhideTest",
@@ -7774,9 +7732,51 @@
 			"testing.refreshTests",
 			"testing.cancelTestRefresh"
 		],
-		"vs/workbench/contrib/testing/browser/testingConfigurationUi": [
-			"testConfigurationUi.pick",
-			"updateTestConfiguration"
+		"vs/editor/contrib/peekView/browser/peekView": [
+			"inReferenceSearchEditor",
+			"label.close",
+			"peekViewTitleBackground",
+			"peekViewTitleForeground",
+			"peekViewTitleInfoForeground",
+			"peekViewBorder",
+			"peekViewResultsBackground",
+			"peekViewResultsMatchForeground",
+			"peekViewResultsFileForeground",
+			"peekViewResultsSelectionBackground",
+			"peekViewResultsSelectionForeground",
+			"peekViewEditorBackground",
+			"peekViewEditorGutterBackground",
+			"peekViewResultsMatchHighlight",
+			"peekViewEditorMatchHighlight",
+			"peekViewEditorMatchHighlightBorder"
+		],
+		"vs/workbench/contrib/interactive/browser/interactiveEditor": [
+			"interactiveInputPlaceHolder"
+		],
+		"vs/workbench/contrib/notebook/browser/notebookIcons": [
+			"selectKernelIcon",
+			"executeIcon",
+			"executeAboveIcon",
+			"executeBelowIcon",
+			"stopIcon",
+			"deleteCellIcon",
+			"executeAllIcon",
+			"editIcon",
+			"stopEditIcon",
+			"moveUpIcon",
+			"moveDownIcon",
+			"clearIcon",
+			"splitCellIcon",
+			"successStateIcon",
+			"errorStateIcon",
+			"pendingStateIcon",
+			"executingStateIcon",
+			"collapsedIcon",
+			"expandedIcon",
+			"openAsTextIcon",
+			"revertIcon",
+			"renderOutputIcon",
+			"mimetypeIcon"
 		],
 		"vs/platform/quickinput/browser/helpQuickAccess": [
 			"helpPickAriaLabel"
@@ -7809,15 +7809,15 @@
 				]
 			}
 		],
-		"vs/workbench/contrib/files/browser/views/emptyView": [
-			"noWorkspace"
-		],
 		"vs/workbench/contrib/files/browser/views/explorerView": [
 			"explorerSection",
 			"createNewFile",
 			"createNewFolder",
 			"refreshExplorer",
 			"collapseExplorerFolders"
+		],
+		"vs/workbench/contrib/files/browser/views/emptyView": [
+			"noWorkspace"
 		],
 		"vs/workbench/contrib/files/browser/views/openEditorsView": [
 			{
@@ -8141,16 +8141,6 @@
 			},
 			"closeEditor"
 		],
-		"vs/workbench/contrib/search/browser/searchActions": [
-			"replaceInFiles",
-			"toggleTabs",
-			"FocusNextSearchResult.label",
-			"FocusPreviousSearchResult.label",
-			"RemoveAction.label",
-			"file.replaceAll.label",
-			"file.replaceAll.label",
-			"match.replace.label"
-		],
 		"vs/workbench/contrib/search/browser/searchIcons": [
 			"searchDetailsIcon",
 			"searchShowContextIcon",
@@ -8168,6 +8158,16 @@
 			"searchStopIcon",
 			"searchViewIcon",
 			"searchNewEditorIcon"
+		],
+		"vs/workbench/contrib/search/browser/searchActions": [
+			"replaceInFiles",
+			"toggleTabs",
+			"FocusNextSearchResult.label",
+			"FocusPreviousSearchResult.label",
+			"RemoveAction.label",
+			"file.replaceAll.label",
+			"file.replaceAll.label",
+			"match.replace.label"
 		],
 		"vs/workbench/contrib/search/browser/searchWidget": [
 			"search.action.replaceAll.disabled.label",
@@ -8278,10 +8278,6 @@
 		"vs/workbench/contrib/scm/browser/scmRepositoriesViewPane": [
 			"scm"
 		],
-		"vs/workbench/contrib/workspace/common/workspace": [
-			"workspaceTrustEnabledCtx",
-			"workspaceTrustedCtx"
-		],
 		"vs/workbench/contrib/scm/browser/scmViewPane": [
 			"scm",
 			"input",
@@ -8299,6 +8295,10 @@
 			"expand all",
 			"label.close",
 			"scm.providerBorder"
+		],
+		"vs/workbench/contrib/workspace/common/workspace": [
+			"workspaceTrustEnabledCtx",
+			"workspaceTrustedCtx"
 		],
 		"vs/workbench/contrib/debug/browser/breakpointsView": [
 			"unverifiedExceptionBreakpoint",
@@ -8478,11 +8478,6 @@
 			"breakpointAdded",
 			"breakpointRemoved"
 		],
-		"vs/workbench/contrib/debug/browser/statusbarColorProvider": [
-			"statusBarDebuggingBackground",
-			"statusBarDebuggingForeground",
-			"statusBarDebuggingBorder"
-		],
 		"vs/workbench/contrib/debug/browser/debugCommands": [
 			"restartDebug",
 			"stepOverDebug",
@@ -8515,6 +8510,11 @@
 			"editor.debug.action.stepIntoTargets.none",
 			"addInlineBreakpoint",
 			"debug"
+		],
+		"vs/workbench/contrib/debug/browser/statusbarColorProvider": [
+			"statusBarDebuggingBackground",
+			"statusBarDebuggingForeground",
+			"statusBarDebuggingBorder"
 		],
 		"vs/workbench/contrib/debug/browser/debugStatus": [
 			"status.debug",
@@ -8827,14 +8827,14 @@
 			"addConfiguration",
 			"debugSession"
 		],
-		"vs/workbench/contrib/debug/browser/replFilter": [
-			"showing filtered repl lines"
-		],
 		"vs/workbench/contrib/debug/browser/linkDetector": [
 			"followForwardedLink",
 			"followLink",
 			"fileLinkMac",
 			"fileLink"
+		],
+		"vs/workbench/contrib/debug/browser/replFilter": [
+			"showing filtered repl lines"
 		],
 		"vs/workbench/contrib/debug/browser/replViewer": [
 			"debugConsole",
@@ -9010,6 +9010,9 @@
 			"selectOpenerConfigureTitle",
 			"selectOpenerPlaceHolder"
 		],
+		"vs/workbench/contrib/output/browser/logViewer": [
+			"logViewerAriaLabel"
+		],
 		"vs/workbench/contrib/extensions/common/extensionsInput": [
 			"extensionsInputName"
 		],
@@ -9023,6 +9026,32 @@
 			"suggestProxyError",
 			"open user settings",
 			"no local extensions"
+		],
+		"vs/workbench/contrib/extensions/browser/extensionsIcons": [
+			"extensionsViewIcon",
+			"manageExtensionIcon",
+			"clearSearchResultsIcon",
+			"refreshIcon",
+			"filterIcon",
+			"installLocalInRemoteIcon",
+			"installWorkspaceRecommendedIcon",
+			"configureRecommendedIcon",
+			"syncEnabledIcon",
+			"syncIgnoredIcon",
+			"remoteIcon",
+			"installCountIcon",
+			"ratingIcon",
+			"verifiedPublisher",
+			"preReleaseIcon",
+			"sponsorIcon",
+			"starFullIcon",
+			"starHalfIcon",
+			"starEmptyIcon",
+			"errorIcon",
+			"warningIcon",
+			"infoIcon",
+			"trustIcon",
+			"activationtimeIcon"
 		],
 		"vs/workbench/contrib/extensions/browser/extensionsActions": [
 			"VS Code for Web",
@@ -9209,32 +9238,6 @@
 			"extensionButtonProminentForeground",
 			"extensionButtonProminentHoverBackground"
 		],
-		"vs/workbench/contrib/extensions/browser/extensionsIcons": [
-			"extensionsViewIcon",
-			"manageExtensionIcon",
-			"clearSearchResultsIcon",
-			"refreshIcon",
-			"filterIcon",
-			"installLocalInRemoteIcon",
-			"installWorkspaceRecommendedIcon",
-			"configureRecommendedIcon",
-			"syncEnabledIcon",
-			"syncIgnoredIcon",
-			"remoteIcon",
-			"installCountIcon",
-			"ratingIcon",
-			"verifiedPublisher",
-			"preReleaseIcon",
-			"sponsorIcon",
-			"starFullIcon",
-			"starHalfIcon",
-			"starEmptyIcon",
-			"errorIcon",
-			"warningIcon",
-			"infoIcon",
-			"trustIcon",
-			"activationtimeIcon"
-		],
 		"vs/workbench/contrib/extensions/common/extensionsFileTemplate": [
 			"app.extensions.json.title",
 			"app.extensions.json.recommendations",
@@ -9246,6 +9249,9 @@
 			"disableOtherKeymapsConfirmation",
 			"yes",
 			"no"
+		],
+		"vs/workbench/contrib/extensions/browser/extensionsActivationProgress": [
+			"activation"
 		],
 		"vs/workbench/contrib/extensions/browser/extensionEditor": [
 			"extension version",
@@ -9358,9 +9364,6 @@
 			"find next",
 			"find previous"
 		],
-		"vs/workbench/contrib/extensions/browser/extensionsActivationProgress": [
-			"activation"
-		],
 		"vs/workbench/contrib/extensions/browser/extensionsDependencyChecker": [
 			"extensions",
 			"auto install missing deps",
@@ -9459,9 +9462,6 @@
 		"vs/workbench/contrib/extensions/browser/extensionsCompletionItemsProvider": [
 			"exampleExtension"
 		],
-		"vs/workbench/contrib/output/browser/logViewer": [
-			"logViewerAriaLabel"
-		],
 		"vs/workbench/contrib/terminal/common/terminalColorRegistry": [
 			"terminal.background",
 			"terminal.foreground",
@@ -9483,6 +9483,11 @@
 			"terminal.dragAndDropBackground",
 			"terminal.tab.activeBorder",
 			"terminal.ansiColor"
+		],
+		"vs/workbench/contrib/terminal/browser/terminalQuickAccess": [
+			"workbench.action.terminal.newplus",
+			"workbench.action.terminal.newWithProfilePlus",
+			"renameTerminal"
 		],
 		"vs/workbench/contrib/terminal/browser/terminalActions": [
 			"showTerminalTabs",
@@ -9579,11 +9584,6 @@
 			"workbench.action.terminal.newWithProfile",
 			"workbench.action.terminal.newWithProfile.profileName",
 			"workbench.action.terminal.newWorkspacePlaceholder"
-		],
-		"vs/workbench/contrib/terminal/browser/terminalQuickAccess": [
-			"workbench.action.terminal.newplus",
-			"workbench.action.terminal.newWithProfilePlus",
-			"renameTerminal"
 		],
 		"vs/workbench/contrib/terminal/browser/terminalService": [
 			"terminalService.terminalCloseConfirmationSingular",
@@ -10135,15 +10135,6 @@
 			"reloadWindow",
 			"cancel"
 		],
-		"vs/workbench/contrib/emmet/browser/actions/expandAbbreviation": [
-			"expandAbbreviationAction",
-			{
-				"key": "miEmmetExpandAbbreviation",
-				"comment": [
-					"&& denotes a mnemonic"
-				]
-			}
-		],
 		"vs/workbench/contrib/remote/browser/remoteIndicator": [
 			"remote.category",
 			"remote.showMenu",
@@ -10184,10 +10175,14 @@
 			"closeVirtualWorkspace.title",
 			"installRemotes"
 		],
-		"vs/workbench/contrib/codeEditor/browser/diffEditorHelper": [
-			"hintTimeout",
-			"removeTimeout",
-			"hintWhitespace"
+		"vs/workbench/contrib/emmet/browser/actions/expandAbbreviation": [
+			"expandAbbreviationAction",
+			{
+				"key": "miEmmetExpandAbbreviation",
+				"comment": [
+					"&& denotes a mnemonic"
+				]
+			}
 		],
 		"vs/workbench/contrib/codeEditor/browser/accessibility/accessibility": [
 			"emergencyConfOn",
@@ -10209,6 +10204,11 @@
 			"openDocWinLinux",
 			"outroMsg",
 			"ShowAccessibilityHelpAction"
+		],
+		"vs/workbench/contrib/codeEditor/browser/diffEditorHelper": [
+			"hintTimeout",
+			"removeTimeout",
+			"hintWhitespace"
 		],
 		"vs/workbench/contrib/codeEditor/browser/inspectKeybindings": [
 			"workbench.action.inspectKeyMap",
@@ -10890,9 +10890,6 @@
 			"localHistoryCompareToFileEditorLabel",
 			"localHistoryCompareToPreviousEditorLabel"
 		],
-		"vs/workbench/services/workspaces/browser/workspaceTrustEditorInput": [
-			"workspaceTrustEditorInputName"
-		],
 		"vs/workbench/contrib/workspace/browser/workspaceTrustEditor": [
 			"shieldIcon",
 			"checkListIcon",
@@ -10984,6 +10981,9 @@
 			"untrustedWorkspaceReason",
 			"untrustedFolderReason",
 			"trustedForcedReason"
+		],
+		"vs/workbench/services/workspaces/browser/workspaceTrustEditorInput": [
+			"workspaceTrustEditorInputName"
 		],
 		"vs/workbench/contrib/audioCues/browser/commands": [
 			"audioCues.help",
@@ -11096,17 +11096,6 @@
 			"workspaceTarget",
 			"folderTarget"
 		],
-		"vs/workbench/services/textMate/common/TMGrammars": [
-			"vscode.extension.contributes.grammars",
-			"vscode.extension.contributes.grammars.language",
-			"vscode.extension.contributes.grammars.scopeName",
-			"vscode.extension.contributes.grammars.path",
-			"vscode.extension.contributes.grammars.embeddedLanguages",
-			"vscode.extension.contributes.grammars.tokenTypes",
-			"vscode.extension.contributes.grammars.injectTo",
-			"vscode.extension.contributes.grammars.balancedBracketScopes",
-			"vscode.extension.contributes.grammars.unbalancedBracketScopes"
-		],
 		"vs/workbench/services/textfile/common/textFileEditorModelManager": [
 			{
 				"key": "genericSaveError",
@@ -11117,6 +11106,17 @@
 		],
 		"vs/workbench/common/editor/textEditorModel": [
 			"languageAutoDetected"
+		],
+		"vs/workbench/services/textMate/common/TMGrammars": [
+			"vscode.extension.contributes.grammars",
+			"vscode.extension.contributes.grammars.language",
+			"vscode.extension.contributes.grammars.scopeName",
+			"vscode.extension.contributes.grammars.path",
+			"vscode.extension.contributes.grammars.embeddedLanguages",
+			"vscode.extension.contributes.grammars.tokenTypes",
+			"vscode.extension.contributes.grammars.injectTo",
+			"vscode.extension.contributes.grammars.balancedBracketScopes",
+			"vscode.extension.contributes.grammars.unbalancedBracketScopes"
 		],
 		"vs/workbench/services/extensions/common/extensionHostManager": [
 			"measureExtHostLatency"
@@ -11157,9 +11157,6 @@
 			"remoteFileDialog.validateFileOnly",
 			"remoteFileDialog.validateFolderOnly"
 		],
-		"vs/workbench/services/workingCopy/common/workingCopyHistoryTracker": [
-			"undoRedo.source"
-		],
 		"vs/workbench/services/configurationResolver/common/variableResolver": [
 			"canNotResolveFile",
 			"canNotResolveFolderForFile",
@@ -11185,6 +11182,9 @@
 		],
 		"vs/workbench/contrib/extensions/common/reportExtensionIssueAction": [
 			"reportExtensionIssue"
+		],
+		"vs/workbench/services/workingCopy/common/workingCopyHistoryTracker": [
+			"undoRedo.source"
 		],
 		"vs/platform/terminal/common/terminalProfiles": [
 			"terminalAutomaticProfile"
@@ -11691,15 +11691,15 @@
 			"keep",
 			"toggle"
 		],
-		"vs/base/browser/ui/splitview/paneview": [
-			"viewSection"
-		],
 		"vs/base/browser/ui/tree/treeDefaults": [
 			"collapse all"
 		],
 		"vs/workbench/browser/parts/views/checkbox": [
 			"checked",
 			"unchecked"
+		],
+		"vs/base/browser/ui/splitview/paneview": [
+			"viewSection"
 		],
 		"vs/workbench/contrib/remote/browser/remoteIcons": [
 			"getStartedIcon",
@@ -11786,6 +11786,14 @@
 			"binaryError",
 			"openAnyway"
 		],
+		"vs/workbench/browser/parts/editor/editorPanes": [
+			"ok",
+			"cancel",
+			"editorOpenErrorDialog"
+		],
+		"vs/workbench/browser/parts/editor/tabsTitleControl": [
+			"ariaLabelTabActions"
+		],
 		"vs/workbench/browser/parts/activitybar/activitybarActions": [
 			"manageTrustedExtensions",
 			"signOut",
@@ -11808,14 +11816,6 @@
 		],
 		"vs/workbench/browser/parts/sidebar/sidebarActions": [
 			"focusSideBar"
-		],
-		"vs/workbench/browser/parts/editor/editorPanes": [
-			"ok",
-			"cancel",
-			"editorOpenErrorDialog"
-		],
-		"vs/workbench/browser/parts/editor/tabsTitleControl": [
-			"ariaLabelTabActions"
 		],
 		"vs/base/browser/ui/button/button": [
 			"button dropdown more actions"
@@ -11977,6 +11977,28 @@
 			},
 			"groupRowAriaLabel"
 		],
+		"vs/workbench/contrib/preferences/browser/settingsTree": [
+			"extensions",
+			"modified",
+			"policyLabel",
+			"viewPolicySettings",
+			"settingsContextMenuTitle",
+			"newExtensionsButtonLabel",
+			"editInSettingsJson",
+			"editLanguageSettingLabel",
+			"settings.Default",
+			"modified",
+			"manageWorkspaceTrust",
+			"trustLabel",
+			"resetSettingLabel",
+			"validationError",
+			"validationError",
+			"settings.Modified",
+			"settings",
+			"copySettingIdLabel",
+			"copySettingAsJSONLabel",
+			"stopSyncingSetting"
+		],
 		"vs/workbench/contrib/preferences/common/settingsEditorColorRegistry": [
 			"headerForeground",
 			"modifiedItemForeground",
@@ -12014,28 +12036,6 @@
 			"onlineSettingsSearchTooltip",
 			"policySettingsSearch",
 			"policySettingsSearchTooltip"
-		],
-		"vs/workbench/contrib/preferences/browser/settingsTree": [
-			"extensions",
-			"modified",
-			"policyLabel",
-			"viewPolicySettings",
-			"settingsContextMenuTitle",
-			"newExtensionsButtonLabel",
-			"editInSettingsJson",
-			"editLanguageSettingLabel",
-			"settings.Default",
-			"modified",
-			"manageWorkspaceTrust",
-			"trustLabel",
-			"resetSettingLabel",
-			"validationError",
-			"validationError",
-			"settings.Modified",
-			"settings",
-			"copySettingIdLabel",
-			"copySettingAsJSONLabel",
-			"stopSyncingSetting"
 		],
 		"vs/workbench/contrib/notebook/browser/viewParts/notebookKernelActionViewItem": [
 			"select",
@@ -12576,12 +12576,6 @@
 		"vs/workbench/contrib/customEditor/common/contributedCustomEditors": [
 			"builtinProviderDisplayName"
 		],
-		"vs/workbench/contrib/extensions/browser/extensionsViewer": [
-			"error",
-			"Unknown Extension",
-			"extension.arialabel",
-			"extensions"
-		],
 		"vs/workbench/contrib/extensions/browser/extensionsWidgets": [
 			"ratedLabel",
 			"sponsor",
@@ -12606,6 +12600,12 @@
 			"extensionIconVerifiedForeground",
 			"extensionPreReleaseForeground",
 			"extensionIcon.sponsorForeground"
+		],
+		"vs/workbench/contrib/extensions/browser/extensionsViewer": [
+			"error",
+			"Unknown Extension",
+			"extension.arialabel",
+			"extensions"
 		],
 		"vs/workbench/contrib/extensions/browser/dynamicWorkspaceRecommendations": [
 			"dynamicWorkspaceRecommendation"
@@ -12757,44 +12757,6 @@
 			"releaseNotesInputName",
 			"unassigned"
 		],
-		"vs/workbench/contrib/welcomeGettingStarted/browser/gettingStartedExtensionPoint": [
-			"title",
-			"walkthroughs",
-			"walkthroughs.id",
-			"walkthroughs.title",
-			"walkthroughs.description",
-			"walkthroughs.featuredFor",
-			"walkthroughs.when",
-			"walkthroughs.steps",
-			"walkthroughs.steps.id",
-			"walkthroughs.steps.title",
-			"walkthroughs.steps.description.interpolated",
-			"walkthroughs.steps.button.deprecated.interpolated",
-			"walkthroughs.steps.media",
-			"pathDeprecated",
-			"walkthroughs.steps.media.image.path.string",
-			"walkthroughs.steps.media.image.path.dark.string",
-			"walkthroughs.steps.media.image.path.light.string",
-			"walkthroughs.steps.media.image.path.hc.string",
-			"walkthroughs.steps.media.image.path.hcLight.string",
-			"walkthroughs.steps.media.altText",
-			"walkthroughs.steps.media.image.path.svg",
-			"walkthroughs.steps.media.altText",
-			"pathDeprecated",
-			"walkthroughs.steps.media.markdown.path",
-			"walkthroughs.steps.completionEvents",
-			"walkthroughs.steps.completionEvents.onCommand",
-			"walkthroughs.steps.completionEvents.onLink",
-			"walkthroughs.steps.completionEvents.onView",
-			"walkthroughs.steps.completionEvents.onSettingChanged",
-			"walkthroughs.steps.completionEvents.onContext",
-			"walkthroughs.steps.completionEvents.extensionInstalled",
-			"walkthroughs.steps.completionEvents.stepSelected",
-			"walkthroughs.steps.doneOn",
-			"walkthroughs.steps.doneOn.deprecation",
-			"walkthroughs.steps.oneOn.command",
-			"walkthroughs.steps.when"
-		],
 		"vs/workbench/contrib/welcomeGettingStarted/common/gettingStartedContent": [
 			"getting-started-setup-icon",
 			"getting-started-beginner-icon",
@@ -12922,6 +12884,44 @@
 			"gettingStarted.notebook.title",
 			"gettingStarted.notebookProfile.title",
 			"gettingStarted.notebookProfile.description"
+		],
+		"vs/workbench/contrib/welcomeGettingStarted/browser/gettingStartedExtensionPoint": [
+			"title",
+			"walkthroughs",
+			"walkthroughs.id",
+			"walkthroughs.title",
+			"walkthroughs.description",
+			"walkthroughs.featuredFor",
+			"walkthroughs.when",
+			"walkthroughs.steps",
+			"walkthroughs.steps.id",
+			"walkthroughs.steps.title",
+			"walkthroughs.steps.description.interpolated",
+			"walkthroughs.steps.button.deprecated.interpolated",
+			"walkthroughs.steps.media",
+			"pathDeprecated",
+			"walkthroughs.steps.media.image.path.string",
+			"walkthroughs.steps.media.image.path.dark.string",
+			"walkthroughs.steps.media.image.path.light.string",
+			"walkthroughs.steps.media.image.path.hc.string",
+			"walkthroughs.steps.media.image.path.hcLight.string",
+			"walkthroughs.steps.media.altText",
+			"walkthroughs.steps.media.image.path.svg",
+			"walkthroughs.steps.media.altText",
+			"pathDeprecated",
+			"walkthroughs.steps.media.markdown.path",
+			"walkthroughs.steps.completionEvents",
+			"walkthroughs.steps.completionEvents.onCommand",
+			"walkthroughs.steps.completionEvents.onLink",
+			"walkthroughs.steps.completionEvents.onView",
+			"walkthroughs.steps.completionEvents.onSettingChanged",
+			"walkthroughs.steps.completionEvents.onContext",
+			"walkthroughs.steps.completionEvents.extensionInstalled",
+			"walkthroughs.steps.completionEvents.stepSelected",
+			"walkthroughs.steps.doneOn",
+			"walkthroughs.steps.doneOn.deprecation",
+			"walkthroughs.steps.oneOn.command",
+			"walkthroughs.steps.when"
 		],
 		"vs/workbench/contrib/welcomeGettingStarted/browser/gettingStartedColors": [
 			"welcomePage.background",
@@ -15067,9 +15067,6 @@
 			"property `{0}` can be omitted and must be of type `string[]`",
 			"property `{0}` can be omitted and must be of type `object` with properties `{1}` and `{2}` of type `string`"
 		],
-		"vs/workbench/services/themes/browser/workbenchThemeService": [
-			"Unable to load {0}: {1}"
-		],
 		"vs/workbench/services/label/common/labelService": [
 			"Contributes resource label formatting rules.",
 			"URI scheme on which to match the formatter on. For example \"file\". Simple glob patterns are supported.",
@@ -15084,6 +15081,9 @@
 			"Workspace",
 			"{0} (Workspace)",
 			"{0} (Workspace)"
+		],
+		"vs/workbench/services/themes/browser/workbenchThemeService": [
+			"Unable to load {0}: {1}"
 		],
 		"vs/workbench/services/extensionManagement/browser/extensionEnablementService": [
 			"All installed extensions are temporarily disabled.",
@@ -15281,6 +15281,13 @@
 			"Font size for the output text for notebook cells. When set to {0}, {1} is used.",
 			"The font family for the output text for notebook cells. When set to empty, the {0} is used."
 		],
+		"vs/workbench/contrib/testing/browser/testing.contribution": [
+			"Testing",
+			"T&&esting",
+			"No tests have been found in this workspace yet.",
+			"Install Additional Test Extensions...",
+			"Test Explorer"
+		],
 		"vs/workbench/contrib/interactive/browser/interactive.contribution": [
 			"Open Interactive Window",
 			"Open Interactive Window",
@@ -15296,13 +15303,6 @@
 			"The border color for the current interactive code cell when the editor does not have focus.",
 			"Automatically scroll the interactive window to show the output of the last statement executed. If this value is false, the window will only scroll if the last cell was already the one scrolled to.",
 			"Controls whether the Interactive Window sessions/history should be restored across window reloads. Whether the state of controllers used in Interactive Windows is persisted across window reloads are controlled by extensions contributing controllers."
-		],
-		"vs/workbench/contrib/testing/browser/testing.contribution": [
-			"Testing",
-			"T&&esting",
-			"No tests have been found in this workspace yet.",
-			"Install Additional Test Extensions...",
-			"Test Explorer"
 		],
 		"vs/workbench/contrib/logs/common/logs.contribution": [
 			"Settings Sync",
@@ -15970,6 +15970,27 @@
 		"vs/workbench/contrib/webviewPanel/browser/webviewPanel.contribution": [
 			"webview editor"
 		],
+		"vs/workbench/contrib/output/browser/output.contribution": [
+			"View icon of the output view.",
+			"Output",
+			"Output",
+			"&&Output",
+			"Log Viewer",
+			"Switch to Output",
+			"Clear Output",
+			"Output was cleared",
+			"Toggle Auto Scrolling",
+			"Turn Auto Scrolling Off",
+			"Turn Auto Scrolling On",
+			"Open Log Output File",
+			"Show Logs...",
+			"Extension Logs",
+			"Select Log",
+			"Open Log File...",
+			"Select Log file",
+			"Output",
+			"Enable/disable the ability of smart scrolling in the output view. Smart scrolling allows you to lock scrolling automatically when you click in the output view and unlocks when you click in the last line."
+		],
 		"vs/workbench/contrib/extensions/browser/extensionsViewlet": [
 			"Installed",
 			"Install Local Extensions in '{0}'...",
@@ -16011,6 +16032,16 @@
 			"{0} Extensions require reload",
 			"We have uninstalled '{0}' which was reported to be problematic.",
 			"Reload Now"
+		],
+		"vs/workbench/contrib/output/browser/outputView": [
+			"{0} - Output",
+			"Output channel for '{0}'",
+			"Output",
+			"{0}, Output panel",
+			"Output panel",
+			"Output Channels",
+			"Log ({0})",
+			"Log ({0})"
 		],
 		"vs/workbench/contrib/extensions/browser/extensions.contribution": [
 			"Press Enter to manage extensions.",
@@ -16145,37 +16176,6 @@
 			"Add Extension to Workspace Folder Ignored Recommendations",
 			"Extensions",
 			"Extensions"
-		],
-		"vs/workbench/contrib/output/browser/output.contribution": [
-			"View icon of the output view.",
-			"Output",
-			"Output",
-			"&&Output",
-			"Log Viewer",
-			"Switch to Output",
-			"Clear Output",
-			"Output was cleared",
-			"Toggle Auto Scrolling",
-			"Turn Auto Scrolling Off",
-			"Turn Auto Scrolling On",
-			"Open Log Output File",
-			"Show Logs...",
-			"Extension Logs",
-			"Select Log",
-			"Open Log File...",
-			"Select Log file",
-			"Output",
-			"Enable/disable the ability of smart scrolling in the output view. Smart scrolling allows you to lock scrolling automatically when you click in the output view and unlocks when you click in the last line."
-		],
-		"vs/workbench/contrib/output/browser/outputView": [
-			"{0} - Output",
-			"Output channel for '{0}'",
-			"Output",
-			"{0}, Output panel",
-			"Output panel",
-			"Output Channels",
-			"Log ({0})",
-			"Log ({0})"
 		],
 		"vs/workbench/contrib/terminal/browser/terminal.contribution": [
 			"Type the name of a terminal to open.",
@@ -16776,6 +16776,18 @@
 			"Settings Profiles",
 			"Settings Profile"
 		],
+		"vs/workbench/services/textfile/browser/textFileService": [
+			"File Created",
+			"File Replaced",
+			"Text File Model Decorations",
+			"Deleted, Read Only",
+			"Read Only",
+			"Deleted",
+			"File seems to be binary and cannot be opened as text",
+			"'{0}' already exists. Do you want to replace it?",
+			"A file or folder with the name '{0}' already exists in the folder '{1}'. Replacing it will overwrite its current contents.",
+			"&&Replace"
+		],
 		"vs/workbench/services/textMate/browser/abstractTextMateService": [
 			"Already Logging.",
 			"Stop",
@@ -16789,23 +16801,8 @@
 			"Invalid value in `contributes.{0}.tokenTypes`. Must be an object map from scope name to token type. Provided value: {1}",
 			"Expected `contributes.{0}.path` ({1}) to be included inside extension's folder ({2}). This might make the extension non-portable."
 		],
-		"vs/workbench/services/textfile/browser/textFileService": [
-			"File Created",
-			"File Replaced",
-			"Text File Model Decorations",
-			"Deleted, Read Only",
-			"Read Only",
-			"Deleted",
-			"File seems to be binary and cannot be opened as text",
-			"'{0}' already exists. Do you want to replace it?",
-			"A file or folder with the name '{0}' already exists in the folder '{1}'. Replacing it will overwrite its current contents.",
-			"&&Replace"
-		],
 		"vs/workbench/services/extensions/common/remoteExtensionHost": [
 			"Remote Extension Host"
-		],
-		"vs/workbench/services/extensions/browser/webWorkerExtensionHost": [
-			"Worker Extension Host"
 		],
 		"vs/workbench/services/extensions/common/abstractExtensionService": [
 			"The following extensions contain dependency loops and have been disabled: {0}",
@@ -16813,6 +16810,9 @@
 			"The remote extension host terminated unexpectedly. Restarting...",
 			"Remote Extension host terminated unexpectedly 3 times within the last 5 minutes.",
 			"Restart Remote Extension Host"
+		],
+		"vs/workbench/services/extensions/browser/webWorkerExtensionHost": [
+			"Worker Extension Host"
 		],
 		"vs/workbench/services/extensions/common/extensionsUtil": [
 			"Overwriting extension {0} with {1}.",
@@ -16880,11 +16880,6 @@
 			"{0}, preview",
 			"{0}, pinned"
 		],
-		"vs/workbench/services/workingCopy/common/workingCopyHistoryService": [
-			"File Saved",
-			"File Moved",
-			"File Renamed"
-		],
 		"vs/workbench/services/workspaces/browser/abstractWorkspaceEditingService": [
 			"Save",
 			"Save Workspace",
@@ -16919,26 +16914,6 @@
 			"Select Session",
 			"Select Log file"
 		],
-		"vs/platform/telemetry/common/telemetryService": [
-			"Controls {0} telemetry, first-party extension telemetry and participating third-party extension telemetry. Some third party extensions might not respect this setting. Consult the specific extension's documentation to be sure. Telemetry helps us better understand how {0} is performing, where improvements need to be made, and how features are being used.",
-			"Read more about the [data we collect]({0}).",
-			"Read more about the [data we collect]({0}) and our [privacy statement]({1}).",
-			"A full restart of the application is necessary for crash reporting changes to take effect.",
-			"Crash Reports",
-			"Error Telemetry",
-			"Usage Data",
-			"The following table outlines the data sent with each setting:",
-			"****Note:*** If this setting is 'off', no telemetry will be sent regardless of other telemetry settings. If this setting is set to anything except 'off' and telemetry is disabled with deprecated settings, no telemetry will be sent.*",
-			"Telemetry",
-			"Sends usage data, errors, and crash reports.",
-			"Sends general error telemetry and crash reports.",
-			"Sends OS level crash reports.",
-			"Disables all product telemetry.",
-			"Telemetry",
-			"Enable diagnostic data to be collected. This helps us to better understand how {0} is performing and where improvements need to be made.",
-			"Enable diagnostic data to be collected. This helps us to better understand how {0} is performing and where improvements need to be made. [Read more]({1}) about what we collect and our privacy statement.",
-			"If this setting is false, no telemetry will be sent regardless of the new setting's value. Deprecated in favor of the {0} setting."
-		],
 		"vs/workbench/contrib/files/browser/editors/textFileEditor": [
 			"Text File Editor",
 			"Reveal in Explorer View",
@@ -16965,6 +16940,26 @@
 		"vs/base/common/actions": [
 			"(empty)"
 		],
+		"vs/platform/telemetry/common/telemetryService": [
+			"Controls {0} telemetry, first-party extension telemetry and participating third-party extension telemetry. Some third party extensions might not respect this setting. Consult the specific extension's documentation to be sure. Telemetry helps us better understand how {0} is performing, where improvements need to be made, and how features are being used.",
+			"Read more about the [data we collect]({0}).",
+			"Read more about the [data we collect]({0}) and our [privacy statement]({1}).",
+			"A full restart of the application is necessary for crash reporting changes to take effect.",
+			"Crash Reports",
+			"Error Telemetry",
+			"Usage Data",
+			"The following table outlines the data sent with each setting:",
+			"****Note:*** If this setting is 'off', no telemetry will be sent regardless of other telemetry settings. If this setting is set to anything except 'off' and telemetry is disabled with deprecated settings, no telemetry will be sent.*",
+			"Telemetry",
+			"Sends usage data, errors, and crash reports.",
+			"Sends general error telemetry and crash reports.",
+			"Sends OS level crash reports.",
+			"Disables all product telemetry.",
+			"Telemetry",
+			"Enable diagnostic data to be collected. This helps us to better understand how {0} is performing and where improvements need to be made.",
+			"Enable diagnostic data to be collected. This helps us to better understand how {0} is performing and where improvements need to be made. [Read more]({1}) about what we collect and our privacy statement.",
+			"If this setting is false, no telemetry will be sent regardless of the new setting's value. Deprecated in favor of the {0} setting."
+		],
 		"vs/workbench/contrib/extensions/common/runtimeExtensionsInput": [
 			"Running Extensions"
 		],
@@ -16977,10 +16972,6 @@
 			"A codicon, URI, or light and dark URIs to associate with this terminal type.",
 			"Icon path when a light theme is used",
 			"Icon path when a dark theme is used"
-		],
-		"vs/workbench/contrib/terminal/browser/terminalProfileResolverService": [
-			"The terminal is using deprecated shell/shellArgs settings, do you want to migrate it to a profile?",
-			"Migrate"
 		],
 		"vs/workbench/contrib/terminal/common/terminalContextKey": [
 			"Whether the terminal is focused.",
@@ -16996,6 +16987,11 @@
 			"Whether the focused tab's terminal is a split terminal.",
 			"Whether the terminal run command picker is currently open.",
 			"Whether shell integration is enabled in the active terminal"
+		],
+		"vs/workbench/services/workingCopy/common/workingCopyHistoryService": [
+			"File Saved",
+			"File Moved",
+			"File Renamed"
 		],
 		"vs/workbench/common/contextkeys": [
 			"The kind of workspace opened in the window, either 'empty' (no workspace), 'folder' (single folder) or 'workspace' (multi-root workspace)",
@@ -17057,9 +17053,9 @@
 			"Whether a resource is present or not",
 			"Whether the resource is backed by a file system provider"
 		],
-		"vs/workbench/contrib/terminal/browser/terminalConfigHelper": [
-			"The '{0}' extension is recommended for opening a terminal in WSL.",
-			"Install"
+		"vs/workbench/contrib/terminal/browser/terminalProfileResolverService": [
+			"The terminal is using deprecated shell/shellArgs settings, do you want to migrate it to a profile?",
+			"Migrate"
 		],
 		"vs/workbench/contrib/terminal/browser/terminalInstance": [
 			"Terminal input",
@@ -17093,6 +17089,10 @@
 			"The terminal process terminated with exit code: {0}.",
 			"The terminal process failed to launch: {0}."
 		],
+		"vs/workbench/contrib/terminal/browser/terminalConfigHelper": [
+			"The '{0}' extension is recommended for opening a terminal in WSL.",
+			"Install"
+		],
 		"vs/workbench/contrib/tasks/common/tasks": [
 			"Whether a task is currently running.",
 			"Tasks",
@@ -17104,95 +17104,6 @@
 			"Whether the task commands have been registered yet",
 			"Whether ProcessExecution tasks are supported. Consider using in the when clause of a 'taskDefinition' contribution.",
 			"True when in the web with no remote authority."
-		],
-		"vs/workbench/contrib/tasks/browser/abstractTaskService": [
-			"Configure Task",
-			"Tasks",
-			"Select the build task (there is no default build task defined)",
-			"Filters the tasks shown in the quickpick",
-			"The task's label or a term to filter by",
-			"The contributed task type",
-			"The task's label or a term to filter by",
-			"There are task errors. See the output for details.",
-			"Show output",
-			"The folder {0} is ignored since it uses task version 0.1.0",
-			"Warning: {0} tasks are unavailable in the current environment.\n",
-			"No test task defined. Mark a task with 'isTestCommand' in the tasks.json file.",
-			"No test task defined. Mark a task with as a 'test' group in the tasks.json file.",
-			"No build task defined. Mark a task with 'isBuildCommand' in the tasks.json file.",
-			"No build task defined. Mark a task with as a 'build' group in the tasks.json file.",
-			"Task to execute is undefined",
-			"associate",
-			"Continue without scanning the task output",
-			"Never scan the task output for this task",
-			"Never scan the task output for {0} tasks",
-			"Learn more about scanning the task output",
-			"Select for which kind of errors and warnings to scan the task output",
-			"The current task configuration has errors. Please fix the errors first before customizing a task.",
-			"\t// See https://go.microsoft.com/fwlink/?LinkId=733558 \n\t// for the documentation about the tasks.json format",
-			"There are many build tasks defined in the tasks.json. Executing the first one.\n",
-			"Save all editors?",
-			"Save",
-			"Don't save",
-			"Do you want to save all editors before running the task?",
-			"The task '{0}' is already active.",
-			"Terminate Task",
-			"Restart Task",
-			"There is already a task running. Terminate it first before executing another task.",
-			"Failed to terminate and restart task {0}",
-			"The task provider for \"{0}\" tasks unexpectedly provided a task of type \"{1}\".\n",
-			"Warning: {0} tasks are unavailable in the current environment.\n",
-			"Error: The {0} task detection didn't contribute a task for the following configuration:\n{1}\nThe task will be ignored.\n",
-			"Error: the provided task configuration has validation errors and can't not be used. Please correct the errors first.",
-			"Error: The content of the tasks json in {0} has syntax errors. Please correct them before executing a task.\n",
-			"workspace file",
-			"Only tasks version 2.0.0 permitted in workspace configuration files.",
-			"user settings",
-			"Only tasks version 2.0.0 permitted in user settings.",
-			"Error: the provided task configuration has validation errors and can't not be used. Please correct the errors first.",
-			"Ignoring task configurations for workspace folder {0}. Multi folder workspace task support requires that all folders use task version 2.0.0\n",
-			"Error: The content of the tasks.json file has syntax errors. Please correct them before executing a task.\n",
-			"Terminate Task",
-			"An error has occurred while running a task. See task log for details.",
-			"Configure Task",
-			"recently used tasks",
-			"configured tasks",
-			"detected tasks",
-			"The following workspace folders are ignored since they use task version 0.1.0: {0}",
-			"Don't Show Again",
-			"Listing and running tasks requires that some of the files in this workspace be executed as code.",
-			"Select the task to run",
-			"Configure a Task",
-			"Configure a Task",
-			"Fetching build tasks...",
-			"Select the build task to run",
-			"No build task to run found. Configure Build Task...",
-			"Fetching test tasks...",
-			"Select the test task to run",
-			"No test task to run found. Configure Tasks...",
-			"Select a task to terminate",
-			"No task is currently running",
-			"All Running Tasks",
-			"The launched process doesn't exist anymore. If the task spawned background tasks exiting VS Code might result in orphaned processes.",
-			"Failed to terminate running task",
-			"Select the task to restart",
-			"No task to restart",
-			"Select a Task Template",
-			"User",
-			"Create tasks.json file from template",
-			"Open tasks.json file",
-			"Select a task to configure",
-			"{0} is already marked as the default build task",
-			"Select a task to configure",
-			"Select the task to be used as the default build task",
-			"{0} is already marked as the default test task.",
-			"Select the task to be used as the default test task",
-			"Select the task to show its output",
-			"No task is running",
-			"The deprecated tasks version 0.1.0 has been removed. Your tasks have been upgraded to version 2.0.0. Open the diff to review the upgrade.",
-			"The deprecated tasks version 0.1.0 has been removed. Your tasks have been upgraded to version 2.0.0. Open the diffs to review the upgrade.",
-			"Open diff",
-			"Open diffs"
 		],
 		"vs/workbench/contrib/debug/common/debug": [
 			"Debug type of the active debug session. For example 'python'.",
@@ -17461,6 +17372,95 @@
 			"The green color used in chart visualizations.",
 			"The purple color used in chart visualizations."
 		],
+		"vs/workbench/contrib/tasks/browser/abstractTaskService": [
+			"Configure Task",
+			"Tasks",
+			"Select the build task (there is no default build task defined)",
+			"Filters the tasks shown in the quickpick",
+			"The task's label or a term to filter by",
+			"The contributed task type",
+			"The task's label or a term to filter by",
+			"There are task errors. See the output for details.",
+			"Show output",
+			"The folder {0} is ignored since it uses task version 0.1.0",
+			"Warning: {0} tasks are unavailable in the current environment.\n",
+			"No test task defined. Mark a task with 'isTestCommand' in the tasks.json file.",
+			"No test task defined. Mark a task with as a 'test' group in the tasks.json file.",
+			"No build task defined. Mark a task with 'isBuildCommand' in the tasks.json file.",
+			"No build task defined. Mark a task with as a 'build' group in the tasks.json file.",
+			"Task to execute is undefined",
+			"associate",
+			"Continue without scanning the task output",
+			"Never scan the task output for this task",
+			"Never scan the task output for {0} tasks",
+			"Learn more about scanning the task output",
+			"Select for which kind of errors and warnings to scan the task output",
+			"The current task configuration has errors. Please fix the errors first before customizing a task.",
+			"\t// See https://go.microsoft.com/fwlink/?LinkId=733558 \n\t// for the documentation about the tasks.json format",
+			"There are many build tasks defined in the tasks.json. Executing the first one.\n",
+			"Save all editors?",
+			"Save",
+			"Don't save",
+			"Do you want to save all editors before running the task?",
+			"The task '{0}' is already active.",
+			"Terminate Task",
+			"Restart Task",
+			"There is already a task running. Terminate it first before executing another task.",
+			"Failed to terminate and restart task {0}",
+			"The task provider for \"{0}\" tasks unexpectedly provided a task of type \"{1}\".\n",
+			"Warning: {0} tasks are unavailable in the current environment.\n",
+			"Error: The {0} task detection didn't contribute a task for the following configuration:\n{1}\nThe task will be ignored.\n",
+			"Error: the provided task configuration has validation errors and can't not be used. Please correct the errors first.",
+			"Error: The content of the tasks json in {0} has syntax errors. Please correct them before executing a task.\n",
+			"workspace file",
+			"Only tasks version 2.0.0 permitted in workspace configuration files.",
+			"user settings",
+			"Only tasks version 2.0.0 permitted in user settings.",
+			"Error: the provided task configuration has validation errors and can't not be used. Please correct the errors first.",
+			"Ignoring task configurations for workspace folder {0}. Multi folder workspace task support requires that all folders use task version 2.0.0\n",
+			"Error: The content of the tasks.json file has syntax errors. Please correct them before executing a task.\n",
+			"Terminate Task",
+			"An error has occurred while running a task. See task log for details.",
+			"Configure Task",
+			"recently used tasks",
+			"configured tasks",
+			"detected tasks",
+			"The following workspace folders are ignored since they use task version 0.1.0: {0}",
+			"Don't Show Again",
+			"Listing and running tasks requires that some of the files in this workspace be executed as code.",
+			"Select the task to run",
+			"Configure a Task",
+			"Configure a Task",
+			"Fetching build tasks...",
+			"Select the build task to run",
+			"No build task to run found. Configure Build Task...",
+			"Fetching test tasks...",
+			"Select the test task to run",
+			"No test task to run found. Configure Tasks...",
+			"Select a task to terminate",
+			"No task is currently running",
+			"All Running Tasks",
+			"The launched process doesn't exist anymore. If the task spawned background tasks exiting VS Code might result in orphaned processes.",
+			"Failed to terminate running task",
+			"Select the task to restart",
+			"No task to restart",
+			"Select a Task Template",
+			"User",
+			"Create tasks.json file from template",
+			"Open tasks.json file",
+			"Select a task to configure",
+			"{0} is already marked as the default build task",
+			"Select a task to configure",
+			"Select the task to be used as the default build task",
+			"{0} is already marked as the default test task.",
+			"Select the task to be used as the default test task",
+			"Select the task to show its output",
+			"No task is running",
+			"The deprecated tasks version 0.1.0 has been removed. Your tasks have been upgraded to version 2.0.0. Open the diff to review the upgrade.",
+			"The deprecated tasks version 0.1.0 has been removed. Your tasks have been upgraded to version 2.0.0. Open the diffs to review the upgrade.",
+			"Open diff",
+			"Open diffs"
+		],
 		"vs/workbench/api/common/extHostExtensionService": [
 			"Cannot load test runner.",
 			"Path {0} does not point to a valid extension test runner."
@@ -17661,6 +17661,11 @@
 		"vs/editor/browser/widget/codeEditorWidget": [
 			"The number of cursors has been limited to {0}."
 		],
+		"vs/editor/browser/widget/diffEditorWidget": [
+			"Line decoration for inserts in the diff editor.",
+			"Line decoration for removals in the diff editor.",
+			"Cannot compare files because one file is too large."
+		],
 		"vs/editor/contrib/anchorSelect/browser/anchorSelect": [
 			"Selection Anchor",
 			"Anchor set at {0}:{1}",
@@ -17668,11 +17673,6 @@
 			"Go to Selection Anchor",
 			"Select from Anchor to Cursor",
 			"Cancel Selection Anchor"
-		],
-		"vs/editor/browser/widget/diffEditorWidget": [
-			"Line decoration for inserts in the diff editor.",
-			"Line decoration for removals in the diff editor.",
-			"Cannot compare files because one file is too large."
 		],
 		"vs/editor/contrib/bracketMatching/browser/bracketMatching": [
 			"Overview ruler marker color for matching brackets.",
@@ -17757,6 +17757,11 @@
 			"Replace",
 			"&&Replace"
 		],
+		"vs/editor/contrib/fontZoom/browser/fontZoom": [
+			"Editor Font Zoom In",
+			"Editor Font Zoom Out",
+			"Editor Font Zoom Reset"
+		],
 		"vs/editor/contrib/folding/browser/folding": [
 			"The number of foldable regions is limited to a maximum of {0}. Increase configuration option ['Folding Maximum Regions'](command:workbench.action.openSettings?[\"editor.foldingMaximumRegions\"]) to enable more.",
 			"Unfold",
@@ -17779,11 +17784,6 @@
 			"Fold Level {0}",
 			"Background color behind folded ranges. The color must not be opaque so as not to hide underlying decorations.",
 			"Color of the folding control in the editor gutter."
-		],
-		"vs/editor/contrib/fontZoom/browser/fontZoom": [
-			"Editor Font Zoom In",
-			"Editor Font Zoom Out",
-			"Editor Font Zoom Reset"
 		],
 		"vs/editor/contrib/format/browser/formatActions": [
 			"Format Document",
@@ -17858,16 +17858,12 @@
 			"Reindent Lines",
 			"Reindent Selected Lines"
 		],
-		"vs/editor/contrib/inPlaceReplace/browser/inPlaceReplace": [
-			"Replace with Previous Value",
-			"Replace with Next Value"
-		],
 		"vs/editor/contrib/lineSelection/browser/lineSelection": [
 			"Expand Line Selection"
 		],
-		"vs/editor/contrib/linkedEditing/browser/linkedEditing": [
-			"Start Linked Editing",
-			"Background color when the editor auto renames on type."
+		"vs/editor/contrib/inPlaceReplace/browser/inPlaceReplace": [
+			"Replace with Previous Value",
+			"Replace with Next Value"
 		],
 		"vs/editor/contrib/linesOperations/browser/linesOperations": [
 			"Copy Line Up",
@@ -17898,6 +17894,10 @@
 			"Transform to Title Case",
 			"Transform to Snake Case",
 			"Transform to Kebab Case"
+		],
+		"vs/editor/contrib/linkedEditing/browser/linkedEditing": [
+			"Start Linked Editing",
+			"Background color when the editor auto renames on type."
 		],
 		"vs/editor/contrib/links/browser/links": [
 			"Failed to open this link because it is not well-formed: {0}",
@@ -18356,14 +18356,6 @@
 		"vs/workbench/browser/quickaccess": [
 			"Whether keyboard focus is inside the quick open control"
 		],
-		"vs/workbench/browser/parts/views/viewPaneContainer": [
-			"Views",
-			"Move View Up",
-			"Move View Left",
-			"Move View Down",
-			"Move View Right",
-			"Move Views"
-		],
 		"vs/workbench/browser/parts/views/treeView": [
 			"There is no data provider registered that can provide view data.",
 			"Whether the the tree view with id {0} enables collapse all.",
@@ -18388,6 +18380,14 @@
 			"True when the focus is inside a compact item's first part in the EXPLORER view.",
 			"True when the focus is inside a compact item's last part in the EXPLORER view.",
 			"True when a workspace in the EXPLORER view has some collapsible root child."
+		],
+		"vs/workbench/browser/parts/views/viewPaneContainer": [
+			"Views",
+			"Move View Up",
+			"Move View Left",
+			"Move View Down",
+			"Move View Right",
+			"Move Views"
 		],
 		"vs/workbench/contrib/remote/browser/remoteExplorer": [
 			"Ports",
@@ -18489,6 +18489,26 @@
 			"Redo",
 			"&&Select All",
 			"Select All"
+		],
+		"vs/workbench/browser/parts/editor/editorCommands": [
+			"Move the active editor by tabs or groups",
+			"Active editor move argument",
+			"Argument Properties:\n\t* 'to': String value providing where to move.\n\t* 'by': String value providing the unit for move (by tab or by group).\n\t* 'value': Number value providing how many positions or an absolute position to move.",
+			"Copy the active editor by groups",
+			"Active editor copy argument",
+			"Argument Properties:\n\t* 'to': String value providing where to copy.\n\t* 'value': Number value providing how many positions or an absolute position to copy.",
+			"Toggle Inline View",
+			"Compare",
+			"Split Editor in Group",
+			"Join Editor in Group",
+			"Toggle Split Editor in Group",
+			"Toggle Layout of Split Editor in Group",
+			"Focus First Side in Active Editor",
+			"Focus Second Side in Active Editor",
+			"Focus Other Side in Active Editor",
+			"Toggle Editor Group Lock",
+			"Lock Editor Group",
+			"Unlock Editor Group"
 		],
 		"vs/workbench/browser/parts/editor/editorActions": [
 			"Split Editor",
@@ -18605,26 +18625,6 @@
 			"Toggle Editor Type",
 			"Reopen Editor With Text Editor"
 		],
-		"vs/workbench/browser/parts/editor/editorCommands": [
-			"Move the active editor by tabs or groups",
-			"Active editor move argument",
-			"Argument Properties:\n\t* 'to': String value providing where to move.\n\t* 'by': String value providing the unit for move (by tab or by group).\n\t* 'value': Number value providing how many positions or an absolute position to move.",
-			"Copy the active editor by groups",
-			"Active editor copy argument",
-			"Argument Properties:\n\t* 'to': String value providing where to copy.\n\t* 'value': Number value providing how many positions or an absolute position to copy.",
-			"Toggle Inline View",
-			"Compare",
-			"Split Editor in Group",
-			"Join Editor in Group",
-			"Toggle Split Editor in Group",
-			"Toggle Layout of Split Editor in Group",
-			"Focus First Side in Active Editor",
-			"Focus Second Side in Active Editor",
-			"Focus Other Side in Active Editor",
-			"Toggle Editor Group Lock",
-			"Lock Editor Group",
-			"Unlock Editor Group"
-		],
 		"vs/workbench/browser/parts/editor/editorQuickAccess": [
 			"No matching editors",
 			"{0}, unsaved changes, {1}",
@@ -18637,6 +18637,20 @@
 			"If an editor matching one of the listed types is opened as the first in an editor group and more than one group is open, the group is automatically locked. Locked groups will only be used for opening editors when explicitly chosen by user gesture (e.g. drag and drop), but not by default. Consequently the active editor in a locked group is less likely to be replaced accidentally with a different editor.",
 			"The default editor for files detected as binary. If undefined the user will be presented with a picker.",
 			"Configure glob patterns to editors (e.g. `\"*.hex\": \"hexEditor.hexEdit\"`). These have precedence over the default behavior."
+		],
+		"vs/workbench/browser/parts/editor/editorGroupView": [
+			"Empty editor group actions",
+			"{0} (empty)",
+			"Group {0}",
+			"Editor Group {0}"
+		],
+		"vs/workbench/browser/parts/editor/editorDropTarget": [
+			"Hold __{0}__ to drop into editor"
+		],
+		"vs/workbench/browser/parts/auxiliarybar/auxiliaryBarPart": [
+			"Move Secondary Side Bar Left",
+			"Move Secondary Side Bar Right",
+			"Hide Secondary Side Bar"
 		],
 		"vs/workbench/browser/parts/activitybar/activitybarPart": [
 			"Settings icon in the view bar.",
@@ -18654,11 +18668,6 @@
 			"Accounts",
 			"Accounts"
 		],
-		"vs/workbench/browser/parts/auxiliarybar/auxiliaryBarPart": [
-			"Move Secondary Side Bar Left",
-			"Move Secondary Side Bar Right",
-			"Hide Secondary Side Bar"
-		],
 		"vs/workbench/browser/parts/panel/panelPart": [
 			"Panel entries visibility customizations",
 			"Reset Location",
@@ -18666,15 +18675,6 @@
 			"Drag a view here to display.",
 			"More Actions...",
 			"Hide Panel"
-		],
-		"vs/workbench/browser/parts/editor/editorGroupView": [
-			"Empty editor group actions",
-			"{0} (empty)",
-			"Group {0}",
-			"Editor Group {0}"
-		],
-		"vs/workbench/browser/parts/editor/editorDropTarget": [
-			"Hold __{0}__ to drop into editor"
 		],
 		"vs/workbench/browser/parts/statusbar/statusbarActions": [
 			"Hide '{0}'",
@@ -18839,16 +18839,6 @@
 			"Semantic token styling rules for this theme.",
 			"Overrides editor semantic token color and styles from the currently selected color theme."
 		],
-		"vs/workbench/services/themes/common/productIconThemeSchema": [
-			"The ID of the font.",
-			"The ID must only contain letters, numbers, underscore and minus.",
-			"The location of the font.",
-			"The font path, relative to the current product icon theme file.",
-			"The format of the font.",
-			"The weight of the font. See https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight for valid values.",
-			"The style of the font. See https://developer.mozilla.org/en-US/docs/Web/CSS/font-style for valid values.",
-			"Association of icon name to a font character."
-		],
 		"vs/workbench/services/themes/browser/productIconThemeData": [
 			"Problems processing product icons definitions in {0}:\n{1}",
 			"Default",
@@ -18862,6 +18852,16 @@
 			"Missing or invalid font id '{0}'. Skipping font definition.",
 			"Skipping icon definition '{0}'. Unknown font.",
 			"Skipping icon definition '{0}'. Unknown fontCharacter."
+		],
+		"vs/workbench/services/themes/common/productIconThemeSchema": [
+			"The ID of the font.",
+			"The ID must only contain letters, numbers, underscore and minus.",
+			"The location of the font.",
+			"The font path, relative to the current product icon theme file.",
+			"The format of the font.",
+			"The weight of the font. See https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight for valid values.",
+			"The style of the font. See https://developer.mozilla.org/en-US/docs/Web/CSS/font-style for valid values.",
+			"Association of icon name to a font character."
 		],
 		"vs/workbench/services/extensionManagement/browser/extensionBisect": [
 			"Extension Bisect is active and has disabled 1 extension. Check if you can still reproduce the problem and proceed by selecting from these options.",
@@ -19560,60 +19560,6 @@
 			"Hide Metadata Differences",
 			"Hide Outputs Differences"
 		],
-		"vs/editor/contrib/peekView/browser/peekView": [
-			"Whether the current code editor is embedded inside peek",
-			"Close",
-			"Background color of the peek view title area.",
-			"Color of the peek view title.",
-			"Color of the peek view title info.",
-			"Color of the peek view borders and arrow.",
-			"Background color of the peek view result list.",
-			"Foreground color for line nodes in the peek view result list.",
-			"Foreground color for file nodes in the peek view result list.",
-			"Background color of the selected entry in the peek view result list.",
-			"Foreground color of the selected entry in the peek view result list.",
-			"Background color of the peek view editor.",
-			"Background color of the gutter in the peek view editor.",
-			"Match highlight color in the peek view result list.",
-			"Match highlight color in the peek view editor.",
-			"Match highlight border in the peek view editor."
-		],
-		"vs/workbench/contrib/interactive/browser/interactiveEditor": [
-			"Type '{0}' code here and press {1} to run"
-		],
-		"vs/workbench/contrib/notebook/browser/notebookIcons": [
-			"Configure icon to select a kernel in notebook editors.",
-			"Icon to execute in notebook editors.",
-			"Icon to execute above cells in notebook editors.",
-			"Icon to execute below cells in notebook editors.",
-			"Icon to stop an execution in notebook editors.",
-			"Icon to delete a cell in notebook editors.",
-			"Icon to execute all cells in notebook editors.",
-			"Icon to edit a cell in notebook editors.",
-			"Icon to stop editing a cell in notebook editors.",
-			"Icon to move up a cell in notebook editors.",
-			"Icon to move down a cell in notebook editors.",
-			"Icon to clear cell outputs in notebook editors.",
-			"Icon to split a cell in notebook editors.",
-			"Icon to indicate a success state in notebook editors.",
-			"Icon to indicate an error state in notebook editors.",
-			"Icon to indicate a pending state in notebook editors.",
-			"Icon to indicate an executing state in notebook editors.",
-			"Icon to annotate a collapsed section in notebook editors.",
-			"Icon to annotate an expanded section in notebook editors.",
-			"Icon to open the notebook in a text editor.",
-			"Icon to revert in notebook editors.",
-			"Icon to render output in diff editor.",
-			"Icon for a mime type in notebook editors."
-		],
-		"vs/workbench/contrib/files/browser/fileConstants": [
-			"Save As...",
-			"Save",
-			"Save without Formatting",
-			"Save All",
-			"Remove Folder from Workspace",
-			"New Untitled File"
-		],
 		"vs/workbench/contrib/testing/browser/icons": [
 			"View icon of the test view.",
 			"Icon of the \"run test\" action.",
@@ -19634,6 +19580,14 @@
 			"Icon shown for tests that are queued.",
 			"Icon shown for tests that are skipped.",
 			"Icon shown for tests that are in an unset state."
+		],
+		"vs/workbench/contrib/files/browser/fileConstants": [
+			"Save As...",
+			"Save",
+			"Save without Formatting",
+			"Save All",
+			"Remove Folder from Workspace",
+			"New Untitled File"
 		],
 		"vs/workbench/contrib/testing/browser/testingDecorations": [
 			"Peek Test Output",
@@ -19739,6 +19693,10 @@
 			"Running tests may execute code in your workspace.",
 			"An error occurred attempting to run tests: {0}"
 		],
+		"vs/workbench/contrib/testing/browser/testingConfigurationUi": [
+			"Pick a test profile to use",
+			"Update Test Configuration"
+		],
 		"vs/workbench/contrib/testing/browser/testExplorerActions": [
 			"Hide Test",
 			"Unhide Test",
@@ -19780,9 +19738,51 @@
 			"Refresh Tests",
 			"Cancel Test Refresh"
 		],
-		"vs/workbench/contrib/testing/browser/testingConfigurationUi": [
-			"Pick a test profile to use",
-			"Update Test Configuration"
+		"vs/editor/contrib/peekView/browser/peekView": [
+			"Whether the current code editor is embedded inside peek",
+			"Close",
+			"Background color of the peek view title area.",
+			"Color of the peek view title.",
+			"Color of the peek view title info.",
+			"Color of the peek view borders and arrow.",
+			"Background color of the peek view result list.",
+			"Foreground color for line nodes in the peek view result list.",
+			"Foreground color for file nodes in the peek view result list.",
+			"Background color of the selected entry in the peek view result list.",
+			"Foreground color of the selected entry in the peek view result list.",
+			"Background color of the peek view editor.",
+			"Background color of the gutter in the peek view editor.",
+			"Match highlight color in the peek view result list.",
+			"Match highlight color in the peek view editor.",
+			"Match highlight border in the peek view editor."
+		],
+		"vs/workbench/contrib/interactive/browser/interactiveEditor": [
+			"Type '{0}' code here and press {1} to run"
+		],
+		"vs/workbench/contrib/notebook/browser/notebookIcons": [
+			"Configure icon to select a kernel in notebook editors.",
+			"Icon to execute in notebook editors.",
+			"Icon to execute above cells in notebook editors.",
+			"Icon to execute below cells in notebook editors.",
+			"Icon to stop an execution in notebook editors.",
+			"Icon to delete a cell in notebook editors.",
+			"Icon to execute all cells in notebook editors.",
+			"Icon to edit a cell in notebook editors.",
+			"Icon to stop editing a cell in notebook editors.",
+			"Icon to move up a cell in notebook editors.",
+			"Icon to move down a cell in notebook editors.",
+			"Icon to clear cell outputs in notebook editors.",
+			"Icon to split a cell in notebook editors.",
+			"Icon to indicate a success state in notebook editors.",
+			"Icon to indicate an error state in notebook editors.",
+			"Icon to indicate a pending state in notebook editors.",
+			"Icon to indicate an executing state in notebook editors.",
+			"Icon to annotate a collapsed section in notebook editors.",
+			"Icon to annotate an expanded section in notebook editors.",
+			"Icon to open the notebook in a text editor.",
+			"Icon to revert in notebook editors.",
+			"Icon to render output in diff editor.",
+			"Icon for a mime type in notebook editors."
 		],
 		"vs/platform/quickinput/browser/helpQuickAccess": [
 			"{0}, {1}"
@@ -19810,15 +19810,15 @@
 			"This action is irreversible!",
 			"&&Clear"
 		],
-		"vs/workbench/contrib/files/browser/views/emptyView": [
-			"No Folder Opened"
-		],
 		"vs/workbench/contrib/files/browser/views/explorerView": [
 			"Explorer Section: {0}",
 			"New File...",
 			"New Folder...",
 			"Refresh Explorer",
 			"Collapse Folders in Explorer"
+		],
+		"vs/workbench/contrib/files/browser/views/emptyView": [
+			"No Folder Opened"
 		],
 		"vs/workbench/contrib/files/browser/views/openEditorsView": [
 			"Open Editors",
@@ -20027,16 +20027,6 @@
 			"Open to the Bottom",
 			"Remove from Recently Opened"
 		],
-		"vs/workbench/contrib/search/browser/searchActions": [
-			"Replace in Files",
-			"Toggle Search on Type",
-			"Focus Next Search Result",
-			"Focus Previous Search Result",
-			"Dismiss",
-			"Replace All",
-			"Replace All",
-			"Replace"
-		],
 		"vs/workbench/contrib/search/browser/searchIcons": [
 			"Icon to make search details visible.",
 			"Icon for toggle the context in the search editor.",
@@ -20054,6 +20044,16 @@
 			"Icon for stop in the search view.",
 			"View icon of the search view.",
 			"Icon for the action to open a new search editor."
+		],
+		"vs/workbench/contrib/search/browser/searchActions": [
+			"Replace in Files",
+			"Toggle Search on Type",
+			"Focus Next Search Result",
+			"Focus Previous Search Result",
+			"Dismiss",
+			"Replace All",
+			"Replace All",
+			"Replace"
 		],
 		"vs/workbench/contrib/search/browser/searchWidget": [
 			"Replace All (Submit Search to Enable)",
@@ -20154,10 +20154,6 @@
 		"vs/workbench/contrib/scm/browser/scmRepositoriesViewPane": [
 			"Source Control Repositories"
 		],
-		"vs/workbench/contrib/workspace/common/workspace": [
-			"Whether the workspace trust feature is enabled.",
-			"Whether the current workspace has been trusted by the user."
-		],
 		"vs/workbench/contrib/scm/browser/scmViewPane": [
 			"Source Control Management",
 			"Source Control Input",
@@ -20175,6 +20171,10 @@
 			"Expand All Repositories",
 			"Close",
 			"SCM Provider separator border."
+		],
+		"vs/workbench/contrib/workspace/common/workspace": [
+			"Whether the workspace trust feature is enabled.",
+			"Whether the current workspace has been trusted by the user."
 		],
 		"vs/workbench/contrib/debug/browser/breakpointsView": [
 			"Unverified Exception Breakpoint",
@@ -20278,11 +20278,6 @@
 			"Added breakpoint, line {0}, file {1}",
 			"Removed breakpoint, line {0}, file {1}"
 		],
-		"vs/workbench/contrib/debug/browser/statusbarColorProvider": [
-			"Status bar background color when a program is being debugged. The status bar is shown in the bottom of the window",
-			"Status bar foreground color when a program is being debugged. The status bar is shown in the bottom of the window",
-			"Status bar border color separating to the sidebar and editor when a program is being debugged. The status bar is shown in the bottom of the window"
-		],
 		"vs/workbench/contrib/debug/browser/debugCommands": [
 			"Restart",
 			"Step Over",
@@ -20315,6 +20310,11 @@
 			"No step targets available",
 			"Add Inline Breakpoint",
 			"Debug"
+		],
+		"vs/workbench/contrib/debug/browser/statusbarColorProvider": [
+			"Status bar background color when a program is being debugged. The status bar is shown in the bottom of the window",
+			"Status bar foreground color when a program is being debugged. The status bar is shown in the bottom of the window",
+			"Status bar border color separating to the sidebar and editor when a program is being debugged. The status bar is shown in the bottom of the window"
 		],
 		"vs/workbench/contrib/debug/browser/debugStatus": [
 			"Debug",
@@ -20527,14 +20527,14 @@
 			"Add Configuration...",
 			"Debug Session"
 		],
-		"vs/workbench/contrib/debug/browser/replFilter": [
-			"Showing {0} of {1}"
-		],
 		"vs/workbench/contrib/debug/browser/linkDetector": [
 			"follow link using forwarded port",
 			"follow link",
 			"Cmd + click to {0}",
 			"Ctrl + click to {0}"
+		],
+		"vs/workbench/contrib/debug/browser/replFilter": [
+			"Showing {0} of {1}"
 		],
 		"vs/workbench/contrib/debug/browser/replViewer": [
 			"Debug Console",
@@ -20705,6 +20705,9 @@
 			"Configure default opener...",
 			"How would you like to open: {0}"
 		],
+		"vs/workbench/contrib/output/browser/logViewer": [
+			"Log viewer"
+		],
 		"vs/workbench/contrib/extensions/common/extensionsInput": [
 			"Extension: {0}"
 		],
@@ -20718,6 +20721,32 @@
 			"Marketplace returned 'ECONNREFUSED'. Please check the 'http.proxy' setting.",
 			"Open User Settings",
 			"There are no extensions to install."
+		],
+		"vs/workbench/contrib/extensions/browser/extensionsIcons": [
+			"View icon of the extensions view.",
+			"Icon for the 'Manage' action in the extensions view.",
+			"Icon for the 'Clear Search Result' action in the extensions view.",
+			"Icon for the 'Refresh' action in the extensions view.",
+			"Icon for the 'Filter' action in the extensions view.",
+			"Icon for the 'Install Local Extension in Remote' action in the extensions view.",
+			"Icon for the 'Install Workspace Recommended Extensions' action in the extensions view.",
+			"Icon for the 'Configure Recommended Extensions' action in the extensions view.",
+			"Icon to indicate that an extension is synced.",
+			"Icon to indicate that an extension is ignored when syncing.",
+			"Icon to indicate that an extension is remote in the extensions view and editor.",
+			"Icon shown along with the install count in the extensions view and editor.",
+			"Icon shown along with the rating in the extensions view and editor.",
+			"Icon used for the verified extension publisher in the extensions view and editor.",
+			"Icon shown for extensions having pre-release versions in extensions view and editor.",
+			"Icon used for sponsoring extensions in the extensions view and editor.",
+			"Full star icon used for the rating in the extensions editor.",
+			"Half star icon used for the rating in the extensions editor.",
+			"Empty star icon used for the rating in the extensions editor.",
+			"Icon shown with a error message in the extensions editor.",
+			"Icon shown with a warning message in the extensions editor.",
+			"Icon shown with an info message in the extensions editor.",
+			"Icon shown with a workspace trust message in the extension editor.",
+			"Icon shown with a activation time message in the extension editor."
 		],
 		"vs/workbench/contrib/extensions/browser/extensionsActions": [
 			"{0} for the Web",
@@ -20881,32 +20910,6 @@
 			"Button foreground color for actions extension that stand out (e.g. install button).",
 			"Button background hover color for actions extension that stand out (e.g. install button)."
 		],
-		"vs/workbench/contrib/extensions/browser/extensionsIcons": [
-			"View icon of the extensions view.",
-			"Icon for the 'Manage' action in the extensions view.",
-			"Icon for the 'Clear Search Result' action in the extensions view.",
-			"Icon for the 'Refresh' action in the extensions view.",
-			"Icon for the 'Filter' action in the extensions view.",
-			"Icon for the 'Install Local Extension in Remote' action in the extensions view.",
-			"Icon for the 'Install Workspace Recommended Extensions' action in the extensions view.",
-			"Icon for the 'Configure Recommended Extensions' action in the extensions view.",
-			"Icon to indicate that an extension is synced.",
-			"Icon to indicate that an extension is ignored when syncing.",
-			"Icon to indicate that an extension is remote in the extensions view and editor.",
-			"Icon shown along with the install count in the extensions view and editor.",
-			"Icon shown along with the rating in the extensions view and editor.",
-			"Icon used for the verified extension publisher in the extensions view and editor.",
-			"Icon shown for extensions having pre-release versions in extensions view and editor.",
-			"Icon used for sponsoring extensions in the extensions view and editor.",
-			"Full star icon used for the rating in the extensions editor.",
-			"Half star icon used for the rating in the extensions editor.",
-			"Empty star icon used for the rating in the extensions editor.",
-			"Icon shown with a error message in the extensions editor.",
-			"Icon shown with a warning message in the extensions editor.",
-			"Icon shown with an info message in the extensions editor.",
-			"Icon shown with a workspace trust message in the extension editor.",
-			"Icon shown with a activation time message in the extension editor."
-		],
 		"vs/workbench/contrib/extensions/common/extensionsFileTemplate": [
 			"Extensions",
 			"List of extensions which should be recommended for users of this workspace. The identifier of an extension is always '${publisher}.${name}'. For example: 'vscode.csharp'.",
@@ -20918,6 +20921,9 @@
 			"Disable other keymaps ({0}) to avoid conflicts between keybindings?",
 			"Yes",
 			"No"
+		],
+		"vs/workbench/contrib/extensions/browser/extensionsActivationProgress": [
+			"Activating Extensions..."
 		],
 		"vs/workbench/contrib/extensions/browser/extensionEditor": [
 			"Extension Version",
@@ -21030,9 +21036,6 @@
 			"Find Next",
 			"Find Previous"
 		],
-		"vs/workbench/contrib/extensions/browser/extensionsActivationProgress": [
-			"Activating Extensions..."
-		],
 		"vs/workbench/contrib/extensions/browser/extensionsDependencyChecker": [
 			"Extensions",
 			"Install Missing Dependencies",
@@ -21097,9 +21100,6 @@
 		"vs/workbench/contrib/extensions/browser/extensionsCompletionItemsProvider": [
 			"Example"
 		],
-		"vs/workbench/contrib/output/browser/logViewer": [
-			"Log viewer"
-		],
 		"vs/workbench/contrib/terminal/common/terminalColorRegistry": [
 			"The background color of the terminal, this allows coloring the terminal differently to the panel.",
 			"The foreground color of the terminal.",
@@ -21121,6 +21121,11 @@
 			"Background color when dragging on top of terminals. The color should have transparency so that the terminal contents can still shine through.",
 			"Border on the side of the terminal tab in the panel. This defaults to tab.activeBorder.",
 			"'{0}' ANSI color in the terminal."
+		],
+		"vs/workbench/contrib/terminal/browser/terminalQuickAccess": [
+			"Create New Terminal",
+			"Create New Terminal With Profile",
+			"Rename Terminal"
 		],
 		"vs/workbench/contrib/terminal/browser/terminalActions": [
 			"Show Tabs",
@@ -21217,11 +21222,6 @@
 			"Create New Terminal (With Profile)",
 			"The name of the profile to create",
 			"Select current working directory for new terminal"
-		],
-		"vs/workbench/contrib/terminal/browser/terminalQuickAccess": [
-			"Create New Terminal",
-			"Create New Terminal With Profile",
-			"Rename Terminal"
 		],
 		"vs/workbench/contrib/terminal/browser/terminalService": [
 			"Do you want to terminate the active terminal session?",
@@ -21718,10 +21718,6 @@
 			"Reload Window",
 			"Cancel"
 		],
-		"vs/workbench/contrib/emmet/browser/actions/expandAbbreviation": [
-			"Emmet: Expand Abbreviation",
-			"Emmet: E&&xpand Abbreviation"
-		],
 		"vs/workbench/contrib/remote/browser/remoteIndicator": [
 			"Remote",
 			"Show Remote Menu",
@@ -21742,10 +21738,9 @@
 			"Close Remote Workspace",
 			"Install Additional Remote Extensions..."
 		],
-		"vs/workbench/contrib/codeEditor/browser/diffEditorHelper": [
-			"The diff algorithm was stopped early (after {0} ms.)",
-			"Remove Limit",
-			"Show Whitespace Differences"
+		"vs/workbench/contrib/emmet/browser/actions/expandAbbreviation": [
+			"Emmet: Expand Abbreviation",
+			"Emmet: E&&xpand Abbreviation"
 		],
 		"vs/workbench/contrib/codeEditor/browser/accessibility/accessibility": [
 			"Now changing the setting `editor.accessibilitySupport` to 'on'.",
@@ -21767,6 +21762,11 @@
 			"Press Control+H now to open a browser window with more VS Code information related to Accessibility.",
 			"You can dismiss this tooltip and return to the editor by pressing Escape or Shift+Escape.",
 			"Show Accessibility Help"
+		],
+		"vs/workbench/contrib/codeEditor/browser/diffEditorHelper": [
+			"The diff algorithm was stopped early (after {0} ms.)",
+			"Remove Limit",
+			"Show Whitespace Differences"
 		],
 		"vs/workbench/contrib/codeEditor/browser/inspectKeybindings": [
 			"Inspect Key Mappings",
@@ -22348,9 +22348,6 @@
 			"{0} ({1} • {2}) ↔ {3}",
 			"{0} ({1} • {2}) ↔ {3} ({4} • {5})"
 		],
-		"vs/workbench/services/workspaces/browser/workspaceTrustEditorInput": [
-			"Workspace Trust"
-		],
 		"vs/workbench/contrib/workspace/browser/workspaceTrustEditor": [
 			"Icon for workspace trust ion the banner.",
 			"Icon for the checkmark in the workspace trust editor.",
@@ -22422,6 +22419,9 @@
 			"This workspace is trusted via the bolded entries in the trusted folders below.",
 			"This folder is trusted via the bolded entries in the the trusted folders below.",
 			"This window is trusted by nature of the workspace that is opened."
+		],
+		"vs/workbench/services/workspaces/browser/workspaceTrustEditorInput": [
+			"Workspace Trust"
 		],
 		"vs/workbench/contrib/audioCues/browser/commands": [
 			"Help: List Audio Cues",
@@ -22514,6 +22514,12 @@
 			"Workspace Settings",
 			"Folder Settings"
 		],
+		"vs/workbench/services/textfile/common/textFileEditorModelManager": [
+			"Failed to save '{0}': {1}"
+		],
+		"vs/workbench/common/editor/textEditorModel": [
+			"Language {0} was automatically detected and set as the language mode."
+		],
 		"vs/workbench/services/textMate/common/TMGrammars": [
 			"Contributes textmate tokenizers.",
 			"Language identifier for which this syntax is contributed to.",
@@ -22524,12 +22530,6 @@
 			"List of language scope names to which this grammar is injected to.",
 			"Defines which scope names contain balanced brackets.",
 			"Defines which scope names do not contain balanced brackets."
-		],
-		"vs/workbench/services/textfile/common/textFileEditorModelManager": [
-			"Failed to save '{0}': {1}"
-		],
-		"vs/workbench/common/editor/textEditorModel": [
-			"Language {0} was automatically detected and set as the language mode."
 		],
 		"vs/workbench/services/extensions/common/extensionHostManager": [
 			"Measure Extension Host Latency"
@@ -22570,9 +22570,6 @@
 			"Please select a file.",
 			"Please select a folder."
 		],
-		"vs/workbench/services/workingCopy/common/workingCopyHistoryTracker": [
-			"Undo / Redo"
-		],
 		"vs/workbench/services/configurationResolver/common/variableResolver": [
 			"Variable {0} can not be resolved. Please open an editor.",
 			"Variable {0}: can not find workspace folder of '{1}'.",
@@ -22598,6 +22595,9 @@
 		],
 		"vs/workbench/contrib/extensions/common/reportExtensionIssueAction": [
 			"Report Issue"
+		],
+		"vs/workbench/services/workingCopy/common/workingCopyHistoryTracker": [
+			"Undo / Redo"
 		],
 		"vs/platform/terminal/common/terminalProfiles": [
 			"Automatically detect the default"
@@ -23047,15 +23047,15 @@
 			"Keep '{0}'",
 			"Toggle View Pinned"
 		],
-		"vs/base/browser/ui/splitview/paneview": [
-			"{0} Section"
-		],
 		"vs/base/browser/ui/tree/treeDefaults": [
 			"Collapse All"
 		],
 		"vs/workbench/browser/parts/views/checkbox": [
 			"Checked",
 			"Unchecked"
+		],
+		"vs/base/browser/ui/splitview/paneview": [
+			"{0} Section"
 		],
 		"vs/workbench/contrib/remote/browser/remoteIcons": [
 			"Getting started icon in the remote explorer view.",
@@ -23142,6 +23142,14 @@
 			"The file is not displayed in the editor because it is either binary or uses an unsupported text encoding.",
 			"Open Anyway"
 		],
+		"vs/workbench/browser/parts/editor/editorPanes": [
+			"OK",
+			"Cancel",
+			"Unable to open '{0}'"
+		],
+		"vs/workbench/browser/parts/editor/tabsTitleControl": [
+			"Tab actions"
+		],
 		"vs/workbench/browser/parts/activitybar/activitybarActions": [
 			"Manage Trusted Extensions",
 			"Sign Out",
@@ -23164,14 +23172,6 @@
 		],
 		"vs/workbench/browser/parts/sidebar/sidebarActions": [
 			"Focus into Primary Side Bar"
-		],
-		"vs/workbench/browser/parts/editor/editorPanes": [
-			"OK",
-			"Cancel",
-			"Unable to open '{0}'"
-		],
-		"vs/workbench/browser/parts/editor/tabsTitleControl": [
-			"Tab actions"
 		],
 		"vs/base/browser/ui/button/button": [
 			"More Actions..."
@@ -23313,6 +23313,28 @@
 			"Settings Table of Contents",
 			"{0}, group"
 		],
+		"vs/workbench/contrib/preferences/browser/settingsTree": [
+			"Extensions",
+			"The setting has been configured in the current scope.",
+			"This setting is managed by your organization.",
+			"View policy settings",
+			"More Actions... ",
+			"Show matching extensions",
+			"Edit in settings.json",
+			"Edit settings for {0}",
+			"default",
+			"The setting has been configured in the current scope.",
+			"Manage Workspace Trust",
+			"This setting can only be applied in a trusted workspace",
+			"Reset Setting",
+			"Validation Error.",
+			"Validation Error.",
+			"Modified.",
+			"Settings",
+			"Copy Setting ID",
+			"Copy Setting as JSON",
+			"Sync This Setting"
+		],
 		"vs/workbench/contrib/preferences/common/settingsEditorColorRegistry": [
 			"The foreground color for a section header or active title.",
 			"The color of the modified setting indicator.",
@@ -23350,28 +23372,6 @@
 			"Show settings for online services",
 			"Policy services",
 			"Show settings for policy services"
-		],
-		"vs/workbench/contrib/preferences/browser/settingsTree": [
-			"Extensions",
-			"The setting has been configured in the current scope.",
-			"This setting is managed by your organization.",
-			"View policy settings",
-			"More Actions... ",
-			"Show matching extensions",
-			"Edit in settings.json",
-			"Edit settings for {0}",
-			"default",
-			"The setting has been configured in the current scope.",
-			"Manage Workspace Trust",
-			"This setting can only be applied in a trusted workspace",
-			"Reset Setting",
-			"Validation Error.",
-			"Validation Error.",
-			"Modified.",
-			"Settings",
-			"Copy Setting ID",
-			"Copy Setting as JSON",
-			"Sync This Setting"
 		],
 		"vs/workbench/contrib/notebook/browser/viewParts/notebookKernelActionViewItem": [
 			"Select Kernel",
@@ -23862,12 +23862,6 @@
 		"vs/workbench/contrib/customEditor/common/contributedCustomEditors": [
 			"Built-in"
 		],
-		"vs/workbench/contrib/extensions/browser/extensionsViewer": [
-			"Error",
-			"Unknown Extension:",
-			"{0}, {1}, {2}, {3}",
-			"Extensions"
-		],
 		"vs/workbench/contrib/extensions/browser/extensionsWidgets": [
 			"Average rating: {0} out of 5",
 			"Sponsor",
@@ -23892,6 +23886,12 @@
 			"The icon color for extension verified publisher.",
 			"The icon color for pre-release extension.",
 			"The icon color for extension sponsor."
+		],
+		"vs/workbench/contrib/extensions/browser/extensionsViewer": [
+			"Error",
+			"Unknown Extension:",
+			"{0}, {1}, {2}, {3}",
+			"Extensions"
 		],
 		"vs/workbench/contrib/extensions/browser/dynamicWorkspaceRecommendations": [
 			"This extension may interest you because it's popular among users of the {0} repository."
@@ -24029,44 +24029,6 @@
 			"Release Notes: {0}",
 			"unassigned"
 		],
-		"vs/workbench/contrib/welcomeGettingStarted/browser/gettingStartedExtensionPoint": [
-			"Title",
-			"Contribute walkthroughs to help users getting started with your extension.",
-			"Unique identifier for this walkthrough.",
-			"Title of walkthrough.",
-			"Description of walkthrough.",
-			"Walkthroughs that match one of these glob patterns appear as 'featured' in workspaces with the specified files. For example, a walkthrough for TypeScript projects might specify `tsconfig.json` here.",
-			"Context key expression to control the visibility of this walkthrough.",
-			"Steps to complete as part of this walkthrough.",
-			"Unique identifier for this step. This is used to keep track of which steps have been completed.",
-			"Title of step.",
-			"Description of step. Supports ``preformatted``, __italic__, and **bold** text. Use markdown-style links for commands or external links: {0}, {1}, or {2}. Links on their own line will be rendered as buttons.",
-			"Deprecated. Use markdown links in the description instead, i.e. {0}, {1}, or {2}",
-			"Media to show alongside this step, either an image or markdown content.",
-			"Deprecated. Please use `image` or `markdown` instead",
-			"Path to an image - or object consisting of paths to light, dark, and hc images - relative to extension directory. Depending on context, the image will be displayed from 400px to 800px wide, with similar bounds on height. To support HIDPI displays, the image will be rendered at 1.5x scaling, for example a 900 physical pixels wide image will be displayed as 600 logical pixels wide.",
-			"Path to the image for dark themes, relative to extension directory.",
-			"Path to the image for light themes, relative to extension directory.",
-			"Path to the image for hc themes, relative to extension directory.",
-			"Path to the image for hc light themes, relative to extension directory.",
-			"Alternate text to display when the image cannot be loaded or in screen readers.",
-			"Path to an svg, color tokens are supported in variables to support theming to match the workbench.",
-			"Alternate text to display when the image cannot be loaded or in screen readers.",
-			"Deprecated. Please use `image` or `markdown` instead",
-			"Path to the markdown document, relative to extension directory.",
-			"Events that should trigger this step to become checked off. If empty or not defined, the step will check off when any of the step's buttons or links are clicked; if the step has no buttons or links it will check on when it is selected.",
-			"Check off step when a given command is executed anywhere in VS Code.",
-			"Check off step when a given link is opened via a walkthrough step.",
-			"Check off step when a given view is opened",
-			"Check off step when a given setting is changed",
-			"Check off step when a context key expression is true.",
-			"Check off step when an extension with the given id is installed. If the extension is already installed, the step will start off checked.",
-			"Check off step as soon as it is selected.",
-			"Signal to mark step as complete.",
-			"doneOn is deprecated. By default steps will be checked off when their buttons are clicked, to configure further use completionEvents",
-			"Mark step done when the specified command is executed.",
-			"Context key expression to control the visibility of this step."
-		],
 		"vs/workbench/contrib/welcomeGettingStarted/common/gettingStartedContent": [
 			"Icon used for the setup category of welcome page",
 			"Icon used for the beginner category of welcome page",
@@ -24194,6 +24156,44 @@
 			"Customize Notebooks",
 			"Select the layout for your notebooks",
 			"Get notebooks to feel just the way you prefer"
+		],
+		"vs/workbench/contrib/welcomeGettingStarted/browser/gettingStartedExtensionPoint": [
+			"Title",
+			"Contribute walkthroughs to help users getting started with your extension.",
+			"Unique identifier for this walkthrough.",
+			"Title of walkthrough.",
+			"Description of walkthrough.",
+			"Walkthroughs that match one of these glob patterns appear as 'featured' in workspaces with the specified files. For example, a walkthrough for TypeScript projects might specify `tsconfig.json` here.",
+			"Context key expression to control the visibility of this walkthrough.",
+			"Steps to complete as part of this walkthrough.",
+			"Unique identifier for this step. This is used to keep track of which steps have been completed.",
+			"Title of step.",
+			"Description of step. Supports ``preformatted``, __italic__, and **bold** text. Use markdown-style links for commands or external links: {0}, {1}, or {2}. Links on their own line will be rendered as buttons.",
+			"Deprecated. Use markdown links in the description instead, i.e. {0}, {1}, or {2}",
+			"Media to show alongside this step, either an image or markdown content.",
+			"Deprecated. Please use `image` or `markdown` instead",
+			"Path to an image - or object consisting of paths to light, dark, and hc images - relative to extension directory. Depending on context, the image will be displayed from 400px to 800px wide, with similar bounds on height. To support HIDPI displays, the image will be rendered at 1.5x scaling, for example a 900 physical pixels wide image will be displayed as 600 logical pixels wide.",
+			"Path to the image for dark themes, relative to extension directory.",
+			"Path to the image for light themes, relative to extension directory.",
+			"Path to the image for hc themes, relative to extension directory.",
+			"Path to the image for hc light themes, relative to extension directory.",
+			"Alternate text to display when the image cannot be loaded or in screen readers.",
+			"Path to an svg, color tokens are supported in variables to support theming to match the workbench.",
+			"Alternate text to display when the image cannot be loaded or in screen readers.",
+			"Deprecated. Please use `image` or `markdown` instead",
+			"Path to the markdown document, relative to extension directory.",
+			"Events that should trigger this step to become checked off. If empty or not defined, the step will check off when any of the step's buttons or links are clicked; if the step has no buttons or links it will check on when it is selected.",
+			"Check off step when a given command is executed anywhere in VS Code.",
+			"Check off step when a given link is opened via a walkthrough step.",
+			"Check off step when a given view is opened",
+			"Check off step when a given setting is changed",
+			"Check off step when a context key expression is true.",
+			"Check off step when an extension with the given id is installed. If the extension is already installed, the step will start off checked.",
+			"Check off step as soon as it is selected.",
+			"Signal to mark step as complete.",
+			"doneOn is deprecated. By default steps will be checked off when their buttons are clicked, to configure further use completionEvents",
+			"Mark step done when the specified command is executed.",
+			"Context key expression to control the visibility of this step."
 		],
 		"vs/workbench/contrib/welcomeGettingStarted/browser/gettingStartedColors": [
 			"Background color for the Welcome page.",
