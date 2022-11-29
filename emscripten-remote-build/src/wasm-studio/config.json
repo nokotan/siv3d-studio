@@ -1,0 +1,12 @@
+{
+  "serviceUrl": "https://wasmexplorer-service.herokuapp.com/service.php",
+  "clang": "https://webassembly-studio-clang.herokuapp.com/build",
+  "rustc": "https://webassembly-studio-rust.herokuapp.com/rustc",
+  "cargo": "https://webassembly-studio-rust.herokuapp.com/cargo",
+  "emscripten": "https://emscripten-compiler.herokuapp.com/build",
+  "templates": {
+    "default": "dist/templates/index.js",
+    "arc": "dist/arc-templates/index.js"
+  },
+  "sentryDNS": "https://756ae32005ed49cf9d4dd2aa106ccd4a@sentry.io/1229949"
+}

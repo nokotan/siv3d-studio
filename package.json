@@ -10,6 +10,11 @@
   "keywords": [],
   "author": "",
   "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "emscripten-remote-build",
+    "siv3d-playground"
+  ],
   "devDependencies": {
     "@types/decompress": "^4.2.4",
     "@types/node": "^18.6.4",

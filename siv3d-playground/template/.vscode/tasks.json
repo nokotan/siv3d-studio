@@ -1,0 +1,26 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "emcc",
+            "label": "emcc build",
+            "files": [ "src/*.cpp", "include/*.h", "include/*.hpp" ],
+            "flags": [ 
+                "-Wall", "-std=c++2a", "-fcolor-diagnostics",
+                "-include-pch /include/OpenSiv3Dv0.6/Siv3D.O0.pch",
+                "-I/include/OpenSiv3Dv0.6/",
+                "-I/include/OpenSiv3Dv0.6/ThirdParty/",
+                "-s SIDE_MODULE=1",
+                "-D_XM_NO_INTRINSICS_",
+                "-s ASYNCIFY=1",
+                "-s ASYNCIFY_IMPORTS=\"[ '_ZN3s3d6System6UpdateEv', '_ZN3s3d7TextureC1ENS_10StringViewENS_11TextureDescE', '_ZN3s3d5ImageC1ENS_10StringViewENS_11ImageFormatE', '_ZN3s3d5AudioC1ENS_10StringViewE', '_ZN3s3d5AudioC1ENS_10StringViewENS_5YesNoINS_8Loop_tagEEE' ]\""
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}

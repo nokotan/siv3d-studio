@@ -1,0 +1,8 @@
+{
+    "emcc.compile.run.title": "Compile",
+    "emcc.preview.show.title": "Run on Preview",
+    "emcc.preview.reload.title": "Reload",
+    "emcc.taskDefinitions.properties.files.description": "files to build",
+    "emcc.taskDefinitions.properties.flags.description": "compiler flags",
+    "emcc.taskDefinitions.properties.outputName.description": "output file name"
+}

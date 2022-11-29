@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="user-scalable=no">
+    <title>OpenSiv3D for Web</title>
+    <style>
+      body {
+        font-family: arial;
+        overflow: hidden;
+        padding: 0px;
+        margin: 0px;
+        background-color: gray;
+      }
+
+      #app {
+        position: relative;
+      }
+
+      canvas.emscripten {
+        border: 0px none;
+        background-color: gray;
+        width: 100%;
+        height: 100%;
+      }
+
+      .playground-overlay {
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+
+        color: white;
+        background: rgba(0, 0, 0, 0.5);
+        transition: color 0.2s ease-out;
+
+        font-size: large;
+      }
+
+      .reload-button {
+        margin-left: auto;
+        margin-right: auto;
+        width: 3cm;
+        height: 3cm;
+      }
+
+      .button-container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translateY(-50%) translateX(-50%);
+      }
+
+      .error-text {
+        margin-top: 1em;
+      }
+
+      .st1 {
+        fill:#CBCBCB;
+        transition: all 0.2s ease-out;
+      }
+
+      .st1:hover {
+        fill:#FBFBFB;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <div class="playground-overlay" hidden="true">
+        <span class="button-container">
+          <div class="reload-button" hidden="true">
+            <svg version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+              <g>
+                <path class="st1" d="M268.175,488.161c98.2-11,176.9-89.5,188.1-187.7c14.7-128.4-85.1-237.7-210.2-239.1v-57.6c0-3.2-4-4.9-6.7-2.9
+                  l-118.6,87.1c-2,1.5-2,4.4,0,5.9l118.6,87.1c2.7,2,6.7,0.2,6.7-2.9v-57.5c87.9,1.4,158.3,76.2,152.3,165.6
+                  c-5.1,76.9-67.8,139.3-144.7,144.2c-81.5,5.2-150.8-53-163.2-130c-2.3-14.3-14.8-24.7-29.2-24.7c-17.9,0-31.9,15.9-29.1,33.6
+                  C49.575,418.961,150.875,501.261,268.175,488.161z"/>
+              </g>
+            </svg>
+          </div>
+          <div class="error-text"></div>
+        </span>
+      </div>
+      <div id="app-container">
+        <div id="canvas-container">
+          <canvas
+            class="emscripten"
+            id="canvas"
+            oncontextmenu="event.preventDefault()"
+            tabindex="-1"
+          ></canvas>
+        </div>
+      </div>
+    </div>
+    <script>
+      const appContainer = document.querySelector("#app");
+
+      function onResize() {
+        setTimeout(doResize, 100);
+      }
+
+      function doResize() {
+        Module["setFramebufferSize"](window.innerWidth * devicePixelRatio, window.innerHeight * devicePixelRatio);
+      }
+
+      var Module = {
+        postRun: [ doResize ],
+        canvas: (function () {
+          var canvas = document.getElementById("canvas");
+
+          // As a default initial behavior, pop up an alert when webgl context is lost. To make your
+          // application robust, you may want to override this behavior before shipping!
+          // See http://www.khronos.org/registry/webgl/specs/latest/1.0/#5.15.2
+          canvas.addEventListener(
+            "webglcontextlost",
+            function (e) {
+              Module["onAlert"]("WebGL context lost. You will need to reload the page.");
+              e.preventDefault();
+            },
+            false
+          );
+
+          return canvas;
+        })(),
+        onAbort: function(e) {
+          Module["onRuntimeExit"]();
+        },
+        onAlert: function (text) {
+          document.querySelector(".error-text").textContent = text;
+        },
+        onRuntimeInitialized: function() {
+          window.addEventListener("resize", onResize);
+        },
+        onRuntimeExit: function() {
+          doResize();
+
+          var overlay = document.querySelector(".playground-overlay");
+          overlay.hidden = false;
+
+          var reloadButton = document.querySelector(".reload-button");
+          reloadButton.hidden = false;
+
+          reloadButton.addEventListener("click", function() {
+            location.reload();
+          });
+        },
+        dynamicLibraries: ["main.wasm"],
+        setFramebufferSize: function(width, height) {
+          const canvas = Module['canvas'];
+          canvas.width = width;
+          canvas.height = height;
+
+          if (!GLFW.active) return;
+          let resizeNeeded = true;
+
+          if (GLFW.active.width != width || GLFW.active.height != height) {
+            GLFW.active.width = width;
+            GLFW.active.height = height;
+          } else {
+            resizeNeeded = false;
+          }
+
+          if (resizeNeeded) {
+            GLFW.onWindowSizeChanged();
+            GLFW.onFramebufferSizeChanged();
+          }
+        }
+      }
+    </script>
+    <script src="Siv3D.js"></script>
+  </body>
+</html>
