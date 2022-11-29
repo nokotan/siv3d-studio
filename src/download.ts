@@ -136,41 +136,13 @@ export async function downloadAndUnzipVSCode(quality: 'stable' | 'insider'): Pro
 	return { type: 'static', location: downloadedPath, quality, version: info.version };
 }
 
-export async function downloadAndUnzipExtensions(extensionName: string, extensionUrl: string): Promise<void> {
+export async function buildExtension(extensionName: string): Promise<void> {
 	
 	const folderName = `vscode-web/addon/${extensionName}`;
-
-	const downloadedPath = path.resolve(vscodeTestDir, folderName);
-
-	const tmpArchiveName = `${extensionName}-tmp`;
-	try {
-		await download(extensionUrl, tmpArchiveName, `Downloading ${extensionName}`);
-		await unzip(tmpArchiveName, downloadedPath, `Unpacking ${extensionName}`);
-	} catch (err) {
-		console.error(err);
-		throw Error(`Failed to download and unpack ${extensionName}`);
-	} finally {
-		try {
-			fs.unlink(tmpArchiveName);
-		} catch (e) {
-			// ignore
-		}
-	}
-}
-
-export async function fetchExtensionsFromRepository(extensionName: string, extensionRepository: string): Promise<void> {
-	
-	const folderName = `vscode-web/addon/${extensionName}`;
-	const repositoryName = path.resolve(extensionRoot, extensionName);
 	const downloadedPath = path.resolve(vscodeTestDir, folderName);
 	const tmpArchiveName = path.resolve(extensionName, `${extensionName}.tgz`);
 
 	try {
-		if (!existsSync(repositoryName)) {
-			execSync(`git clone ${extensionRepository} ${extensionName}`);
-		} else {
-			execSync(`cd ${extensionName} && git stash && git pull --rebase && git stash pop`)
-		}
 		execSync(`cd ${extensionName} && npm install && npm pack && mv ${extensionName}-*.tgz ${extensionName}.tgz`);
 		await unzip(tmpArchiveName, downloadedPath, `Unpacking ${extensionName}`);
 	} catch (err) {
