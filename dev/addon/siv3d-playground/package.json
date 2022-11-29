@@ -59,8 +59,8 @@
     }
   },
   "scripts": {
-    "compile": "yarn webpack-cli --config extension.webpack.config --mode production",
-    "watch": "yarn webpack-cli --config extension.webpack.config --mode production --watch --info-verbosity verbose",
+    "compile": "webpack-cli --config extension.webpack.config --mode production",
+    "watch": "webpack-cli --config extension.webpack.config --mode production --watch --info-verbosity verbose",
     "prepack": "npm run compile"
   },
   "devDependencies": {

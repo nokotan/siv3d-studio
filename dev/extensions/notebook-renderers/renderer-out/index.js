@@ -564,9 +564,7 @@ var _Color = class {
     return new _Color(new RGBA(backgroundAlpha * background.rgba.r + foreground.rgba.a * foreground.rgba.r, backgroundAlpha * background.rgba.g + foreground.rgba.a * foreground.rgba.g, backgroundAlpha * background.rgba.b + foreground.rgba.a * foreground.rgba.b));
   }
   toString() {
-    if (!this._toString) {
-      this._toString = _Color.Format.CSS.format(this);
-    }
+    this._toString ?? (this._toString = _Color.Format.CSS.format(this));
     return this._toString;
   }
   static getLighterColor(of, relative, factor) {
