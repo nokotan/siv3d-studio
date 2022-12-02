@@ -2,7 +2,7 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 import { reloadPreview, showPreview } from './previewProvider';
-import { CustomBuildTaskProvider } from './taskProvider';
+import { CustomBuildTaskProvider, CustomBuildTaskTerminal } from './taskProvider';
 
 import * as nls from 'vscode-nls';
 
@@ -44,6 +44,22 @@ export function activate(context: vscode.ExtensionContext) {
 			reloadPreview();
 		})
 	);
+
+	vscode.window.registerTerminalProfileProvider('emcc.terminal', {
+		provideTerminalProfile(
+		  token: vscode.CancellationToken
+		): vscode.ProviderResult<vscode.TerminalProfile> {
+		  return new vscode.TerminalProfile({
+			name: "emcc terminal",
+			pty: new CustomBuildTaskTerminal(
+				workspaceRoot,
+				{
+					type: "emcc",
+					flags: []
+				})
+		  });
+		}
+	});  
 }
 
 // this method is called when your extension is deactivated

@@ -63,14 +63,14 @@ export class CustomBuildTaskProvider implements vscode.TaskProvider {
 	}
 }
 
-class CustomBuildTaskTerminal implements vscode.Pseudoterminal {
+export class CustomBuildTaskTerminal implements vscode.Pseudoterminal {
 	private writeEmitter = new vscode.EventEmitter<string>();
 	onDidWrite: vscode.Event<string> = this.writeEmitter.event;
 	private closeEmitter = new vscode.EventEmitter<number>();
 	onDidClose?: vscode.Event<number> = this.closeEmitter.event;
 	private textDecoder: TextDecoder;
 
-	constructor(private workspaceRoot: vscode.Uri, private definition: EmscriptenBuildTaskDefinition, private getSharedState: () => string | undefined, private setSharedState: (state: string) => void) {
+	constructor(private workspaceRoot: vscode.Uri, private definition: EmscriptenBuildTaskDefinition, private getSharedState?: () => string | undefined, private setSharedState?: (state: string) => void) {
 		this.textDecoder = new TextDecoder();
 	}
 
@@ -86,6 +86,8 @@ class CustomBuildTaskTerminal implements vscode.Pseudoterminal {
 		if (!this.definition.files) {
 			this.definition.files = [ "**/*.cpp" ]
 		}
+
+		console.log(`do build`);
 
 		const fileURLsPromise = this.definition.files.map(async filePattern => {
 			return await vscode.workspace.findFiles(filePattern);
