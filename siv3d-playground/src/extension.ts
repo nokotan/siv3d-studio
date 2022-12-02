@@ -13,7 +13,9 @@
 //
 
 import * as vscode from 'vscode';
-import { MemFS } from './memfs';
+import { loadAdditionalAssets, loadInitialAssets } from './initialFiles';
+import { MemFs } from './memfs';
+import { WasmMemFs } from './wasmfs';
 
 declare const navigator: unknown;
 
@@ -27,8 +29,10 @@ export async function activate(context: vscode.ExtensionContext) {
 					compilePromiseResolver = resolve;
 				});
 				vscode.commands.executeCommand("workbench.action.tasks.runTask", "emcc build");
-				
+
 				if ((await compilePromise) === 0) {
+					const workspaceRoot = (vscode.workspace.workspaceFolders && (vscode.workspace.workspaceFolders.length > 0))
+						? vscode.workspace.workspaceFolders[0].uri : undefined;
 					vscode.commands.executeCommand("emcc.preview.show", vscode.Uri.joinPath(workspaceRoot, "main.html"), "Siv3D Preview");
 				}
 				compilePromiseResolver = null;
@@ -41,21 +45,38 @@ export async function activate(context: vscode.ExtensionContext) {
 			}
 		});
 
-		const openOptions: vscode.TextDocumentShowOptions = {
-			preview: false
-		};
-		const workspaceRoot = (vscode.workspace.workspaceFolders && (vscode.workspace.workspaceFolders.length > 0))
-			? vscode.workspace.workspaceFolders[0].uri : undefined;
 		const memFs = enableFs(context);
-		await memFs.loadInitialAssets(context.extensionUri);
-		vscode.commands.executeCommand('vscode.open', vscode.Uri.parse(`memfs:/siv3d-playground/src/Main.cpp`), openOptions);
-		// vscode.commands.executeCommand("emcc.preview.show", vscode.Uri.joinPath(workspaceRoot, "main.html"), "Siv3D Preview");
-		await memFs.loadAdditionalAssets();
+		memFs.createDirectory(vscode.Uri.parse("memfs:/siv3d-playground"));
+
+		const workspaceRoot = (vscode.workspace.workspaceFolders && (vscode.workspace.workspaceFolders.length > 0))
+			? vscode.workspace.workspaceFolders[0] : undefined;
+
+		if (workspaceRoot) {
+			seedWorkspace(context, memFs, workspaceRoot);
+		}
+
+		vscode.workspace.onDidChangeWorkspaceFolders(e => {
+			for (const workspace of e.added) {
+				seedWorkspace(context, memFs, workspace);
+			}
+		});
 	}
 }
 
-function enableFs(context: vscode.ExtensionContext): MemFS {
-	const memFs = new MemFS();
+async function seedWorkspace(context: vscode.ExtensionContext, memFs: vscode.FileSystemProvider, workspace: vscode.WorkspaceFolder) {
+	const openOptions: vscode.TextDocumentShowOptions = {
+		preview: false
+	};
+	const workspaceRoot = workspace.uri;
+	
+	await loadInitialAssets(memFs, workspaceRoot, context.extensionUri);
+	vscode.commands.executeCommand('vscode.open', vscode.Uri.joinPath(workspaceRoot, "src/Main.cpp"), openOptions);
+	// vscode.commands.executeCommand("emcc.preview.show", vscode.Uri.joinPath(workspaceRoot, "main.html"), "Siv3D Preview");
+	await loadAdditionalAssets(memFs, workspaceRoot);
+}
+
+function enableFs(context: vscode.ExtensionContext) {
+	const memFs = new WasmMemFs();
 	context.subscriptions.push(memFs);
 
 	return memFs;

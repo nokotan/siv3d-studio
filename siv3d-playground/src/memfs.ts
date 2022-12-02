@@ -73,92 +73,21 @@ export type Entry = File | Directory;
 
 const textEncoder = new TextEncoder();
 
-export class MemFS implements FileSystemProvider, FileSearchProvider, TextSearchProvider, Disposable {
+export class MemFs implements FileSystemProvider, FileSearchProvider, TextSearchProvider, Disposable {
 	static scheme = 'memfs';
 
 	private readonly disposable: Disposable;
 
 	constructor() {
 		this.disposable = Disposable.from(
-			workspace.registerFileSystemProvider(MemFS.scheme, this, { isCaseSensitive: true }),
-			workspace.registerFileSearchProvider(MemFS.scheme, this),
-			workspace.registerTextSearchProvider(MemFS.scheme, this)
+			workspace.registerFileSystemProvider(MemFs.scheme, this, { isCaseSensitive: true }),
+			workspace.registerFileSearchProvider(MemFs.scheme, this),
+			workspace.registerTextSearchProvider(MemFs.scheme, this)
 		);
 	}
 
 	dispose() {
 		this.disposable?.dispose();
-	}
-
-	private async readFileFromTemplate(extensionBase: Uri, sourcePath: string, targetPath?: string): Promise<void> {
-		const fileContent = await workspace.fs.readFile(Uri.joinPath(extensionBase, "template", sourcePath));
-		const targetFilePath = targetPath || sourcePath;
-		this.writeFile(Uri.joinPath(Uri.parse("memfs:/siv3d-playground"), targetFilePath), fileContent, { create: true, overwrite: false });
-	}
-
-	private async fetchFile(fetchBase: string, sourcePath: string, targetPath?: string): Promise<void> {
-		const fileResponse = await fetch(Uri.joinPath(Uri.parse(fetchBase), sourcePath).toString());
-		const fileContent = await fileResponse.arrayBuffer();
-		const targetFilePath = targetPath || sourcePath;
-		this.writeFile(Uri.joinPath(Uri.parse("memfs:/siv3d-playground"), targetFilePath), new Uint8Array(fileContent), { create: true, overwrite: false });
-	}
-
-	async loadInitialAssets(extensionBase: Uri) {
-		const promises: Promise<void>[] = [];
-
-		this.createDirectory(Uri.parse("memfs:/siv3d-playground"));
-		promises.push(this.readFileFromTemplate(extensionBase, "main.html"));
-		promises.push(this.readFileFromTemplate(extensionBase, "README.md"));
-			
-		this.createDirectory(Uri.parse("memfs:/siv3d-playground/.vscode"));
-		promises.push(this.readFileFromTemplate(extensionBase, ".vscode/tasks.json"));
-		
-		this.createDirectory(Uri.parse("memfs:/siv3d-playground/src"));
-		promises.push(this.readFileFromTemplate(extensionBase, "src/Main.cpp"));
-
-		this.createDirectory(Uri.parse("memfs:/siv3d-playground/include"));
-	
-		await Promise.all(promises);
-	}
-
-	async loadAdditionalAssets() {
-		const promises: Promise<void>[] = [];
-
-		const downloadUrl = workspace.getConfiguration("siv3d-playground").get<string>("siv3d-assets-download-url");
-
-		promises.push(this.fetchFile(downloadUrl, "lib/Siv3D.wasm", "Siv3D.wasm"));
-		promises.push(this.fetchFile(downloadUrl, "lib/Siv3D.js", "Siv3D.js"));
-		promises.push(this.fetchFile(downloadUrl, "lib/Siv3D.data", "Siv3D.data"));
-
-		await Promise.all(promises);
-
-		this.createDirectory(Uri.parse("memfs:/siv3d-playground/example"));
-		promises.push(this.fetchFile(downloadUrl, "example/windmill.png"));
-		promises.push(this.fetchFile(downloadUrl, "example/example/particle.png"));
-
-		this.createDirectory(Uri.parse("memfs:/siv3d-playground/example/geojson"));
-		promises.push(this.fetchFile(downloadUrl, "example/geojson/countries.geojson"));
-
-		this.createDirectory(Uri.parse("memfs:/siv3d-playground/example/texture"));
-		promises.push(this.fetchFile(downloadUrl, "example/texture/uv.png"));
-		promises.push(this.fetchFile(downloadUrl, "example/texture/grass.jpg"));
-		promises.push(this.fetchFile(downloadUrl, "example/texture/rock.jpg"));
-		promises.push(this.fetchFile(downloadUrl, "example/texture/ground.jpg"));
-		promises.push(this.fetchFile(downloadUrl, "example/texture/earth.jpg"));
-
-		this.createDirectory(Uri.parse("memfs:/siv3d-playground/example/shader"));
-		this.createDirectory(Uri.parse("memfs:/siv3d-playground/example/shader/essl"));
-		promises.push(this.fetchFile(downloadUrl, "example/shader/essl/terrain_forward.vert"));
-		promises.push(this.fetchFile(downloadUrl, "example/shader/essl/terrain_forward.frag"));
-		promises.push(this.fetchFile(downloadUrl, "example/shader/essl/terrain_normal.frag"));
-
-		this.createDirectory(Uri.parse("memfs:/siv3d-playground/example/obj"));
-		promises.push(this.fetchFile(downloadUrl, "example/obj/blacksmith.obj"));
-		promises.push(this.fetchFile(downloadUrl, "example/obj/mill.obj"));
-		promises.push(this.fetchFile(downloadUrl, "example/obj/tree.obj"));
-		promises.push(this.fetchFile(downloadUrl, "example/obj/pine.obj"));
-			
-		await Promise.all(promises);
 	}
 
 	root = new Directory(Uri.parse('memfs:/'), '');
@@ -457,16 +386,4 @@ export class MemFS implements FileSystemProvider, FileSearchProvider, TextSearch
 
 		return result;
 	}
-}
-
-function randomData(lineCnt: number, lineLen = 155): Uint8Array {
-	let lines: string[] = [];
-	for (let i = 0; i < lineCnt; i++) {
-		let line = '';
-		while (line.length < lineLen) {
-			line += Math.random().toString(2 + (i % 34)).substr(2);
-		}
-		lines.push(line.substr(0, lineLen));
-	}
-	return textEncoder.encode(lines.join('\n'));
 }
