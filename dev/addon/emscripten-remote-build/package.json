@@ -81,7 +81,15 @@
           }
         }
       }
-    ]
+    ],
+    "terminal": {
+      "profiles": [
+        {
+          "title": "emcc terminal",
+          "id": "emcc.terminal"
+        }
+      ]
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run package",

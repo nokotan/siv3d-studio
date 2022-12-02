@@ -660,7 +660,7 @@ module.exports = posix;
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.CustomBuildTaskProvider = void 0;
+exports.CustomBuildTaskTerminal = exports.CustomBuildTaskProvider = void 0;
 const vscode = __webpack_require__(1);
 const models_1 = __webpack_require__(5);
 const service_1 = __webpack_require__(11);
@@ -716,6 +716,7 @@ class CustomBuildTaskTerminal {
         if (!this.definition.files) {
             this.definition.files = ["**/*.cpp"];
         }
+        console.log(`do build`);
         const fileURLsPromise = this.definition.files.map(async (filePattern) => {
             return await vscode.workspace.findFiles(filePattern);
         });
@@ -743,6 +744,7 @@ class CustomBuildTaskTerminal {
         }
     }
 }
+exports.CustomBuildTaskTerminal = CustomBuildTaskTerminal;
 
 
 /***/ }),
@@ -9553,6 +9555,17 @@ function activate(context) {
     }), vscode.commands.registerCommand("emcc.preview.reload", () => {
         (0, previewProvider_1.reloadPreview)();
     }));
+    vscode.window.registerTerminalProfileProvider('emcc.terminal', {
+        provideTerminalProfile(token) {
+            return new vscode.TerminalProfile({
+                name: "emcc terminal",
+                pty: new taskProvider_1.CustomBuildTaskTerminal(workspaceRoot, {
+                    type: "emcc",
+                    flags: []
+                })
+            });
+        }
+    });
 }
 exports.activate = activate;
 // this method is called when your extension is deactivated
