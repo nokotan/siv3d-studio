@@ -51,12 +51,7 @@ export function activate(context: vscode.ExtensionContext) {
 		): vscode.ProviderResult<vscode.TerminalProfile> {
 		  return new vscode.TerminalProfile({
 			name: "emcc terminal",
-			pty: new CustomBuildTaskTerminal(
-				workspaceRoot,
-				{
-					type: "emcc",
-					flags: []
-				})
+			pty: new CustomBuildTaskTerminal(workspaceRoot)
 		  });
 		}
 	});  
