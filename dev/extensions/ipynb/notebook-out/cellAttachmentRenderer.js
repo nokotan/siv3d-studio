@@ -1,4 +1,4 @@
-// extensions/ipynb/notebook-src/cellAttachmentRenderer.ts
+// extensions/ipynb/src/cellAttachmentRenderer.ts
 async function activate(ctx) {
   const markdownItRenderer = await ctx.getRenderer("vscode.markdown-it-renderer");
   if (!markdownItRenderer) {
@@ -9,7 +9,7 @@ async function activate(ctx) {
     md.renderer.rules.image = (tokens, idx, options, env, self) => {
       const token = tokens[idx];
       const src = token.attrGet("src");
-      const attachments = env.outputItem.metadata.attachments;
+      const attachments = env.outputItem.metadata?.custom?.attachments;
       if (attachments && src) {
         const imageAttachment = attachments[src.replace("attachment:", "")];
         if (imageAttachment) {

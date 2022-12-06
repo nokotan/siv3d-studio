@@ -564,7 +564,9 @@ var _Color = class {
     return new _Color(new RGBA(backgroundAlpha * background.rgba.r + foreground.rgba.a * foreground.rgba.r, backgroundAlpha * background.rgba.g + foreground.rgba.a * foreground.rgba.g, backgroundAlpha * background.rgba.b + foreground.rgba.a * foreground.rgba.b));
   }
   toString() {
-    this._toString ?? (this._toString = _Color.Format.CSS.format(this));
+    if (!this._toString) {
+      this._toString = _Color.Format.CSS.format(this);
+    }
     return this._toString;
   }
   static getLighterColor(of, relative, factor) {
@@ -1302,34 +1304,23 @@ var domEval = (container) => {
     container.appendChild(scriptTag).parentNode.removeChild(scriptTag);
   }
 };
-async function renderHTML(outputInfo, container, signal, hooks) {
+function renderHTML(outputInfo, container, hooks) {
   clearContainer(container);
   let element = document.createElement("div");
   const htmlContent = outputInfo.text();
   const trustedHtml = ttPolicy?.createHTML(htmlContent) ?? htmlContent;
   element.innerHTML = trustedHtml;
   for (const hook of hooks) {
-    element = await hook.postRender(outputInfo, element, signal) ?? element;
-    if (signal.aborted) {
-      return;
-    }
+    element = hook.postRender(outputInfo, element) ?? element;
   }
   container.appendChild(element);
   domEval(element);
 }
-async function renderJavascript(outputInfo, container, signal, hooks) {
-  let scriptText = outputInfo.text();
-  for (const hook of hooks) {
-    scriptText = await hook.preEvaluate(outputInfo, container, scriptText, signal) ?? scriptText;
-    if (signal.aborted) {
-      return;
-    }
-  }
-  const script = document.createElement("script");
-  script.type = "module";
-  script.textContent = scriptText;
+function renderJavascript(outputInfo, container) {
+  const str = outputInfo.text();
+  const scriptVal = `<script type="application/javascript">${str}</script>`;
   const element = document.createElement("div");
-  const trustedHtml = ttPolicy?.createHTML(script.outerHTML) ?? script.outerHTML;
+  const trustedHtml = ttPolicy?.createHTML(scriptVal) ?? scriptVal;
   element.innerHTML = trustedHtml;
   container.appendChild(element);
   domEval(element);
@@ -1402,7 +1393,6 @@ function renderText(outputInfo, container, ctx) {
 var activate = (ctx) => {
   const disposables = new Map();
   const htmlHooks = new Set();
-  const jsHooks = new Set();
   const latestContext = ctx;
   const style = document.createElement("style");
   style.textContent = `
@@ -1446,23 +1436,25 @@ var activate = (ctx) => {
 	`;
   document.body.appendChild(style);
   return {
-    renderOutputItem: async (outputInfo, element, signal) => {
+    renderOutputItem: (outputInfo, element) => {
       switch (outputInfo.mime) {
         case "text/html":
-        case "image/svg+xml": {
-          if (!ctx.workspace.isTrusted) {
-            return;
+        case "image/svg+xml":
+          {
+            if (!ctx.workspace.isTrusted) {
+              return;
+            }
+            renderHTML(outputInfo, element, htmlHooks);
           }
-          await renderHTML(outputInfo, element, signal, htmlHooks);
           break;
-        }
-        case "application/javascript": {
-          if (!ctx.workspace.isTrusted) {
-            return;
+        case "application/javascript":
+          {
+            if (!ctx.workspace.isTrusted) {
+              return;
+            }
+            renderJavascript(outputInfo, element);
           }
-          renderJavascript(outputInfo, element, signal, jsHooks);
           break;
-        }
         case "image/gif":
         case "image/png":
         case "image/jpeg":
@@ -1511,14 +1503,6 @@ var activate = (ctx) => {
       return {
         dispose: () => {
           htmlHooks.delete(hook);
-        }
-      };
-    },
-    experimental_registerJavaScriptRenderingHook: (hook) => {
-      jsHooks.add(hook);
-      return {
-        dispose: () => {
-          jsHooks.delete(hook);
         }
       };
     }
