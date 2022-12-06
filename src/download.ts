@@ -33,8 +33,9 @@ const vscodeTestDir = path.resolve(extensionRoot, 'vscode');
 
 
 async function getLatestVersion(quality: 'stable' | 'insider'): Promise<DownloadInfo> {
-	const update: DownloadInfo = await fetchJSON(`https://update.code.visualstudio.com/api/update/web-standalone/${quality}/latest`);
-	return update;
+	// const update: DownloadInfo = await fetchJSON(`https://update.code.visualstudio.com/api/update/web-standalone/${quality}/latest`);
+	// return update;
+	return Promise.resolve({ url: `https://update.code.visualstudio.com/commit:da76f93349a72022ca4670c1b84860304616aaa2/web-standalone/${quality}`, version: "64bbfbf67ada9953918d72e1df2f4d8e537d340e" });
 }
 
 const reset = '\x1b[G\x1b[0K';
