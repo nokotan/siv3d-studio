@@ -186,7 +186,13 @@ class CustomBuildTaskTerminal {
     }
     close() {
     }
+    handleInput(data) {
+        this.writeEmitter.fire(data + "\u001b[0;0H");
+    }
     async doBuild() {
+        if (!this.definition) {
+            return;
+        }
         if (!this.definition.files) {
             this.definition.files = ["**/*.cpp"];
         }
@@ -207,7 +213,7 @@ class CustomBuildTaskTerminal {
         const files = await Promise.all(filePromises);
         const outputs = await service_1.Service.compileFiles(files, service_1.Language.Cpp, service_1.Language.Wasm, this.definition.flags.join(" "));
         const outputFile = vscode.Uri.parse(`${this.workspaceRoot.toString()}/${outputFileName}`);
-        this.writeEmitter.fire(outputs.console.replace(/\n/g, "\r\n"));
+        this.writeEmitter.fire(outputs.console.replace(/\n\//g, "\n./").replace(/\n/g, "\r\n"));
         await vscode.workspace.fs.writeFile(outputFile, new Uint8Array(outputs.files["a.wasm"]));
         if (outputs.success) {
             this.writeEmitter.fire(`'${outputFileName}' is successfully emitted.\r\n`);
@@ -16781,10 +16787,7 @@ function activate(context) {
         provideTerminalProfile(token) {
             return new vscode.TerminalProfile({
                 name: "emcc terminal",
-                pty: new taskProvider_1.CustomBuildTaskTerminal(workspaceRoot, {
-                    type: "emcc",
-                    flags: []
-                })
+                pty: new taskProvider_1.CustomBuildTaskTerminal(workspaceRoot)
             });
         }
     });

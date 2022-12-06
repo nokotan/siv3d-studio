@@ -19,7 +19,8 @@
     "onCommand:workbench.action.tasks.runTask",
     "onCommand:emcc.preview.show",
     "onCommand:emcc.compile.run",
-    "onWebviewPanel:emccPreview"
+    "onWebviewPanel:emccPreview",
+    "onTerminalProfile:emcc.terminal"
   ],
   "main": "./dist/extension.node.js",
   "browser": "./dist/extension.web.js",
