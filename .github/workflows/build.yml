@@ -46,7 +46,7 @@ jobs:
           name: siv3d-studio-app-bundle
           path: dev
       - run: |
-          sed -i -e "s|/siv3d-studio|/siv3d-studio/dev|g" dev/index.html
+          sed -i -e "s|https://siv3d.dev|https://siv3d.dev/dev|g" dev/index.html
           sed -i -e "s|https://siv3d-assets.kamenokosoft.com/v6|https://siv3d-assets.kamenokosoft.com/v6/dev|g" dev/index.html
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
