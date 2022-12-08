@@ -74,7 +74,7 @@ export type Entry = File | Directory;
 const textEncoder = new TextEncoder();
 
 export class MemFs implements FileSystemProvider, FileSearchProvider, TextSearchProvider, Disposable {
-	static scheme = 'memfs';
+	static scheme = 'vscode-remote';
 
 	private readonly disposable: Disposable;
 
@@ -90,7 +90,7 @@ export class MemFs implements FileSystemProvider, FileSearchProvider, TextSearch
 		this.disposable?.dispose();
 	}
 
-	root = new Directory(Uri.parse('memfs:/'), '');
+	root = new Directory(Uri.parse('vscode-remote:/'), '');
 
 	// --- manage file metadata
 

@@ -117,7 +117,7 @@ export class CustomBuildTaskTerminal implements vscode.Pseudoterminal {
 
         const outputs = await Service.compileFiles(files, Language.Cpp, Language.Wasm, this.definition.flags.join(" "));
 		const outputFile = vscode.Uri.parse(`${this.workspaceRoot.toString()}/${outputFileName}`);
-		this.writeEmitter.fire(outputs.console.replace(/\n\//g, "\n./").replace(/\n/g, "\r\n"));
+		this.writeEmitter.fire(outputs.console.replace(/\.\//g, `${this.workspaceRoot.path}/`).replace(/\n/g, "\r\n"));
 		await vscode.workspace.fs.writeFile(outputFile, new Uint8Array(outputs.files["a.wasm"] as ArrayBuffer));
 			
 		if (outputs.success) {
