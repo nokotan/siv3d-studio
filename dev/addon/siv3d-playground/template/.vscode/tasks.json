@@ -23,6 +23,7 @@
             },
             "problemMatcher": {
                 "owner": "gcc-problem-matcher",
+                "fileLocation": ["absolute"],
                 "pattern": [
                     {
                         "regexp": "^(.*?):(\\d+):(\\d*):?\\s+(?:fatal\\s+)?(warning|error):\\s+(.*)$",
