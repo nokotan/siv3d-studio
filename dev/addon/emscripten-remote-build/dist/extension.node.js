@@ -64,7 +64,7 @@ class PreviewPalel {
             return;
         }
         const parentFolder = path.dirname(htmlUrl.path);
-        const parentFolderUrl = htmlUrl.with({ path: parentFolder });
+        const parentFolderUrl = vscode.Uri.from({ scheme: "memfs", path: parentFolder });
         // Otherwise, create a new panel.
         const panel = vscode.window.createWebviewPanel(PreviewPalel.viewType, previewTabName, column || vscode.ViewColumn.One, {
             enableScripts: true,
@@ -86,7 +86,7 @@ class PreviewPalel {
         let rawcontent = await vscode.workspace.fs.readFile(this._htmlUrl);
         let content = this.textDecoder.decode(rawcontent);
         content = content.replace(/\bsrc\s*=\s*['"](.+?)['"]/g, (all, path) => {
-            const resourcePath = vscode.Uri.joinPath(this._parentUrl, path || "");
+            const resourcePath = vscode.Uri.joinPath(this._parentUrl, path || "").with({ scheme: "memfs" });
             const blobUrl = webview.asWebviewUri(resourcePath);
             if (!blobUrl) {
                 return all;
