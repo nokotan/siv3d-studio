@@ -10,7 +10,7 @@
   ],
   "private": true,
   "activationEvents": [
-    "onFileSystem:memfs",
+    "onFileSystem:vscode-remote",
     "onStartupFinished"
   ],
   "browser": "./dist/extension",
