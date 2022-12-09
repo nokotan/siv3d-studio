@@ -63,8 +63,8 @@ class PreviewPalel {
             PreviewPalel.reload();
             return;
         }
-        const parentFolder = path.dirname(vscode.workspace.asRelativePath(htmlUrl));
-        const parentFolderUrl = parentFolder === "." ? workspaceRoot : vscode.Uri.parse(`${workspaceRoot.toString()}/${parentFolder}`);
+        const parentFolder = path.dirname(htmlUrl.path);
+        const parentFolderUrl = htmlUrl.with({ path: parentFolder });
         // Otherwise, create a new panel.
         const panel = vscode.window.createWebviewPanel(PreviewPalel.viewType, previewTabName, column || vscode.ViewColumn.One, {
             enableScripts: true,
@@ -86,7 +86,8 @@ class PreviewPalel {
         let rawcontent = await vscode.workspace.fs.readFile(this._htmlUrl);
         let content = this.textDecoder.decode(rawcontent);
         content = content.replace(/\bsrc\s*=\s*['"](.+?)['"]/g, (all, path) => {
-            const blobUrl = webview.asWebviewUri(vscode.Uri.joinPath(this._parentUrl, path || ""));
+            const resourcePath = vscode.Uri.joinPath(this._parentUrl, path || "");
+            const blobUrl = webview.asWebviewUri(resourcePath);
             if (!blobUrl) {
                 return all;
             }
@@ -169,16 +170,6 @@ class CustomBuildTaskProvider {
 }
 exports.CustomBuildTaskProvider = CustomBuildTaskProvider;
 CustomBuildTaskProvider.CustomBuildScriptType = 'emcc';
-function asRelativePath(workspaceRoot, file) {
-    const workspaceRootPath = workspaceRoot.path + "/";
-    const filePath = file.path;
-    if (filePath.startsWith(workspaceRootPath)) {
-        return filePath.slice(workspaceRootPath.length);
-    }
-    else {
-        return filePath.split("/").pop() || "";
-    }
-}
 class CustomBuildTaskTerminal {
     constructor(workspaceRoot, definition, getSharedState, setSharedState) {
         this.workspaceRoot = workspaceRoot;
@@ -215,7 +206,7 @@ class CustomBuildTaskTerminal {
         const filePromises = fileURLs.map(async (url) => {
             const content = await vscode.workspace.fs.readFile(url);
             const text = this.textDecoder.decode(content);
-            const file = new models_1.File(asRelativePath(this.workspaceRoot, url), models_1.FileType.Cpp);
+            const file = new models_1.File(vscode.workspace.asRelativePath(url), models_1.FileType.Cpp);
             file.setData(text);
             return file;
         });
