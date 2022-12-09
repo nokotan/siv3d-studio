@@ -63,17 +63,6 @@ export class CustomBuildTaskProvider implements vscode.TaskProvider {
 	}
 }
 
-function asRelativePath(workspaceRoot: vscode.Uri, file: vscode.Uri) {
-	const workspaceRootPath = workspaceRoot.path + "/";
-	const filePath = file.path;
-
-	if (filePath.startsWith(workspaceRootPath)) {
-		return filePath.slice(workspaceRootPath.length);
-	} else {
-		return filePath.split("/").pop() || "";
-	}
-}
-
 export class CustomBuildTaskTerminal implements vscode.Pseudoterminal {
 	private writeEmitter = new vscode.EventEmitter<string>();
 	onDidWrite: vscode.Event<string> = this.writeEmitter.event;
@@ -117,7 +106,7 @@ export class CustomBuildTaskTerminal implements vscode.Pseudoterminal {
         const filePromises = fileURLs.map(async url => {
             const content = await vscode.workspace.fs.readFile(url);
             const text = this.textDecoder.decode(content);
-            const file = new File(asRelativePath(this.workspaceRoot, url), FileType.Cpp);
+            const file = new File(vscode.workspace.asRelativePath(url), FileType.Cpp);
             file.setData(text);
             return file;
         });

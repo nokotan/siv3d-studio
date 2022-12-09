@@ -41,8 +41,8 @@ class PreviewPalel {
 			return;
 		}
 
-        const parentFolder = path.dirname(vscode.workspace.asRelativePath(htmlUrl));
-        const parentFolderUrl = parentFolder === "." ? workspaceRoot : vscode.Uri.parse(`${workspaceRoot.toString()}/${parentFolder}`);
+        const parentFolder = path.dirname(htmlUrl.path);
+        const parentFolderUrl = htmlUrl.with({ path: parentFolder });
 
 		// Otherwise, create a new panel.
 		const panel = vscode.window.createWebviewPanel(
@@ -91,7 +91,8 @@ class PreviewPalel {
         let content = this.textDecoder.decode(rawcontent);
 
         content = content.replace(/\bsrc\s*=\s*['"](.+?)['"]/g, (all: string, path?: string) => {
-            const blobUrl = webview.asWebviewUri(vscode.Uri.joinPath(this._parentUrl, path || ""));
+			const resourcePath = vscode.Uri.joinPath(this._parentUrl, path || "");
+            const blobUrl = webview.asWebviewUri(resourcePath);
             if (!blobUrl) {
               return all;
             }

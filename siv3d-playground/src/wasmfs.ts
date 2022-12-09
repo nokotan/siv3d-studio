@@ -36,8 +36,9 @@ export class WasmMemFs implements FileSystemProvider, FileSearchProvider, Dispos
         this.wasmFs = new WasmFs();
 
         this.disposable = Disposable.from(
+            workspace.registerFileSystemProvider("memfs", this, { isCaseSensitive: true }),
             workspace.registerFileSystemProvider("vscode-remote", this, { isCaseSensitive: true }),
-            workspace.registerFileSearchProvider("vscode-remote", this)
+            workspace.registerFileSearchProvider("memfs", this)
         );
     }
 
@@ -190,7 +191,7 @@ export class WasmMemFs implements FileSystemProvider, FileSearchProvider, Dispos
     private _getFiles(): Set<[Dirent, Uri]> {
 		const files = new Set<[Dirent, Uri]>();
 
-		this._doGetFiles(Uri.parse("vscode-remote:/"), files);
+		this._doGetFiles(Uri.parse("memfs:/"), files);
 
 		return files;
 	}

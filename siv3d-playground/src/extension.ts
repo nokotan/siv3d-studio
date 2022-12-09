@@ -46,7 +46,7 @@ export async function activate(context: vscode.ExtensionContext) {
 		});
 
 		const memFs = enableFs(context);
-		memFs.createDirectory(vscode.Uri.parse("vscode-remote:/siv3d-playground"));
+		memFs.createDirectory(vscode.Uri.parse("memfs:/siv3d-playground"));
 
 		const workspaceRoot = (vscode.workspace.workspaceFolders && (vscode.workspace.workspaceFolders.length > 0))
 			? vscode.workspace.workspaceFolders[0] : undefined;
