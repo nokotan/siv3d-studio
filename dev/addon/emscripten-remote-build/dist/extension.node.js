@@ -169,6 +169,16 @@ class CustomBuildTaskProvider {
 }
 exports.CustomBuildTaskProvider = CustomBuildTaskProvider;
 CustomBuildTaskProvider.CustomBuildScriptType = 'emcc';
+function asRelativePath(workspaceRoot, file) {
+    const workspaceRootPath = workspaceRoot.path + "/";
+    const filePath = file.path;
+    if (filePath.startsWith(workspaceRootPath)) {
+        return filePath.slice(workspaceRootPath.length);
+    }
+    else {
+        return filePath.split("/").pop() || "";
+    }
+}
 class CustomBuildTaskTerminal {
     constructor(workspaceRoot, definition, getSharedState, setSharedState) {
         this.workspaceRoot = workspaceRoot;
@@ -205,7 +215,7 @@ class CustomBuildTaskTerminal {
         const filePromises = fileURLs.map(async (url) => {
             const content = await vscode.workspace.fs.readFile(url);
             const text = this.textDecoder.decode(content);
-            const file = new models_1.File(url.toString(), models_1.FileType.Cpp);
+            const file = new models_1.File(asRelativePath(this.workspaceRoot, url), models_1.FileType.Cpp);
             file.setData(text);
             return file;
         });
@@ -1408,7 +1418,7 @@ class EmscriptenService {
         for (let i = 0; i < inputFile.length; i++) {
             compiledFiles.push({
                 type: inputFile[i].split(".").pop(),
-                name: inputFile[i].split("/").pop(),
+                name: inputFile[i],
                 options: input.options,
                 src: files[i].content,
             });
