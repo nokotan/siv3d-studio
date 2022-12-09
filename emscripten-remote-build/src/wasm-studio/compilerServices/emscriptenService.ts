@@ -43,7 +43,7 @@ export class EmscriptenService implements CompilerService {
     for (let i = 0; i < inputFile.length; i++) {
       compiledFiles.push({
         type: inputFile[i].split(".").pop(),
-        name: inputFile[i].split("/").pop(),
+        name: inputFile[i],
         options: input.options,
         src: files[i].content,
       });
