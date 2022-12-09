@@ -81,9 +81,11 @@ export class MemFs implements FileSystemProvider, FileSearchProvider, TextSearch
 	constructor() {
 		this.disposable = Disposable.from(
 			workspace.registerFileSystemProvider(MemFs.scheme, this, { isCaseSensitive: true }),
-			workspace.registerFileSystemProvider("vscode-remote", this, { isCaseSensitive: true }),
 			workspace.registerFileSearchProvider(MemFs.scheme, this),
-			workspace.registerTextSearchProvider(MemFs.scheme, this)
+			workspace.registerTextSearchProvider(MemFs.scheme, this),
+			workspace.registerFileSystemProvider("vscode-remote", this, { isCaseSensitive: true }),
+			workspace.registerFileSearchProvider("vscode-remote", this),
+			workspace.registerTextSearchProvider("vscode-remote", this),
 		);
 	}
 

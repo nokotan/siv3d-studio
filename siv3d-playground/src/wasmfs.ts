@@ -37,8 +37,9 @@ export class WasmMemFs implements FileSystemProvider, FileSearchProvider, Dispos
 
         this.disposable = Disposable.from(
             workspace.registerFileSystemProvider("memfs", this, { isCaseSensitive: true }),
+            workspace.registerFileSearchProvider("memfs", this),
             workspace.registerFileSystemProvider("vscode-remote", this, { isCaseSensitive: true }),
-            workspace.registerFileSearchProvider("memfs", this)
+            workspace.registerFileSearchProvider("vscode-remote", this),
         );
     }
 
