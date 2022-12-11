@@ -2,10 +2,11 @@
   "name": "siv3d-studio",
   "version": "0.0.2",
   "description": "",
-  "main": "out/index.js",
+  "main": "out/main.js",
   "scripts": {
     "compile": "tsc",
-    "serve": "cd vscode/vscode-web && http-server --cors"
+    "pack": "node out/main.js",
+    "serve": "cd vscode/vscode-web && http-server --cors --ssl"
   },
   "keywords": [],
   "author": "",

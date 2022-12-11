@@ -15,6 +15,7 @@
 import * as vscode from 'vscode';
 import { loadAdditionalAssets, loadInitialAssets } from './initialFiles';
 import { MemFs } from './memfs';
+import { WasmPseudoTerminal } from './terminal';
 import { WasmMemFs } from './wasmfs';
 
 declare const navigator: unknown;
@@ -60,6 +61,17 @@ export async function activate(context: vscode.ExtensionContext) {
 				seedWorkspace(context, memFs, workspace);
 			}
 		});
+
+		vscode.window.registerTerminalProfileProvider('wasm.terminal', {
+			provideTerminalProfile(
+			  token: vscode.CancellationToken
+			): vscode.ProviderResult<vscode.TerminalProfile> {
+			  return new vscode.TerminalProfile({
+				name: "wasm terminal",
+				pty: new WasmPseudoTerminal(memFs.wasmFs)
+			  });
+			}
+		});  
 	}
 }
 

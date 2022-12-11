@@ -4,7 +4,7 @@
 		"module": "commonjs",
 		"moduleResolution": "node",
 		"outDir": "dist",
-		"lib": [ "es2020", "WebWorker" ],
+		"lib": [ "es2020", "WebWorker", "DOM" ],
 		"sourceMap": true
 	},
 

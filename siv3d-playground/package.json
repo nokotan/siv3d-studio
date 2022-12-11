@@ -10,8 +10,10 @@
   ],
   "private": true,
   "activationEvents": [
-    "onFileSystem:vscode-remote",
-    "onStartupFinished"
+    "onFileSystem:memfs",
+    "onFileSystem:memfs",
+    "onStartupFinished",
+    "onTerminalProfile:wasm.terminal"
   ],
   "browser": "./dist/extension",
   "engines": {
@@ -57,6 +59,14 @@
           "group": "navigation"
         }
       ]
+    },
+    "terminal": {
+      "profiles": [
+        {
+          "title": "wasm terminal",
+          "id": "wasm.terminal"
+        }
+      ]
     }
   },
   "scripts": {
@@ -72,6 +82,11 @@
     "webpack-cli": "^4.10.0"
   },
   "dependencies": {
-    "@wasmer/wasmfs": "^0.12.0"
+    "@wasmer/io-devices": "^0.12.0",
+    "@wasmer/wasi": "^0.12.0",
+    "@wasmer/wasmfs": "^0.12.0",
+    "comlink": "^4.0.5",
+    "shell-parse": "0.0.2",
+    "shell-quote": "^1.7.1"
   }
 }

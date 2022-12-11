@@ -50,7 +50,6 @@ export class WasmMemFs implements FileSystemProvider, FileSearchProvider, Dispos
     // --- manage file metadata
 
     stat(uri: Uri): Promise<FileStat> {
-        console.log(`stat: ${uri}`);
         return new Promise((c, e) => {
             this.wasmFs.fs.stat(uri.path, (err, stats) => {
                 if (err) {
@@ -77,7 +76,6 @@ export class WasmMemFs implements FileSystemProvider, FileSearchProvider, Dispos
 	}
 
     readDirectory(uri: Uri): Promise<[string, FileType][]> {
-        console.log(`readDirectory: ${uri}`);
         return new Promise((c, e) => {
             this.wasmFs.fs.readdir(uri.path, { withFileTypes: true }, (err, children) => {
                 if (err) {
@@ -101,12 +99,10 @@ export class WasmMemFs implements FileSystemProvider, FileSearchProvider, Dispos
     // --- manage file contents
 
     readFile(uri: Uri): Uint8Array {
-        console.log(`readFile: ${uri}`);
         return this.wasmFs.fs.readFileSync(uri.path, { encoding: "buffer" }) as Buffer;
     }
 
     writeFile(uri: Uri, content: Uint8Array, options: { create: boolean, overwrite: boolean }): void {
-        console.log(`writeFile: ${uri}`);
         const filePath = uri.path;
 
         // Validate target unless { create: true, overwrite: true }
@@ -135,7 +131,6 @@ export class WasmMemFs implements FileSystemProvider, FileSearchProvider, Dispos
 	// --- manage files/folders
 
 	rename(oldUri: Uri, newUri: Uri, options: { overwrite: boolean }): void {
-        console.log(`rename: ${newUri}`);
         this.wasmFs.fs.renameSync(oldUri.path, newUri.path);
         this._fireSoon(
 			{ type: FileChangeType.Deleted, uri: oldUri },
@@ -144,13 +139,11 @@ export class WasmMemFs implements FileSystemProvider, FileSearchProvider, Dispos
     }
 
     delete(uri: Uri): void {
-        console.log(`delete: ${uri}`);
         this.wasmFs.fs.rmdirSync(uri.path, { recursive: true });
         this._fireSoon({ uri, type: FileChangeType.Deleted });
     }
 
     createDirectory(uri: Uri): void {
-        console.log(`createDirectory: ${uri}`);
         this.wasmFs.fs.mkdirSync(uri.path);
         this._fireSoon({ type: FileChangeType.Created, uri });
     }
@@ -220,8 +213,6 @@ export class WasmMemFs implements FileSystemProvider, FileSearchProvider, Dispos
 
 		for (const file of files) {
 			if (!pattern || pattern.exec(file[0].name)) {
-                console.log(file[0]);
-                console.log(file[1]);
 				result.push(file[1]);
 			}
 		}
