@@ -17,6 +17,7 @@ module.exports = /** @type WebpackConfig */ {
 	target: 'webworker', // extensions run in a webworker context
 	entry: {
 		extension: './src/extension.ts',
+		webworker: './wasm-terminal/src/workers/process.worker.ts'
 	},
 	resolve: {
 		mainFields: ['module', 'main'],
@@ -43,12 +44,13 @@ module.exports = /** @type WebpackConfig */ {
 	},
 	externals: {
 		'vscode': 'commonjs vscode', // ignored because it doesn't exist
+		'util': 'commonjs util', // ignored because it doesn't exist
 	},
 	performance: {
 		hints: false
 	},
 	output: {
-		filename: 'extension.js',
+		filename: '[name].js',
 		path: path.join(__dirname, 'dist'),
 		libraryTarget: 'commonjs'
 	},
