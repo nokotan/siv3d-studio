@@ -91,6 +91,14 @@
     "process": "^0.11.10",
     "shell-parse": "0.0.2",
     "shell-quote": "^1.7.1",
-    "util": "^0.12.5"
+    "util": "^0.12.5",
+    "@wasmer/wasm-transformer": "^0.10.0",
+    "idb-keyval": "^3.2.0",
+    "normalize.css": "^8.0.1",
+    "preact": "^8.5.2",
+    "preact-compat": "^3.17.0",
+    "preact-render-to-string": "^4.1.0",
+    "save-file": "^2.3.1",
+    "text-table": "^0.2.0"
   }
 }
