@@ -137,6 +137,15 @@ export async function downloadAndUnzipVSCode(quality: 'stable' | 'insider'): Pro
 	return { type: 'static', location: downloadedPath, quality, version: info.version };
 }
 
+function hasStdOut(object: unknown): object is { stdout: string, stderr: string } {
+	const arg = object as any;
+
+	return arg !== null
+		&& typeof arg === "object"
+		&& typeof arg.stdout === "string"
+		&& typeof arg.stderr === "string";
+}
+
 export async function buildExtension(extensionName: string): Promise<void> {
 	
 	const folderName = `vscode-web/addon/${extensionName}`;
@@ -144,10 +153,14 @@ export async function buildExtension(extensionName: string): Promise<void> {
 	const tmpArchiveName = path.resolve(extensionName, `${extensionName}.tgz`);
 
 	try {
-		execSync(`cd ${extensionName} && npm install && npm pack && mv ${extensionName}-*.tgz ${extensionName}.tgz`);
+		const stdout = execSync(`cd ${extensionName} && npm install && npm pack && mv ${extensionName}-*.tgz ${extensionName}.tgz`, { encoding: "utf8" });
+		console.log(stdout);
 		await unzip(tmpArchiveName, downloadedPath, `Unpacking ${extensionName}`);
 	} catch (err) {
-		console.error(err);
+		if (hasStdOut(err)) {
+			console.log(err.stdout);
+			console.log(err.stderr);
+		}
 		throw Error(`Failed to download and unpack ${extensionName}`);
 	} finally {
 		try {
