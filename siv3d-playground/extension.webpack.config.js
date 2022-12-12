@@ -10,6 +10,7 @@
 /** @typedef {import('webpack').Configuration} WebpackConfig **/
 
 const path = require('path');
+const webpack = require('webpack');
 
 module.exports = /** @type WebpackConfig */ {
 	context: __dirname,
@@ -21,10 +22,20 @@ module.exports = /** @type WebpackConfig */ {
 	},
 	resolve: {
 		mainFields: ['module', 'main'],
-		extensions: ['.ts', '.js'], // support ts-files and js-files
-		alias: {
+		extensions: ['.ts', '.js', '.json'], // support ts-files and js-files
+		fallback: {
+			path: false,
+			util: false,
+			fs: false,
+			constants: false,
 		}
 	},
+	plugins: [
+		new webpack.ProvidePlugin({
+			process: 'process/browser',
+			Buffer: [ 'buffer', 'Buffer' ]
+		}),
+	],
 	module: {
 		rules: [{
 			test: /\.ts$/,
@@ -44,7 +55,6 @@ module.exports = /** @type WebpackConfig */ {
 	},
 	externals: {
 		'vscode': 'commonjs vscode', // ignored because it doesn't exist
-		'util': 'commonjs util', // ignored because it doesn't exist
 	},
 	performance: {
 		hints: false

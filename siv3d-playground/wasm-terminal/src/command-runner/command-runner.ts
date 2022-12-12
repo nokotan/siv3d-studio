@@ -60,8 +60,8 @@ export default class CommandRunner {
     this.isRunning = false;
     this.supportsSharedArrayBuffer =
       this.wasmTerminalConfig.processWorkerUrl &&
-      (window as any).SharedArrayBuffer &&
-      (window as any).Atomics;
+      typeof SharedArrayBuffer !== "undefined" &&
+      typeof Atomics !== "undefined";
   }
 
   async runCommand() {
@@ -427,7 +427,7 @@ export default class CommandRunner {
 
     // Create the worker blob and URL
     const workerBlob = new Blob([workerString as any]);
-    processWorkerBlobUrl = window.URL.createObjectURL(workerBlob);
+    processWorkerBlobUrl = URL.createObjectURL(workerBlob);
     return processWorkerBlobUrl;
   }
 
