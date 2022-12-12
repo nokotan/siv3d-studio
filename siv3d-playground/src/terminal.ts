@@ -13,7 +13,7 @@ export class WasmPseudoTerminal implements vscode.Pseudoterminal {
 	private wapm: WAPM;
 	private callback?: (data: string) => void;
 
-	constructor(fs: WasmFs) {
+	constructor(fs: WasmFs, processWorkerUrl: vscode.Uri) {
 		const bindedThis = this;
 
 		this.textDecoder = new TextDecoder();
@@ -23,7 +23,7 @@ export class WasmPseudoTerminal implements vscode.Pseudoterminal {
             },
             wasmFs: fs,
             tty: this,
-			processWorkerUrl: "dist/webworker.js"
+			processWorkerUrl: processWorkerUrl.toString()
         });
 		this.wapm = new WAPM(this.terminal, fs);
 	}

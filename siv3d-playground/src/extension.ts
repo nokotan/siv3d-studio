@@ -68,7 +68,7 @@ export async function activate(context: vscode.ExtensionContext) {
 			): vscode.ProviderResult<vscode.TerminalProfile> {
 			  return new vscode.TerminalProfile({
 				name: "wasm terminal",
-				pty: new WasmPseudoTerminal(memFs.wasmFs)
+				pty: new WasmPseudoTerminal(memFs.wasmFs, vscode.Uri.joinPath(context.extensionUri, "dist/webworker.js"))
 			  });
 			}
 		});  
@@ -83,9 +83,6 @@ async function seedWorkspace(context: vscode.ExtensionContext, memFs: vscode.Fil
 	
 	await loadInitialAssets(memFs, workspaceRoot, context.extensionUri);
 	vscode.commands.executeCommand('vscode.open', vscode.Uri.joinPath(workspaceRoot, "src/Main.cpp"), openOptions);
-	vscode.commands.executeCommand('workbench.action.terminal.newWithProfile', {
-		"profileName": "emcc terminal"
-	});
 	// vscode.commands.executeCommand("emcc.preview.show", vscode.Uri.joinPath(workspaceRoot, "main.html"), "Siv3D Preview");
 	await loadAdditionalAssets(memFs, workspaceRoot);
 }
