@@ -13,6 +13,8 @@ import WasmTty from "../wasm-tty/wasm-tty";
 
 import IoDeviceWindow from "../io-device-window/io-device-window";
 
+import * as vscode from "vscode";
+
 /*ROLLUP_REPLACE_INLINE
 // @ts-ignore
 import processWorkerInlinedUrl from "../../lib/workers/process.worker.js";
@@ -417,7 +419,7 @@ export default class CommandRunner {
 
     // Fetch the worker, but at least show the message for a short while
     const workerString = await Promise.all([
-      fetch(processWorkerUrl).then(response => response.text()),
+      vscode.workspace.fs.readFile(vscode.Uri.parse(processWorkerUrl)).then(buffer => new TextDecoder().decode(buffer)),
       new Promise(resolve => setTimeout(resolve, 500))
     ]).then(responses => responses[0]);
 
