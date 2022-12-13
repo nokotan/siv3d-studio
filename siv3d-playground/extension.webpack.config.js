@@ -17,14 +17,24 @@ module.exports = /** @type WebpackConfig */ {
 	mode: 'none', // this leaves the source code as close as possible to the original (when packaging we set this to 'production')
 	target: 'webworker', // extensions run in a webworker context
 	entry: {
-		extension: './src/extension.ts',
-		webworker: './wasm-terminal/src/workers/process.worker.ts'
+		extension: {
+			import: './src/extension.ts',
+			library: {
+				type: 'commonjs2'
+			}
+		},
+		webworker: {
+			import: './wasm-terminal/src/workers/process.worker.ts',
+			library: {
+				name: "webworker",
+				type: 'var'
+			}
+		}
 	},
 	resolve: {
 		mainFields: ['module', 'main'],
 		extensions: ['.ts', '.js', '.json'], // support ts-files and js-files
 		fallback: {
-			path: false,
 			util: false,
 			fs: false,
 			constants: false,
@@ -33,7 +43,8 @@ module.exports = /** @type WebpackConfig */ {
 	plugins: [
 		new webpack.ProvidePlugin({
 			process: 'process/browser',
-			Buffer: [ 'buffer', 'Buffer' ]
+			Buffer: [ 'buffer', 'Buffer' ],
+			path: 'path-browserify'
 		}),
 	],
 	module: {
@@ -60,9 +71,7 @@ module.exports = /** @type WebpackConfig */ {
 		hints: false
 	},
 	output: {
-		filename: '[name].js',
-		path: path.join(__dirname, 'dist'),
-		libraryTarget: 'commonjs2'
+		path: path.join(__dirname, 'dist')
 	},
 	devtool: 'source-map'
 };
