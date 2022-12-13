@@ -21,7 +21,8 @@ module.exports = /** @type WebpackConfig */ {
 			import: './src/extension.ts',
 			library: {
 				name: "extension",
-				type: 'commonjs2'
+				type: 'commonjs2',
+				export: 'default'
 			}
 		},
 		webworker: {
@@ -72,7 +73,7 @@ module.exports = /** @type WebpackConfig */ {
 		hints: false
 	},
 	output: {
-		path: path.join(__dirname, 'dist'),
+		path: path.join(__dirname, 'dist')
 	},
 	devtool: 'source-map'
 };
