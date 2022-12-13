@@ -62,7 +62,7 @@ module.exports = /** @type WebpackConfig */ {
 	output: {
 		filename: '[name].js',
 		path: path.join(__dirname, 'dist'),
-		libraryTarget: 'commonjs'
+		libraryTarget: 'commonjs2'
 	},
 	devtool: 'source-map'
 };
