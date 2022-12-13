@@ -17,8 +17,20 @@ module.exports = /** @type WebpackConfig */ {
 	mode: 'none', // this leaves the source code as close as possible to the original (when packaging we set this to 'production')
 	target: 'webworker', // extensions run in a webworker context
 	entry: {
-		extension: './src/extension.ts',
-		webworker: './wasm-terminal/src/workers/process.worker.ts'
+		extension: {
+			import: './src/extension.ts',
+			library: {
+				name: "extension",
+				type: 'commonjs2'
+			}
+		},
+		webworker: {
+			import: './wasm-terminal/src/workers/process.worker.ts',
+			library: {
+				name: "webworker",
+				type: 'var'
+			}
+		}
 	},
 	resolve: {
 		mainFields: ['module', 'main'],
@@ -60,9 +72,7 @@ module.exports = /** @type WebpackConfig */ {
 		hints: false
 	},
 	output: {
-		filename: '[name].js',
 		path: path.join(__dirname, 'dist'),
-		libraryTarget: 'commonjs2'
 	},
 	devtool: 'source-map'
 };
