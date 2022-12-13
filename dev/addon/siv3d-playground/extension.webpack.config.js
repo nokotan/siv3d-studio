@@ -20,9 +20,7 @@ module.exports = /** @type WebpackConfig */ {
 		extension: {
 			import: './src/extension.ts',
 			library: {
-				name: "extension",
-				type: 'commonjs2',
-				export: 'default'
+				type: 'commonjs2'
 			}
 		},
 		webworker: {
