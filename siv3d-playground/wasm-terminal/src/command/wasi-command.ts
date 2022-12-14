@@ -5,6 +5,8 @@ import { WasmFs } from "@wasmer/wasmfs";
 import Command from "./command";
 import CommandOptions from "./command-options";
 
+import * as path from "path";
+
 export default class WASICommand extends Command {
   constructor(options: CommandOptions) {
     super(options);
@@ -25,7 +27,8 @@ export default class WASICommand extends Command {
       args: this.options.args,
       bindings: {
         ...WASI.defaultBindings,
-        fs: wasmFs.fs
+        fs: wasmFs.fs,
+        path
       }
     };
     const wasi = new WASI(options);
