@@ -35,7 +35,7 @@ module.exports = /** @type WebpackConfig */ {
 		mainFields: ['module', 'main'],
 		extensions: ['.ts', '.js', '.json'], // support ts-files and js-files
 		fallback: {
-			path: "path-browserify",
+			path: require.resolve("path-browserify"),
 			util: false,
 			fs: false,
 			constants: false,
@@ -44,7 +44,7 @@ module.exports = /** @type WebpackConfig */ {
 	plugins: [
 		new webpack.ProvidePlugin({
 			process: 'process/browser',
-			Buffer: [ 'buffer', 'Buffer' ]
+			Buffer: [ 'buffer', 'Buffer' ],
 		}),
 	],
 	module: {
