@@ -6,3 +6,4 @@ wasm-terminal/**
 .gitignore
 webpack.config.js
 tsconfig.json
+extension.zip

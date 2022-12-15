@@ -28,9 +28,10 @@ export async function activate(context: vscode.ExtensionContext): Promise<Extens
 		provideTerminalProfile(
 			token: vscode.CancellationToken
 		): vscode.ProviderResult<vscode.TerminalProfile> {
+			const webWorkerPath = vscode.Uri.joinPath(context.extensionUri, "dist/webworker.js");
 			return new vscode.TerminalProfile({
 				name: "wasm terminal",
-				pty: new WasmPseudoTerminal(memFs.wasmFs, vscode.Uri.joinPath(context.extensionUri, "dist/webworker.js"))
+				pty: new WasmPseudoTerminal(memFs.wasmFs, webWorkerPath)
 			});
 		}
 	});
@@ -43,9 +44,10 @@ export async function activate(context: vscode.ExtensionContext): Promise<Extens
 			vscode.commands.executeCommand("vscode.openFolder", uri);
 		}),
 		vscode.commands.registerCommand("wasm-playground.openTerminal", function() {
-			vscode.window.createTerminal({
+			const webWorkerPath = vscode.Uri.joinPath(context.extensionUri, "dist/webworker.js");
+			return new vscode.TerminalProfile({
 				name: "wasm terminal",
-				pty: new WasmPseudoTerminal(memFs.wasmFs, vscode.Uri.joinPath(context.extensionUri, "dist/webworker.js"))
+				pty: new WasmPseudoTerminal(memFs.wasmFs, webWorkerPath)
 			});
 		})
 	);
