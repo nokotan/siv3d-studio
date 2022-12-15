@@ -12,22 +12,41 @@
   "activationEvents": [
     "onFileSystem:memfs",
     "onFileSystem:vscode-remote",
-    "onStartupFinished",
-    "onTerminalProfile:wasm.terminal"
+    "onTerminalProfile:wasm.terminal",
+    "onCommand:wasm-playground.openRootFolder",
+    "onCommand:wasm-playground.openFolder",
+    "onCommand:wasm-playground.openTerminal"
   ],
   "browser": "./dist/extension",
   "engines": {
     "vscode": "^1.48.0"
   },
   "contributes": {
+    "commands": [
+      {
+        "command": "wasm-playground.openRootFolder",
+        "title": "Open WebAssembly Playground Root Folder",
+        "category": "File"
+      },
+      {
+        "command": "wasm-playground.openFolder",
+        "title": "Open WebAssembly Playground Folder",
+        "category": "File"
+      },
+      {
+        "command": "wasm-playground.openTerminal",
+        "title": "Open WebAssembly.sh",
+        "category": "Ternimal"
+      }
+    ],
     "viewsWelcome": [
       {
         "view": "explorer",
-        "contents": "Open workspace in virtual file system."
+        "contents": "[Open WebAssembly Playground](command:wasm-playground.openRootFolder)"
       },
       {
         "view": "terminal",
-        "contents": "Create WebAssembly.sh."
+        "contents": "[Create WebAssembly.sh](command:wasm-playground.openTerminal)"
       }
     ],
     "terminal": {
