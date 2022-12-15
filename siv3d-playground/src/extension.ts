@@ -14,9 +14,7 @@
 
 import * as vscode from 'vscode';
 import { loadAdditionalAssets, loadInitialAssets } from './initialFiles';
-import { MemFs } from './memfs';
-import { WasmPseudoTerminal } from './terminal';
-import { WasmMemFs } from './wasmfs';
+import { ExtensionContext } from '../../wasm-playground/src/extension';
 
 declare const navigator: unknown;
 
@@ -46,7 +44,18 @@ export async function activate(context: vscode.ExtensionContext) {
 			}
 		});
 
-		const memFs = enableFs(context);
+		const playgroundExtension = vscode.extensions.getExtension<ExtensionContext>("kamenokosoft.wasm-playground");
+
+		let extensionContext;
+
+		if (playgroundExtension.isActive) {
+			extensionContext = playgroundExtension.exports;
+		} else {
+			extensionContext = await playgroundExtension.activate();
+		}
+
+		const memFs = extensionContext.memFs;
+		
 		memFs.createDirectory(vscode.Uri.parse("memfs:/siv3d-playground"));
 
 		const workspaceRoot = (vscode.workspace.workspaceFolders && (vscode.workspace.workspaceFolders.length > 0))
@@ -61,17 +70,6 @@ export async function activate(context: vscode.ExtensionContext) {
 				seedWorkspace(context, memFs, workspace);
 			}
 		});
-
-		vscode.window.registerTerminalProfileProvider('wasm.terminal', {
-			provideTerminalProfile(
-			  token: vscode.CancellationToken
-			): vscode.ProviderResult<vscode.TerminalProfile> {
-			  return new vscode.TerminalProfile({
-				name: "wasm terminal",
-				pty: new WasmPseudoTerminal(memFs.wasmFs, vscode.Uri.joinPath(context.extensionUri, "dist/webworker.js"))
-			  });
-			}
-		});  
 	}
 }
 
@@ -85,11 +83,4 @@ async function seedWorkspace(context: vscode.ExtensionContext, memFs: vscode.Fil
 	vscode.commands.executeCommand('vscode.open', vscode.Uri.joinPath(workspaceRoot, "src/Main.cpp"), openOptions);
 	// vscode.commands.executeCommand("emcc.preview.show", vscode.Uri.joinPath(workspaceRoot, "main.html"), "Siv3D Preview");
 	await loadAdditionalAssets(memFs, workspaceRoot);
-}
-
-function enableFs(context: vscode.ExtensionContext) {
-	const memFs = new WasmMemFs();
-	context.subscriptions.push(memFs);
-
-	return memFs;
 }

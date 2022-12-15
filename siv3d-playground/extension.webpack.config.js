@@ -22,31 +22,12 @@ module.exports = /** @type WebpackConfig */ {
 			library: {
 				type: 'commonjs2'
 			}
-		},
-		webworker: {
-			import: './wasm-terminal/src/workers/process.worker.ts',
-			library: {
-				name: "webworker",
-				type: 'var'
-			}
 		}
 	},
 	resolve: {
 		mainFields: ['module', 'main'],
 		extensions: ['.ts', '.js', '.json'], // support ts-files and js-files
-		fallback: {
-			path: require.resolve("path-browserify"),
-			util: false,
-			fs: false,
-			constants: false,
-		}
 	},
-	plugins: [
-		new webpack.ProvidePlugin({
-			process: 'process/browser',
-			Buffer: [ 'buffer', 'Buffer' ],
-		}),
-	],
 	module: {
 		rules: [{
 			test: /\.ts$/,

@@ -1,4 +1,4 @@
-import packageJson from "../../../../package.json";
+import packageJson from "../../../../../package.json";
 import {
   reset,
   magenta,
@@ -26,8 +26,8 @@ ${magenta}       wwwwwwww
 ${magenta}           wwww              
 ${reset}`;
 
-const wasmShVersion = "0.0.0"; // packageJson.version;
-const wasmerWasmTerminalVersion = "0.0.0"; // packageJson.dependencies['@wasmer/wasm-terminal'].replace('^', '');
+const wasmShVersion = packageJson.version || "unknown";
+const wasmerWasmTerminalVersion = (packageJson.dependencies && packageJson.dependencies['@wasmer/wasm-terminal']) ? packageJson.dependencies['@wasmer/wasm-terminal'].replace('^', '') : "unknown";
 
 let welcomeMessage = `
 ${bold}WebAssembly.sh${reset} v${wasmShVersion}

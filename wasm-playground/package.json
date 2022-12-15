@@ -1,7 +1,7 @@
 {
-  "name": "siv3d-playground",
-  "description": "Siv3D playground for VS Code",
-  "version": "0.0.19",
+  "name": "wasm-playground",
+  "description": "WebAssembly + WASI + WAPM playground for VS Code",
+  "version": "0.0.1",
   "publisher": "KamenokoSoft",
   "license": "MIT",
   "enabledApiProposals": [
@@ -11,7 +11,7 @@
   "private": true,
   "activationEvents": [
     "onFileSystem:memfs",
-    "onFileSystem:memfs",
+    "onFileSystem:vscode-remote",
     "onStartupFinished",
     "onTerminalProfile:wasm.terminal"
   ],
@@ -20,46 +20,16 @@
     "vscode": "^1.48.0"
   },
   "contributes": {
-    "configuration": [
-      {
-        "title": "Siv3D Playground Settings",
-        "properties": {
-          "siv3d-playground.siv3d-assets-download-url": {
-            "type": "string",
-            "default": "https://siv3d-assets.kamenokosoft.com/v6",
-            "description": "Download URL of Siv3D for Web Assets"
-          }
-        }
-      }
-    ],
     "viewsWelcome": [
       {
-        "view": "debug",
-        "contents": "In order to run and debug you'll need to create a local workspace."
+        "view": "explorer",
+        "contents": "Open workspace in virtual file system."
       },
       {
         "view": "terminal",
-        "contents": "In order to run and debug you'll need to create a local workspace."
+        "contents": "Create WebAssembly.sh."
       }
     ],
-    "commands": [
-      {
-        "command": "siv3d-playground.compile.run",
-        "title": "Compile & Run",
-        "icon": "$(debug-start)",
-        "category": "navigation"
-      }
-    ],
-    "menus": {
-      "editor/title": [
-        {
-          "command": "siv3d-playground.compile.run",
-          "args": "emcc build",
-          "when": "resourceLangId == cpp",
-          "group": "navigation"
-        }
-      ]
-    },
     "terminal": {
       "profiles": [
         {
@@ -85,6 +55,7 @@
     "@wasmer/io-devices": "^0.12.0",
     "@wasmer/wasi": "^0.12.0",
     "@wasmer/wasmfs": "^0.12.0",
+    "@wasmer/wasm-transformer": "^0.10.0",
     "buffer": "^6.0.3",
     "comlink": "^4.0.5",
     "path-browserify": "^1.0.1",
@@ -92,7 +63,6 @@
     "shell-parse": "0.0.2",
     "shell-quote": "^1.7.1",
     "util": "^0.12.5",
-    "@wasmer/wasm-transformer": "^0.10.0",
     "idb-keyval": "^3.2.0",
     "normalize.css": "^8.0.1",
     "preact": "^8.5.2",

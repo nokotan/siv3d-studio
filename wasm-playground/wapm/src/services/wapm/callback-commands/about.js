@@ -1,4 +1,4 @@
-import packageJson from '../../../../package.json';
+import packageJson from '../../../../../package.json';
 import {reset, magenta, bold, underline, boldAndUnderline} from '../../../util/ansi';
 
 const message = `WebAssembly.sh is an open-source terminal that uses the WebAssembly Package Manager (WAPM) and local files to run server-side Wasm / WASI modules in a shell-like interface!
