@@ -35,6 +35,57 @@
 	</body>
 
 	<!-- Startup (do not modify order of script tags!) -->
+	<script>
+		const config = {
+			"additionalBuiltinExtensions": [
+				{
+					"scheme": "https",
+					"authority":"siv3d.dev/dev",
+					"path":"/addon/emscripten-remote-build"
+				},
+				{ 
+					"scheme": "https",
+					"authority":"siv3d.dev/dev",
+					"path":"/addon/siv3d-playground"
+				},
+				{ 
+					"scheme": "https",
+					"authority":"siv3d.dev/dev",
+					"path":"/addon/wasm-playground"
+				}
+			],
+			"folderUri": {
+				"$mid": 1,
+				"scheme":"vscode-remote",
+				"path":"/siv3d-playground"
+			},
+			"configurationDefaults": {
+				"workbench.activityBar.visible": false,
+				"workbench.startupEditor": "readme",
+				"extensions.ignoreRecommendations": true,
+				"siv3d-playground.siv3d-assets-download-url": "https://siv3d-assets.kamenokosoft.com/v6/dev",
+				"editor.fontFamily": "Menlo, Monaco, \"Courier New\", Meiryo, monospace"
+			},
+			"productConfiguration": {
+				"extensionsGallery": {
+					"serviceUrl": "https://open-vsx.org/vscode/gallery",
+					"itemUrl": "https://open-vsx.org/vscode/item"
+				},
+				"extensionEnabledApiProposals": {
+					"kamenokosoft.siv3d-playground": [
+						"fileSearchProvider",
+						"textSearchProvider"
+					],
+					"kamenokosoft.wasm-playground": [
+						"fileSearchProvider",
+						"textSearchProvider"
+					]
+				}
+			}
+		};
+		const configElement = document.querySelector("#vscode-workbench-web-configuration");
+		configElement.setAttribute("data-settings", JSON.stringify(config));
+	</script>
 	<script src="./out/vs/loader.js"></script>
 	<script src="./out/vs/webPackagePaths.js"></script>
 	<script>
