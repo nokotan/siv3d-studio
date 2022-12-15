@@ -19,4 +19,3 @@ Contributions of any kind are welcome! 👍
 ## License
 
 [Licensed under MIT](./LICENSE)
-
