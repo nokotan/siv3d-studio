@@ -153,8 +153,7 @@ export async function buildExtension(extensionName: string): Promise<void> {
 	const tmpArchiveName = path.resolve(extensionName, `${extensionName}.tgz`);
 
 	try {
-		const stdout = execSync(`cd ${extensionName} && npm install && npm pack && mv ${extensionName}-*.tgz ${extensionName}.tgz`, { encoding: "utf8" });
-		console.log(stdout);
+		execSync(`cd ${extensionName} && npm install && npm pack && mv ${extensionName}-*.tgz ${extensionName}.tgz`, { encoding: "utf8", stdio: "inherit" });
 		await unzip(tmpArchiveName, downloadedPath, `Unpacking ${extensionName}`);
 	} catch (err) {
 		if (hasStdOut(err)) {

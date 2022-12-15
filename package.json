@@ -14,7 +14,8 @@
   "private": true,
   "workspaces": [
     "emscripten-remote-build",
-    "siv3d-playground"
+    "siv3d-playground",
+    "wasm-playground"
   ],
   "devDependencies": {
     "@types/decompress": "^4.2.4",
