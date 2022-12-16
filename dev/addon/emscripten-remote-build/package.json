@@ -5,7 +5,7 @@
   "description": "",
   "repository": {
     "type": "git",
-    "url": "https://github.com/nokotan/emscripten-remote-build"
+    "url": "https://github.com/nokotan/siv3d-studio/tree/main/emscripten-remote-build"
   },
   "license": "MIT",
   "version": "0.0.6",
@@ -105,7 +105,7 @@
     "lint": "eslint src --ext ts",
     "test": "node ./out/test/runTest.js",
     "prepack": "npm run compile",
-    "vscode:pack": "vsce package -o ./extension"
+    "vscode:pack": "vsce package -o ./out/extension.zip --no-dependencies"
   },
   "devDependencies": {
     "@types/glob": "^7.2.0",
