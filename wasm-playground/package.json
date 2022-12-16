@@ -1,17 +1,13 @@
 {
   "name": "wasm-playground",
   "description": "WebAssembly + WASI + WAPM playground for VS Code",
-  "version": "0.0.1",
+  "version": "0.0.5",
   "publisher": "KamenokoSoft",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/nokotan/siv3d-studio/tree/main/wasm-playground"
   },
-  "enabledApiProposals": [
-    "fileSearchProvider",
-    "textSearchProvider"
-  ],
   "activationEvents": [
     "onFileSystem:memfs",
     "onFileSystem:vscode-remote",
@@ -65,6 +61,7 @@
     "compile": "webpack-cli --config extension.webpack.config --mode production",
     "watch": "webpack-cli --config extension.webpack.config --mode production --watch --info-verbosity verbose",
     "prepack": "npm run compile",
+    "vscode:prepublish": "npm run compile",
     "vscode:pack": "vsce package -o ./out/extension.zip --no-dependencies"
   },
   "devDependencies": {

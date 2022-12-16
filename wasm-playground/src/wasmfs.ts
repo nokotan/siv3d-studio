@@ -35,16 +35,26 @@ export class WasmMemFs implements FileSystemProvider, FileSearchProvider, Dispos
     constructor() {
         this.wasmFs = new WasmFs();
 
-        this.disposable = Disposable.from(
+        let disposables = [];
+
+        disposables.push(
             workspace.registerFileSystemProvider("memfs", this, { isCaseSensitive: true }),
-            workspace.registerFileSearchProvider("memfs", this),
             workspace.registerFileSystemProvider("vscode-remote", this, { isCaseSensitive: true }),
-            workspace.registerFileSearchProvider("vscode-remote", this),
         );
+
+        // if (workspace.registerFileSearchProvider) {
+        //     disposables.push(
+        //         workspace.registerFileSearchProvider("memfs", this),
+        //         workspace.registerFileSearchProvider("vscode-remote", this),
+        //     );
+        // }
+
+        this.disposable = Disposable.from(...disposables);
     }
 
     dispose() {
         delete this.wasmFs;
+        this.disposable.dispose();
     }
 
     // --- manage file metadata

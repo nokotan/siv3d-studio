@@ -91,7 +91,10 @@ class PreviewPalel {
         let content = this.textDecoder.decode(rawcontent);
 
         content = content.replace(/\bsrc\s*=\s*['"](.+?)['"]/g, (all: string, path?: string) => {
-			const resourcePath = vscode.Uri.joinPath(this._parentUrl, path || "").with({ scheme: "memfs" });
+			let resourcePath = vscode.Uri.joinPath(this._parentUrl, path || "");
+			if (resourcePath.scheme === "vscode-remote") {
+				resourcePath = resourcePath.with({ scheme: "memfs" });
+			}
             const blobUrl = webview.asWebviewUri(resourcePath);
             if (!blobUrl) {
               return all;

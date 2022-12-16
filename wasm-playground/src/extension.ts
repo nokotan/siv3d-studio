@@ -38,17 +38,22 @@ export async function activate(context: vscode.ExtensionContext): Promise<Extens
 
 	context.subscriptions.push(
 		vscode.commands.registerCommand("wasm-playground.openRootFolder", function() {
-			vscode.commands.executeCommand("vscode.openFolder", vscode.Uri.parse("vscode-remote:/"));
+			vscode.workspace.updateWorkspaceFolders(0, 0, { uri: vscode.Uri.parse("memfs:/")});
 		}),
-		vscode.commands.registerCommand("wasm-playground.openFolder", function(uri: vscode.Uri) {
-			vscode.commands.executeCommand("vscode.openFolder", uri);
+		vscode.commands.registerCommand("wasm-playground.openFolder", async function() {
+			const workspace = await vscode.window.showWorkspaceFolderPick();
+
+			if (workspace) {
+				vscode.workspace.updateWorkspaceFolders(0, 0, { uri: workspace.uri });
+			}
 		}),
 		vscode.commands.registerCommand("wasm-playground.openTerminal", function() {
 			const webWorkerPath = vscode.Uri.joinPath(context.extensionUri, "dist/webworker.js");
-			return new vscode.TerminalProfile({
+			const terminal = vscode.window.createTerminal({
 				name: "wasm terminal",
 				pty: new WasmPseudoTerminal(memFs.wasmFs, webWorkerPath)
 			});
+			terminal.show();
 		})
 	);
 	
