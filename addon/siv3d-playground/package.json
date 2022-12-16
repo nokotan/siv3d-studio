@@ -4,15 +4,23 @@
   "version": "0.0.19",
   "publisher": "KamenokoSoft",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nokotan/siv3d-studio/tree/main/siv3d-playground"
+  },
   "enabledApiProposals": [
     "fileSearchProvider",
     "textSearchProvider"
   ],
-  "private": true,
   "activationEvents": [
-    "onFileSystem:memfs"
+    "onFileSystem:memfs",
+    "onFileSystem:vscode-remote",
+    "onStartupFinished"
   ],
-  "browser": "./dist/extension",
+  "browser": "./dist/extension.js",
+  "capabilities": {
+    "virtualWorkspaces": true
+  },
   "engines": {
     "vscode": "^1.48.0"
   },
@@ -27,16 +35,6 @@
             "description": "Download URL of Siv3D for Web Assets"
           }
         }
-      }
-    ],
-    "viewsWelcome": [
-      {
-        "view": "debug",
-        "contents": "In order to run and debug you'll need to create a local workspace."
-      },
-      {
-        "view": "terminal",
-        "contents": "In order to run and debug you'll need to create a local workspace."
       }
     ],
     "commands": [
@@ -59,8 +57,8 @@
     }
   },
   "scripts": {
-    "compile": "yarn webpack-cli --config extension.webpack.config --mode production",
-    "watch": "yarn webpack-cli --config extension.webpack.config --mode production --watch --info-verbosity verbose",
+    "compile": "webpack-cli --config extension.webpack.config --mode production",
+    "watch": "webpack-cli --config extension.webpack.config --mode production --watch --info-verbosity verbose",
     "prepack": "npm run compile"
   },
   "devDependencies": {

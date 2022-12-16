@@ -17,7 +17,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
 
 		<!-- Workbench Configuration -->
-		<meta id="vscode-workbench-web-configuration" data-settings='{"additionalBuiltinExtensions":[{"scheme":"https","authority":"siv3d.dev","path":"/addon/emscripten-remote-build"},{"scheme":"https","authority":"siv3d.dev","path":"/addon/siv3d-playground"}],"folderUri":{"$mid":1,"path":"/siv3d-playground","scheme":"memfs"},"configurationDefaults":{"workbench.activityBar.visible":false,"workbench.startupEditor":"readme","extensions.ignoreRecommendations":true,"siv3d-playground.siv3d-assets-download-url":"https://siv3d-assets.kamenokosoft.com/v6","editor.fontFamily": "Menlo, Monaco, \"Courier New\", Meiryo, monospace"},"productConfiguration":{"extensionsGallery":{"serviceUrl":"https://open-vsx.org/vscode/gallery","itemUrl":"https://open-vsx.org/vscode/item"},"extensionEnabledApiProposals":{"kamenokosoft.siv3d-playground":["fileSearchProvider","textSearchProvider"]}}}'>
+		<meta id="vscode-workbench-web-configuration" data-settings='{"additionalBuiltinExtensions":[{"scheme":"https","authority":"siv3d.dev","path":"/addon/emscripten-remote-build"},{"scheme":"https","authority":"siv3d.dev","path":"/addon/siv3d-playground"}],"folderUri":{"$mid":1,"path":"/siv3d-playground","scheme":"vscode-remote"},"configurationDefaults":{"workbench.activityBar.visible":false,"workbench.startupEditor":"readme","extensions.ignoreRecommendations":true,"siv3d-playground.siv3d-assets-download-url":"https://siv3d-assets.kamenokosoft.com/v6","editor.fontFamily": "Menlo, Monaco, \"Courier New\", Meiryo, monospace"},"productConfiguration":{"extensionsGallery":{"serviceUrl":"https://open-vsx.org/vscode/gallery","itemUrl":"https://open-vsx.org/vscode/item"},"extensionEnabledApiProposals":{"kamenokosoft.siv3d-playground":["fileSearchProvider","textSearchProvider"]}}}'>
 
 		<!-- Workbench Auth Session -->
 		<meta id="vscode-workbench-auth-session" data-settings="">
@@ -35,6 +35,57 @@
 	</body>
 
 	<!-- Startup (do not modify order of script tags!) -->
+	<script>
+		const config = {
+			"additionalBuiltinExtensions": [
+				{
+					"scheme": "https",
+					"authority":"siv3d.dev",
+					"path":"/addon/emscripten-remote-build"
+				},
+				{ 
+					"scheme": "https",
+					"authority":"siv3d.dev",
+					"path":"/addon/siv3d-playground"
+				},
+				{ 
+					"scheme": "https",
+					"authority":"siv3d.dev",
+					"path":"/addon/wasm-playground"
+				}
+			],
+			"folderUri": {
+				"$mid": 1,
+				"scheme":"vscode-remote",
+				"path":"/siv3d-playground"
+			},
+			"configurationDefaults": {
+				"workbench.activityBar.visible": false,
+				"workbench.startupEditor": "readme",
+				"extensions.ignoreRecommendations": true,
+				"siv3d-playground.siv3d-assets-download-url": "https://siv3d-assets.kamenokosoft.com/v6",
+				"editor.fontFamily": "Menlo, Monaco, \"Courier New\", Meiryo, monospace"
+			},
+			"productConfiguration": {
+				"extensionsGallery": {
+					"serviceUrl": "https://open-vsx.org/vscode/gallery",
+					"itemUrl": "https://open-vsx.org/vscode/item"
+				},
+				"extensionEnabledApiProposals": {
+					"kamenokosoft.siv3d-playground": [
+						"fileSearchProvider",
+						"textSearchProvider"
+					],
+					"kamenokosoft.wasm-playground": [
+						"fileSearchProvider",
+						"textSearchProvider"
+					]
+				}
+			}
+		};
+		const configElement = document.querySelector("#vscode-workbench-web-configuration");
+		configElement.setAttribute("data-settings", JSON.stringify(config));
+	</script>
 	<script src="./out/vs/loader.js"></script>
 	<script src="./out/vs/webPackagePaths.js"></script>
 	<script>
@@ -51,7 +102,7 @@
 				availableLanguages: {
 					'*': locale
 				},
-				translationServiceUrl: 'https://www.vscode-unpkg.net/_lp/64bbfbf67ada9953918d72e1df2f4d8e537d340e/1.72.0'
+				translationServiceUrl: 'https://www.vscode-unpkg.net/_lp/da76f93349a72022ca4670c1b84860304616aaa2/1.70.0'
 			};
 		}
 

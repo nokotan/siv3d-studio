@@ -10,19 +10,23 @@
 /** @typedef {import('webpack').Configuration} WebpackConfig **/
 
 const path = require('path');
+const webpack = require('webpack');
 
 module.exports = /** @type WebpackConfig */ {
 	context: __dirname,
 	mode: 'none', // this leaves the source code as close as possible to the original (when packaging we set this to 'production')
 	target: 'webworker', // extensions run in a webworker context
 	entry: {
-		extension: './src/extension.ts',
+		extension: {
+			import: './src/extension.ts',
+			library: {
+				type: 'commonjs2'
+			}
+		}
 	},
 	resolve: {
 		mainFields: ['module', 'main'],
-		extensions: ['.ts', '.js'], // support ts-files and js-files
-		alias: {
-		}
+		extensions: ['.ts', '.js', '.json'], // support ts-files and js-files
 	},
 	module: {
 		rules: [{
@@ -48,9 +52,7 @@ module.exports = /** @type WebpackConfig */ {
 		hints: false
 	},
 	output: {
-		filename: 'extension.js',
-		path: path.join(__dirname, 'dist'),
-		libraryTarget: 'commonjs'
+		path: path.join(__dirname, 'dist')
 	},
 	devtool: 'source-map'
 };
