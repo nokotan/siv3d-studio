@@ -1,0 +1,34 @@
+{
+  "categories": [
+    {
+      "title": "Swings",
+      "gists": [
+        "4366463886437d01568a04a6885522f1",
+        "f375af6bd8444c728b803f9d69cb58f7",
+        "ecdf56c499e809ad671c4d85d5c2b90a",
+        "9bd7c0d391237874fcc9c8c216c86c4d"
+      ]
+    },
+    {
+      "title": "Tutorials",
+      "gists": ["c3bcd4bff4a13b2e1b3fc4a26332e2b6"]
+    },
+    {
+      "title": "Data Visualizations",
+      "gists": [
+        "6459889",
+        "1341281",
+        "ded69192b8269a78d2d97e24211e64e0",
+        "41a7adb028bb10c741153f58b36d01fe"
+      ]
+    },
+    {
+      "title": "Code Samples / Starters",
+      "gists": [
+        "1bfc2d4aecb01a834b46",
+        "c4d472ce3c61feec6376",
+        "cc3f9baecd324026931ae9544e1aaf62"
+      ]
+    }
+  ]
+}
