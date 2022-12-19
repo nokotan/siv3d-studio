@@ -13,7 +13,6 @@ import * as createHttpProxyAgent from 'http-proxy-agent';
 import { URL } from 'url';
 
 import * as decompress from 'decompress';
-import * as decompressTargz from 'decompress-targz';
 import { execSync } from 'child_process';
 
 export interface Static {
@@ -91,12 +90,7 @@ async function unzip(source: string, destination: string, message: string) {
 		await fs.mkdir(destination, { recursive: true });
 	}
 
-	await decompress(source, destination, {
-		plugins: [
-			decompressTargz()
-		],
-		strip: 1
-	});
+	await decompress(source, destination);
 	process.stdout.write(`${reset}${message}: complete\n`);
 }
 
@@ -146,14 +140,35 @@ function hasStdOut(object: unknown): object is { stdout: string, stderr: string 
 		&& typeof arg.stderr === "string";
 }
 
-export async function buildExtension(extensionName: string): Promise<void> {
+export async function downloadExternalRepository(extensionRepository: string) {
+
+	const extensionName = path.basename(extensionRepository, ".git");
+
+	if (!existsSync(extensionName)) {
+		execSync(`git clone ${extensionRepository} ${extensionName}`);
+	}
+}
+
+export interface BuildExtensionConfig {
+	vsceOptions: string[],
+	projectName?: string
+}
+
+export async function buildExtension(extensionName: string, options?: BuildExtensionConfig): Promise<void> {
+
+	if (!options) {
+		options = {
+			vsceOptions: [ "--no-dependencies" ]
+		};
+	}
 	
 	const folderName = `vscode-web/addon/${extensionName}`;
 	const downloadedPath = path.resolve(vscodeTestDir, folderName);
-	const tmpArchiveName = path.resolve(extensionName, `${extensionName}.tgz`);
+	const tmpArchiveName = path.resolve(extensionName, `${extensionName}.vsix`);
+	const projectName = options.projectName || extensionName;
 
 	try {
-		execSync(`cd ${extensionName} && npm install && npm pack && mv ${extensionName}-*.tgz ${extensionName}.tgz`, { encoding: "utf8", stdio: "inherit" });
+		execSync(`cd ${extensionName} && npm install && npx vsce package ${options.vsceOptions.join(" ")} && mv ${projectName}-*.vsix ${extensionName}.vsix`, { encoding: "utf8", stdio: "inherit" });
 		await unzip(tmpArchiveName, downloadedPath, `Unpacking ${extensionName}`);
 	} catch (err) {
 		if (hasStdOut(err)) {

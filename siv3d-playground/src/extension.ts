@@ -55,33 +55,58 @@ export async function activate(context: vscode.ExtensionContext) {
 		}
 
 		const memFs = extensionContext.memFs;
-		const workSpaceUri = vscode.Uri.parse("memfs:/siv3d-playground");
-		
-		memFs.createDirectory(workSpaceUri);
+
+		// const workSpaceUri = vscode.Uri.parse("memfs:/siv3d-playground");
+		// seedWorkspace(context, memFs, workSpaceUri);
 
 		const workspaceRoot = (vscode.workspace.workspaceFolders && (vscode.workspace.workspaceFolders.length > 0))
 			? vscode.workspace.workspaceFolders[0] : undefined;
 
 		if (workspaceRoot) {
-			seedWorkspace(context, memFs, workspaceRoot);
+			seedWorkspace(context, memFs, workspaceRoot.uri);
 		}
 
 		vscode.workspace.onDidChangeWorkspaceFolders(e => {
 			for (const workspace of e.added) {
-				seedWorkspace(context, memFs, workspace);
+				seedWorkspace(context, memFs, workspace.uri);
 			}
 		});
 	}
 }
 
-async function seedWorkspace(context: vscode.ExtensionContext, memFs: vscode.FileSystemProvider, workspace: vscode.WorkspaceFolder) {
+async function seedWorkspace(context: vscode.ExtensionContext, memFs: vscode.FileSystemProvider, workspaceUri: vscode.Uri) {
 	const openOptions: vscode.TextDocumentShowOptions = {
 		preview: false
 	};
-	const workspaceRoot = workspace.uri;
-	
-	await loadInitialAssets(memFs, workspaceRoot, context.extensionUri);
-	vscode.commands.executeCommand('vscode.open', vscode.Uri.joinPath(workspaceRoot, "src/Main.cpp"), openOptions);
-	// vscode.commands.executeCommand("emcc.preview.show", vscode.Uri.joinPath(workspaceRoot, "main.html"), "Siv3D Preview");
-	await loadAdditionalAssets(memFs, workspaceRoot);
+
+	const folders = workspaceUri.path.split("/").slice(1);
+
+	try {
+		await memFs.stat(workspaceUri);
+	} catch (e) {
+		if (e instanceof vscode.FileSystemError) {
+			for (let i = 1; i <= folders.length; i++) {
+				const newDirectory = workspaceUri.with({ path: "/" + folders.slice(0, i).join("/") });
+				await memFs.createDirectory(newDirectory);
+			}
+		} else {
+			throw e;
+		}
+	}
+
+	if (folders.length > 0 && folders[0] === "gist") {
+		const gistFsPath = vscode.Uri.parse(`gist://${folders.slice(1).join("/")}/`);
+		const gistExtension = vscode.extensions.getExtension<void>("vsls-contrib.gistfs");
+
+		if (!gistExtension.isActive) {
+			await gistExtension.activate();
+		}
+
+		await vscode.workspace.fs.copy(gistFsPath, workspaceUri, { overwrite: true });
+	} else {
+		await loadInitialAssets(memFs, workspaceUri, context.extensionUri);
+		vscode.commands.executeCommand('vscode.open', vscode.Uri.joinPath(workspaceUri, "src/Main.cpp"), openOptions);
+		// vscode.commands.executeCommand("emcc.preview.show", vscode.Uri.joinPath(workspaceUri, "main.html"), "Siv3D Preview");
+	}
+	await loadAdditionalAssets(memFs, workspaceUri);
 }

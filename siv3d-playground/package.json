@@ -22,7 +22,7 @@
     "virtualWorkspaces": true
   },
   "engines": {
-    "vscode": "^1.48.0"
+    "vscode": "^1.68.0"
   },
   "contributes": {
     "configuration": [
@@ -59,7 +59,8 @@
   "scripts": {
     "compile": "webpack-cli --config extension.webpack.config --mode production",
     "watch": "webpack-cli --config extension.webpack.config --mode production --watch --info-verbosity verbose",
-    "prepack": "npm run compile"
+    "prepack": "npm run compile",
+    "vscode:prepublish": "npm run compile"
   },
   "devDependencies": {
     "@types/vscode": "^1.68.0",
