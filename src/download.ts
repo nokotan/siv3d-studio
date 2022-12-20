@@ -34,7 +34,7 @@ const vscodeTestDir = path.resolve(extensionRoot, 'vscode');
 async function getLatestVersion(quality: 'stable' | 'insider'): Promise<DownloadInfo> {
 	// const update: DownloadInfo = await fetchJSON(`https://update.code.visualstudio.com/api/update/web-standalone/${quality}/latest`);
 	// return update;
-	return Promise.resolve({ url: `https://update.code.visualstudio.com/commit:da76f93349a72022ca4670c1b84860304616aaa2/web-standalone/${quality}`, version: "64bbfbf67ada9953918d72e1df2f4d8e537d340e" });
+	return Promise.resolve({ url: `https://update.code.visualstudio.com/commit:1ad8d514439d5077d2b0b7ee64d2ce82a9308e5a/web-standalone/${quality}`, version: "64bbfbf67ada9953918d72e1df2f4d8e537d340e" });
 }
 
 const reset = '\x1b[G\x1b[0K';
@@ -84,13 +84,15 @@ async function download(downloadUrl: string, destination: string, message: strin
 	});
 }
 
-async function unzip(source: string, destination: string, message: string) {
+async function unzip(source: string, destination: string, message: string, strip?: number) {
 	process.stdout.write(message);
 	if (!existsSync(destination)) {
 		await fs.mkdir(destination, { recursive: true });
 	}
 
-	await decompress(source, destination);
+	await decompress(source, destination, {
+		strip
+	});
 	process.stdout.write(`${reset}${message}: complete\n`);
 }
 
@@ -115,7 +117,7 @@ export async function downloadAndUnzipVSCode(quality: 'stable' | 'insider'): Pro
 	const tmpArchiveName = `vscode-web-${quality}-${info.version}-tmp`;
 	try {
 		await download(info.url, tmpArchiveName, `Downloading ${productName}`);
-		await unzip(tmpArchiveName, downloadedPath, `Unpacking ${productName}`);
+		await unzip(tmpArchiveName, downloadedPath, `Unpacking ${productName}`, 1);
 		await fs.writeFile(path.join(downloadedPath, 'version'), folderName);
 	} catch (err) {
 		console.error(err);
