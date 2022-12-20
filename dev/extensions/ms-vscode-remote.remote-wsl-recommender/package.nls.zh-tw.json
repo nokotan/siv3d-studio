@@ -1,1 +1,1 @@
-{"displayName":"WSL: Recommender","description":"Recommends using the Windows Subsystem for Linux (WSL) and the WSL extension.","openFolderCommand":"Open Folder in WSL...","gettingStartedCommand":"Getting Started with WSL"}
+{"description":"Recommends using the Windows Subsystem for Linux (WSL) and the WSL extension.","displayName":"WSL: Recommender","gettingStartedCommand":"開始使用 WSL","openFolderCommand":"在 WSL 中開啟資料夾..."}

@@ -1,13 +1,4 @@
 /*!
- * Microsoft Dynamic Proto Utility, 1.1.6
+ * Microsoft Dynamic Proto Utility, 1.1.7
  * Copyright (c) Microsoft and contributors. All rights reserved.
  */
-
-/*!
- * The buffer module from node.js, for the browser.
- *
- * @author   Feross Aboukhadijeh <https://feross.org>
- * @license  MIT
- */
-
-/*! safe-buffer. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */
