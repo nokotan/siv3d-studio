@@ -20,7 +20,7 @@ async function main() {
     
     fs.copyFileSync("index.html", "vscode/vscode-web/index.html");
     fs.copyFileSync("vscode/vscode-web/out/vs/code/browser/workbench/callback.html", "vscode/vscode-web/callback.html");
-    replaceFileContentSync("vscode/vscode-web/extensions/github-authentication/dist/browser/extension.js", "/(?:^|\.)github\.dev$/", "/(?:^|\.)siv3d\.dev$/");
+    replaceFileContentSync("vscode/vscode-web/extensions/github-authentication/dist/browser/extension.js", "/(?:^|\\.)github\\.dev$/", "/(?:^|\\.)siv3d\\.dev$/");
     fs.copyFileSync("favicon.ico", "vscode/vscode-web/favicon.ico");
 }
 
