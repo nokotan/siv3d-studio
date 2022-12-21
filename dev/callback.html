@@ -7,7 +7,7 @@
 		<!-- Disable pinch zooming -->
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
 
-		<title>Visual Studio Code</title>
+		<title>siv3d.dev</title>
 
 		<!-- Scripts -->
 		<script>
@@ -16,8 +16,14 @@
 				return value === null ? null : decodeURIComponent(value);
 			}
 
-			const url = new URL(window.location.href);
+			const encodedUrl = new URL(window.location.href);
+			const encodedUrlParams = encodedUrl.searchParams;
+
+			const decodedUrl = decode(encodedUrlParams.get('state'));
+
+			const url = new URL(decodedUrl);
 			const params = url.searchParams;
+
 			const id = decode(params.get('vscode-reqid'));
 			const scheme = decode(params.get('vscode-scheme'));
 			const authority = decode(params.get('vscode-authority'));
@@ -33,6 +39,8 @@
 			const path = decode(params.get('vscode-path'));
 			const query = decode(params.get('vscode-query'));
 			const fragment = decode(params.get('vscode-fragment'));
+
+			params.append('code', encodedUrlParams.get('code'));
 
 			params.delete('vscode-reqid');
 			params.delete('vscode-scheme');
@@ -112,7 +120,7 @@
 	</head>
 	<body>
 		<span class="branding">
-			Visual Studio Code
+			siv3d.dev
 		</span>
 		<div class="message-container">
 			<div class="message">
