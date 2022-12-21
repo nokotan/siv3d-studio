@@ -2,8 +2,8 @@
 
 cp index.html vscode/vscode-web
 cd vscode/vscode-web
-# sed -i -e 's|"scheme":"https"|"scheme":"http"|g' index.html
 sed -i -e 's|siv3d.dev|localhost:8080|g' index.html
+sed -i -e "s|https://siv3d.dev/callback|https://localhost:8080/callback|g" extensions/github-authentication/dist/browser/extension.js
 
 if [ ! -e key.pem ]; then
     openssl genrsa 2048 > key.pem
