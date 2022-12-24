@@ -37,7 +37,7 @@ export function activate(context: vscode.ExtensionContext) {
 		vscode.commands.registerCommand("emcc.preview.show", (selectedFile, previewTabName) => {
 			if (selectedFile instanceof vscode.Uri) {
 				const tabName = typeof previewTabName === "string" ? previewTabName : "Emcc Preview";
-				showPreview(workspaceRoot, context.storageUri!, selectedFile, tabName);
+				showPreview(context.storageUri!, selectedFile, tabName);
 			}
 		}),
 		vscode.commands.registerCommand("emcc.preview.reload", () => {

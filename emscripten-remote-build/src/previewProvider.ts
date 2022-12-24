@@ -1,12 +1,21 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
 
-export function showPreview(workspaceRoot: vscode.Uri, storageRoot: vscode.Uri, htmlUrl: vscode.Uri, previewTabName: string) {
-    PreviewPalel.createOrShow(workspaceRoot, storageRoot, htmlUrl, previewTabName);
+export function showPreview(storageRoot: vscode.Uri, htmlUrl: vscode.Uri, previewTabName: string) {
+    PreviewPalel.createOrShow(storageRoot, htmlUrl, previewTabName);
 }
 
 export function reloadPreview() {
     PreviewPalel.reload();
+}
+
+interface ReloadCommand {
+	command: "emcc.preview.reload";
+}
+
+interface OutputCommand {
+	command: "emcc.preview.output";
+	content: string;
 }
 
 class PreviewPalel {
@@ -15,9 +24,9 @@ class PreviewPalel {
 	public static readonly viewType = 'emccPreview';
 	public static readonly emccPreviewActiveContextKey = 'emccPreviewFocus';
 
-	private _disposables: vscode.Disposable[] = [];
+	private disposables: vscode.Disposable[] = [];
+	private outputChannel: vscode.OutputChannel;
 	private textDecoder: TextDecoder;
-	private textEncoder: TextEncoder;
 
 	public static reload() {
 		// If we already have a panel, show it.
@@ -29,7 +38,7 @@ class PreviewPalel {
 		}
 	}
 
-    public static createOrShow(workspaceRoot: vscode.Uri, storageRoot: vscode.Uri, htmlUrl: vscode.Uri, previewTabName: string) {
+    public static createOrShow(storageRoot: vscode.Uri, htmlUrl: vscode.Uri, previewTabName: string) {
 		const column = vscode.window.activeTextEditor
 			? vscode.window.activeTextEditor.viewColumn
 			: undefined;
@@ -42,7 +51,10 @@ class PreviewPalel {
 		}
 
         const parentFolder = path.dirname(htmlUrl.path);
-        const parentFolderUrl = vscode.Uri.from({ scheme: "memfs", path: parentFolder });
+        const parentFolderUrl = htmlUrl.with({ 
+			path: parentFolder,
+			scheme: htmlUrl.scheme === "vscode-remote" ? "memfs" : htmlUrl.scheme
+		});
 
 		// Otherwise, create a new panel.
 		const panel = vscode.window.createWebviewPanel(
@@ -60,22 +72,32 @@ class PreviewPalel {
             }
 		);
 
-		PreviewPalel.currentPanel = new PreviewPalel(panel, parentFolderUrl, htmlUrl, storageRoot);
+		PreviewPalel.currentPanel = new PreviewPalel(panel, parentFolderUrl, htmlUrl);
 	}
 
-    private constructor(private readonly _panel: vscode.WebviewPanel, private readonly _parentUrl: vscode.Uri, private _htmlUrl: vscode.Uri, private readonly _storageRoot: vscode.Uri) {
+    private constructor(private readonly _panel: vscode.WebviewPanel, private readonly _parentUrl: vscode.Uri, private _htmlUrl: vscode.Uri) {
 		this.textDecoder = new TextDecoder();
-		this.textEncoder = new TextEncoder();
 
 		// Set the webview's initial html content
 		this._update();
 
 		// Listen for when the panel is disposed
 		// This happens when the user closes the panel or when the panel is closed programmatically
-		this._panel.onDidDispose(() => this.dispose(), null, this._disposables);
+		this._panel.onDidDispose(() => this.dispose(), null, this.disposables);
 		this._panel.onDidChangeViewState(({ webviewPanel }) => {
 			this.setPreviewActiveContext(webviewPanel.active);
 		}, this);
+
+		this.outputChannel = vscode.window.createOutputChannel("Preview Output");
+		this.disposables.push(this.outputChannel);
+
+		this._panel.webview.onDidReceiveMessage((e: ReloadCommand | OutputCommand) => {
+			if (e.command === 'emcc.preview.reload') {
+				vscode.commands.executeCommand('emcc.preview.reload');
+			} else if (e.command === 'emcc.preview.output') {
+				this.outputChannel.appendLine(e.content);
+			}
+		})
 
 		this.setPreviewActiveContext(true);
 	}
@@ -83,6 +105,8 @@ class PreviewPalel {
 	private _clear() {
 		const webview = this._panel.webview;
         webview.html = "<html></html>";
+
+		this.outputChannel.clear();
     }
 
     private async _update() {
@@ -102,14 +126,28 @@ class PreviewPalel {
             return `src="${blobUrl}"`;
         });
 
-		content = content.replace("location.reload()", "(function () { const vscode = acquireVsCodeApi(); vscode.postMessage({ command: 'emcc.preview.reload' }); })()");
-        webview.html = content;
+		content = content.replace("location.reload()", 
+			`(function () { 
+				const vscode = Module["vscode"] = (Module["vscode"] || acquireVsCodeApi());
+				vscode.postMessage({ command: 'emcc.preview.reload' });
+			})()`
+		);
+		content = content.replace("</script>", 
+			`</script>
+			<script>
+				(function () {
+					const vscode = Module["vscode"] = (Module["vscode"] || acquireVsCodeApi());
 
-		webview.onDidReceiveMessage(e => {
-			if (e.command === 'emcc.preview.reload') {
-				vscode.commands.executeCommand('emcc.preview.reload');
-			}
-		})
+					Module["print"] = function(content) {
+						vscode.postMessage({ command: 'emcc.preview.output', content });
+					};
+					Module["printErr"] = function(content) {
+						vscode.postMessage({ command: 'emcc.preview.output'. content });
+					};
+				})();
+			</script>`
+		);
+        webview.html = content;
     }
 
     public dispose() {
@@ -118,8 +156,8 @@ class PreviewPalel {
 		// Clean up our resources
 		this._panel.dispose();
 
-		while (this._disposables.length) {
-			const x = this._disposables.pop();
+		while (this.disposables.length) {
+			const x = this.disposables.pop();
 			if (x) {
 				x.dispose();
 			}
