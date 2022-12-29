@@ -126,26 +126,25 @@ class PreviewPalel {
             return `src="${blobUrl}"`;
         });
 
-		content = content.replace("location.reload()", 
-			`(function () { 
-				const vscode = Module["vscode"] = (Module["vscode"] || acquireVsCodeApi());
-				vscode.postMessage({ command: 'emcc.preview.reload' });
-			})()`
-		);
-		content = content.replace("</script>", 
-			`</script>
-			<script>
-				(function () {
-					const vscode = Module["vscode"] = (Module["vscode"] || acquireVsCodeApi());
+		content = content.replace("<script>", 
+			`<script>
+			(function () { 
+				const vscode = acquireVsCodeApi();
 
-					Module["print"] = function(content) {
-						vscode.postMessage({ command: 'emcc.preview.output', content });
-					};
-					Module["printErr"] = function(content) {
-						vscode.postMessage({ command: 'emcc.preview.output'. content });
-					};
-				})();
-			</script>`
+				window.location.reload = function() {
+					vscode.postMessage({ command: 'emcc.preview.reload' });
+				};
+
+				function log(content) {
+					vscode.postMessage({ command: 'emcc.preview.output', content });
+				}
+
+				window.console.log = log;
+				window.console.warn = log;
+				window.console.error = log;
+			})();
+			</script>
+			<script>`
 		);
         webview.html = content;
     }
