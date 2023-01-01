@@ -14,8 +14,7 @@
   ],
   "activationEvents": [
     "onFileSystem:memfs",
-    "onFileSystem:vscode-remote",
-    "onStartupFinished"
+    "onFileSystem:vscode-remote"
   ],
   "browser": "./dist/extension.js",
   "capabilities": {
