@@ -17,9 +17,6 @@
     "onFileSystem:vscode-remote"
   ],
   "browser": "./dist/extension.js",
-  "capabilities": {
-    "virtualWorkspaces": true
-  },
   "engines": {
     "vscode": "^1.68.0"
   },
