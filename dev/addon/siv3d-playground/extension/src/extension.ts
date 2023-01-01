@@ -16,59 +16,62 @@ import * as vscode from 'vscode';
 import { loadAdditionalAssets, loadInitialAssets } from './initialFiles';
 import { ExtensionContext } from '../../wasm-playground/src/extension';
 
+declare const navigator: unknown;
+
 export async function activate(context: vscode.ExtensionContext) {
-	
-	let compilePromiseResolver: ((resultCode: number) => void) | null;
+	if (typeof navigator === 'object') {	// do not run under node.js
+		let compilePromiseResolver: ((resultCode: number) => void) | null;
 
-	context.subscriptions.push(
-		vscode.commands.registerCommand("siv3d-playground.compile.run", async () => {
-			const compilePromise = new Promise<number>((resolve, _) => {
-				compilePromiseResolver = resolve;
-			});
-			vscode.commands.executeCommand("workbench.action.tasks.runTask", "emcc build");
+		context.subscriptions.push(
+			vscode.commands.registerCommand("siv3d-playground.compile.run", async () => {
+				const compilePromise = new Promise<number>((resolve, _) => {
+					compilePromiseResolver = resolve;
+				});
+				vscode.commands.executeCommand("workbench.action.tasks.runTask", "emcc build");
 
-			if ((await compilePromise) === 0) {
-				const workspaceRoot = (vscode.workspace.workspaceFolders && (vscode.workspace.workspaceFolders.length > 0))
-					? vscode.workspace.workspaceFolders[0].uri : undefined;
-				vscode.commands.executeCommand("emcc.preview.show", vscode.Uri.joinPath(workspaceRoot, "main.html"), "Siv3D Preview");
+				if ((await compilePromise) === 0) {
+					const workspaceRoot = (vscode.workspace.workspaceFolders && (vscode.workspace.workspaceFolders.length > 0))
+						? vscode.workspace.workspaceFolders[0].uri : undefined;
+					vscode.commands.executeCommand("emcc.preview.show", vscode.Uri.joinPath(workspaceRoot, "main.html"), "Siv3D Preview");
+				}
+				compilePromiseResolver = null;
+			})
+		);
+
+		vscode.tasks.onDidEndTaskProcess(e => {
+			if (e.execution.task.name == "emcc build") {
+				compilePromiseResolver && compilePromiseResolver(e.exitCode);
 			}
-			compilePromiseResolver = null;
-		})
-	);
+		});
 
-	vscode.tasks.onDidEndTaskProcess(e => {
-		if (e.execution.task.name == "emcc build") {
-			compilePromiseResolver && compilePromiseResolver(e.exitCode);
+		const playgroundExtension = vscode.extensions.getExtension<ExtensionContext>("kamenokosoft.wasm-playground");
+
+		let extensionContext;
+
+		if (playgroundExtension.isActive) {
+			extensionContext = playgroundExtension.exports;
+		} else {
+			extensionContext = await playgroundExtension.activate();
 		}
-	});
 
-	const playgroundExtension = vscode.extensions.getExtension<ExtensionContext>("kamenokosoft.wasm-playground");
+		const memFs = extensionContext.memFs;
 
-	let extensionContext;
+		// const workSpaceUri = vscode.Uri.parse("memfs:/siv3d-playground");
+		// seedWorkspace(context, memFs, workSpaceUri);
 
-	if (playgroundExtension.isActive) {
-		extensionContext = playgroundExtension.exports;
-	} else {
-		extensionContext = await playgroundExtension.activate();
-	}
+		const workspaceRoot = (vscode.workspace.workspaceFolders && (vscode.workspace.workspaceFolders.length > 0))
+			? vscode.workspace.workspaceFolders[0] : undefined;
 
-	const memFs = extensionContext.memFs;
-
-	// const workSpaceUri = vscode.Uri.parse("memfs:/siv3d-playground");
-	// seedWorkspace(context, memFs, workSpaceUri);
-
-	const workspaceRoot = (vscode.workspace.workspaceFolders && (vscode.workspace.workspaceFolders.length > 0))
-		? vscode.workspace.workspaceFolders[0] : undefined;
-
-	if (workspaceRoot) {
-		seedWorkspace(context, memFs, workspaceRoot.uri);
-	}
-
-	vscode.workspace.onDidChangeWorkspaceFolders(e => {
-		for (const workspace of e.added) {
-			seedWorkspace(context, memFs, workspace.uri);
+		if (workspaceRoot) {
+			seedWorkspace(context, memFs, workspaceRoot.uri);
 		}
-	});
+
+		vscode.workspace.onDidChangeWorkspaceFolders(e => {
+			for (const workspace of e.added) {
+				seedWorkspace(context, memFs, workspace.uri);
+			}
+		});
+	}
 }
 
 async function seedWorkspace(context: vscode.ExtensionContext, memFs: vscode.FileSystemProvider, workspaceUri: vscode.Uri) {

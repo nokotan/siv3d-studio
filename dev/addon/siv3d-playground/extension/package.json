@@ -14,9 +14,13 @@
   ],
   "activationEvents": [
     "onFileSystem:memfs",
-    "onFileSystem:vscode-remote"
+    "onFileSystem:vscode-remote",
+    "onStartupFinished"
   ],
   "browser": "./dist/extension.js",
+  "capabilities": {
+    "virtualWorkspaces": true
+  },
   "engines": {
     "vscode": "^1.68.0"
   },
