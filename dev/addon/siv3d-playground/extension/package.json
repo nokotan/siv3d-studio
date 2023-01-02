@@ -15,7 +15,8 @@
   "activationEvents": [
     "onFileSystem:memfs",
     "onFileSystem:vscode-remote",
-    "onStartupFinished"
+    "onStartupFinished",
+    "onCommand:siv3d-playground.compile.run"
   ],
   "browser": "./dist/extension.js",
   "capabilities": {
