@@ -1,0 +1,99 @@
+{
+  "name": "wasm-playground",
+  "description": "WebAssembly + WASI + WAPM playground for VS Code",
+  "version": "0.0.5",
+  "publisher": "KamenokoSoft",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nokotan/siv3d-studio/tree/main/wasm-playground"
+  },
+  "enabledApiProposals": [
+    "fileSearchProvider",
+    "textSearchProvider"
+  ],
+  "activationEvents": [
+    "onFileSystem:memfs",
+    "onFileSystem:vscode-remote",
+    "onTerminalProfile:wasm.terminal",
+    "onCommand:wasm-playground.openRootFolder",
+    "onCommand:wasm-playground.openFolder",
+    "onCommand:wasm-playground.openTerminal"
+  ],
+  "browser": "./dist/extension.js",
+  "engines": {
+    "vscode": "^1.68.0"
+  },
+  "contributes": {
+    "commands": [
+      {
+        "command": "wasm-playground.openRootFolder",
+        "title": "Open WebAssembly Playground Root Folder",
+        "category": "File"
+      },
+      {
+        "command": "wasm-playground.openFolder",
+        "title": "Open WebAssembly Playground Folder",
+        "category": "File"
+      },
+      {
+        "command": "wasm-playground.openTerminal",
+        "title": "Open WebAssembly.sh",
+        "category": "Ternimal"
+      }
+    ],
+    "viewsWelcome": [
+      {
+        "view": "explorer",
+        "contents": "[Open WebAssembly Playground](command:wasm-playground.openRootFolder)"
+      },
+      {
+        "view": "terminal",
+        "contents": "[Create WebAssembly.sh](command:wasm-playground.openTerminal)"
+      }
+    ],
+    "terminal": {
+      "profiles": [
+        {
+          "title": "wasm terminal",
+          "id": "wasm.terminal"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "compile": "webpack-cli --config extension.webpack.config --mode production",
+    "watch": "webpack-cli --config extension.webpack.config --mode production --watch --info-verbosity verbose",
+    "prepack": "npm run compile",
+    "vscode:prepublish": "npm run compile",
+    "vscode:pack": "vsce package -o ./out/extension.zip --no-dependencies"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.68.0",
+    "ts-loader": "^9.3.1",
+    "typescript": "^4.7.4",
+    "vsce": "^2.10.0",
+    "webpack": "^5.73.0",
+    "webpack-cli": "^4.10.0"
+  },
+  "dependencies": {
+    "@wasmer/io-devices": "^0.12.0",
+    "@wasmer/wasi": "^0.12.0",
+    "@wasmer/wasmfs": "^0.12.0",
+    "@wasmer/wasm-transformer": "^0.10.0",
+    "buffer": "^6.0.3",
+    "comlink": "^4.0.5",
+    "path-browserify": "^1.0.1",
+    "process": "^0.11.10",
+    "shell-parse": "0.0.2",
+    "shell-quote": "^1.7.1",
+    "util": "^0.12.5",
+    "idb-keyval": "^3.2.0",
+    "normalize.css": "^8.0.1",
+    "preact": "^8.5.2",
+    "preact-compat": "^3.17.0",
+    "preact-render-to-string": "^4.1.0",
+    "save-file": "^2.3.1",
+    "text-table": "^0.2.0"
+  }
+}
