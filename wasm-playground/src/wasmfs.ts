@@ -146,8 +146,15 @@ export class WasmMemFs implements FileSystemProvider, FileSearchProvider, Dispos
 		);
     }
 
-    delete(uri: Uri): void {
-        this.wasmFs.fs.rmdirSync(uri.path, { recursive: true });
+    async delete(uri: Uri) {
+        const statResult = await this.stat(uri);
+
+        if (statResult.type === FileType.Directory) {
+            this.wasmFs.fs.rmdirSync(uri.path, { recursive: true });
+        } else {
+            this.wasmFs.fs.unlinkSync(uri.path);
+        }
+
         this._fireSoon({ uri, type: FileChangeType.Deleted });
     }
 
