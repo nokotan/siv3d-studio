@@ -46,15 +46,9 @@ export async function activate(context: vscode.ExtensionContext) {
 
 		const playgroundExtension = vscode.extensions.getExtension<ExtensionContext>("kamenokosoft.wasm-playground");
 
-		let extensionContext;
-
-		if (playgroundExtension.isActive) {
-			extensionContext = playgroundExtension.exports;
-		} else {
-			extensionContext = await playgroundExtension.activate();
+		if (!playgroundExtension.isActive) {
+			await playgroundExtension.activate();
 		}
-
-		const memFs = extensionContext.memFs;
 
 		// const workSpaceUri = vscode.Uri.parse("memfs:/siv3d-playground");
 		// seedWorkspace(context, memFs, workSpaceUri);
@@ -63,31 +57,31 @@ export async function activate(context: vscode.ExtensionContext) {
 			? vscode.workspace.workspaceFolders[0] : undefined;
 
 		if (workspaceRoot) {
-			seedWorkspace(context, memFs, workspaceRoot.uri);
+			seedWorkspace(context, workspaceRoot.uri);
 		}
 
 		vscode.workspace.onDidChangeWorkspaceFolders(e => {
 			for (const workspace of e.added) {
-				seedWorkspace(context, memFs, workspace.uri);
+				seedWorkspace(context, workspace.uri);
 			}
 		});
 	}
 }
 
-async function seedWorkspace(context: vscode.ExtensionContext, memFs: vscode.FileSystemProvider, workspaceUri: vscode.Uri) {
+async function seedWorkspace(context: vscode.ExtensionContext, workspaceUri: vscode.Uri) {
 	const openOptions: vscode.TextDocumentShowOptions = {
 		preview: false
 	};
 
 	const folders = workspaceUri.path.split("/").slice(1);
 
-	try {
-		await memFs.stat(workspaceUri);
+	try {	
+		await vscode.workspace.fs.stat(workspaceUri);
 	} catch (e) {
 		if (e instanceof vscode.FileSystemError) {
 			for (let i = 1; i <= folders.length; i++) {
 				const newDirectory = workspaceUri.with({ path: "/" + folders.slice(0, i).join("/") });
-				await memFs.createDirectory(newDirectory);
+				await vscode.workspace.fs.createDirectory(newDirectory);
 			}
 		} else {
 			throw e;
@@ -104,9 +98,9 @@ async function seedWorkspace(context: vscode.ExtensionContext, memFs: vscode.Fil
 
 		await vscode.workspace.fs.copy(gistFsPath, workspaceUri, { overwrite: true });
 	} else {
-		await loadInitialAssets(memFs, workspaceUri, context.extensionUri);
+		await loadInitialAssets(workspaceUri, context.extensionUri);
 		vscode.commands.executeCommand('vscode.open', vscode.Uri.joinPath(workspaceUri, "src/Main.cpp"), openOptions);
 		// vscode.commands.executeCommand("emcc.preview.show", vscode.Uri.joinPath(workspaceUri, "main.html"), "Siv3D Preview");
 	}
-	await loadAdditionalAssets(memFs, workspaceUri);
+	await loadAdditionalAssets(workspaceUri);
 }
