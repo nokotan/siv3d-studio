@@ -12,10 +12,11 @@
                 "-include-pch /include/OpenSiv3Dv0.6/Siv3D.O0.pch",
                 "-I/include/OpenSiv3Dv0.6/",
                 "-I/include/OpenSiv3Dv0.6/ThirdParty/",
-                "-s SIDE_MODULE=1",
+                "-s SIDE_MODULE=2",
                 "-D_XM_NO_INTRINSICS_",
+                "-s EXPORTED_FUNCTIONS=\"[ '__Z4Mainv' ]\"",
                 "-s ASYNCIFY=1",
-                "-s ASYNCIFY_IMPORTS=\"[ '_ZN3s3d6System6UpdateEv', '_ZN3s3d7TextureC1ENS_10StringViewENS_11TextureDescE', '_ZN3s3d5ImageC1ENS_10StringViewENS_11ImageFormatE', '_ZN3s3d5AudioC1ENS_10StringViewE', '_ZN3s3d5AudioC1ENS_10StringViewENS_5YesNoINS_8Loop_tagEEE' ]\""
+                "-s ASYNCIFY_IMPORTS=\"[ '_ZN3s3d6System6UpdateEv', '_ZN3s3d7TextureC1ENS_10StringViewENS_11TextureDescE', '_ZN3s3d5ImageC1ENS_10StringViewENS_11ImageFormatE', '_ZN3s3d5AudioC1ENS_10StringViewE', '_ZN3s3d5AudioC1ENS_10StringViewENS_5YesNoINS_8Loop_tagEEE', '_ZN3s3d5ModelC1ENS_10StringViewENS_11ColorOptionE', '_ZN3s3d6Dialog11OpenTextureENS_10StringViewES1_', '_ZN3s3d6Dialog9OpenAudioENS_10StringViewES1_', '_ZN3s3d6Dialog8OpenFileERKNS_5ArrayINS_10FileFilterENSt3__29allocatorIS2_EEEENS_10StringViewES9_', '_ZN3s3d6Dialog9OpenFilesERKNS_5ArrayINS_10FileFilterENSt3__29allocatorIS2_EEEENS_10StringViewES9_' ]\""
             ],
             "group": {
                 "kind": "build",
