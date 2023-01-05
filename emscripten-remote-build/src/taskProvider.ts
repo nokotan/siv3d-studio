@@ -95,8 +95,6 @@ export class CustomBuildTaskTerminal implements vscode.Pseudoterminal {
 			this.definition.files = [ "**/*.cpp" ]
 		}
 
-		console.log(`do build`);
-
 		const fileURLsPromise = this.definition.files.map(async filePattern => {
 			return await vscode.workspace.findFiles(filePattern);
 		});

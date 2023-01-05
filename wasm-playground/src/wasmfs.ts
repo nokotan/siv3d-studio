@@ -224,7 +224,6 @@ export class WasmMemFs implements FileSystemProvider, FileSearchProvider, Dispos
 		const result: Uri[] = [];
 
 		const pattern = query ? new RegExp(this._convertSimple2RegExpPattern(query)) : null;
-        console.log(pattern);
 
 		for (const file of files) {
 			if (!pattern || pattern.exec(file[0].name)) {
