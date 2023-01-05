@@ -109,7 +109,7 @@ export class CustomBuildTaskTerminal implements vscode.Pseudoterminal {
             return file;
         });
 
-		this.writeEmitter.fire(`Executing 'emcc ${this.definition.files.join(" ")} ${this.definition.flags.join(" ")} -o ${outputFileName}'...\r\n`);
+		this.writeEmitter.fire(`⏱ Executing 'emcc ${this.definition.files.join(" ")} ${this.definition.flags.join(" ")} -o ${outputFileName}'...\r\n`);
 
         const files = await Promise.all(filePromises);
 
@@ -119,7 +119,7 @@ export class CustomBuildTaskTerminal implements vscode.Pseudoterminal {
 		await vscode.workspace.fs.writeFile(outputFile, new Uint8Array(outputs.files["a.wasm"] as ArrayBuffer));
 			
 		if (outputs.success) {
-			this.writeEmitter.fire(`'${outputFileName}' is successfully emitted.\r\n`);
+			this.writeEmitter.fire(`✅ '${outputFileName}' is successfully emitted.\r\n`);
 			this.closeEmitter.fire(0);
 		} else {
 			this.closeEmitter.fire(-1);

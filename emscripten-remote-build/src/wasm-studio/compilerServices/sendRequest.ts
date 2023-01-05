@@ -105,7 +105,7 @@ export async function sendRequestJSON(content: Object, to: ServiceTypes): Promis
     if (e instanceof TypeError) {
       return {
         success: false,
-        message: "The build server is too busy! 🦄 Please retry in several seconds."
+        message: "🚗🚙🚕 Sorry, the build request is rejected by the build server! Please retry in several seconds."
       }
     } else {
       throw e;
