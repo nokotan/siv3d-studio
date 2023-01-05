@@ -48,7 +48,7 @@ export async function loadAdditionalAssets(workspaceRoot: Uri) {
 
     workspace.fs.createDirectory(Uri.joinPath(workspaceRoot, "example"));
     promises.push(fetchFile(workspaceRoot, downloadUrl, "example/windmill.png"));
-    promises.push(fetchFile(workspaceRoot, downloadUrl, "example/example/particle.png"));
+    promises.push(fetchFile(workspaceRoot, downloadUrl, "example/particle.png"));
 
     workspace.fs.createDirectory(Uri.joinPath(workspaceRoot, "example/geojson"));
     promises.push(fetchFile(workspaceRoot, downloadUrl, "example/geojson/countries.geojson"));
