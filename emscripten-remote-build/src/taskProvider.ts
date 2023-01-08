@@ -100,6 +100,7 @@ export class CustomBuildTaskTerminal implements vscode.Pseudoterminal {
 		});
         const fileURLs = (await Promise.all(fileURLsPromise)).flat();
 		const outputFileName = this.definition.outputName || "main.wasm"; 
+		const outputFile = vscode.Uri.joinPath(this.workspaceRoot, outputFileName);
 
         const filePromises = fileURLs.map(async url => {
             const content = await vscode.workspace.fs.readFile(url);
@@ -111,14 +112,20 @@ export class CustomBuildTaskTerminal implements vscode.Pseudoterminal {
 
 		this.writeEmitter.fire(`⏱ Executing 'emcc ${this.definition.files.join(" ")} ${this.definition.flags.join(" ")} -o ${outputFileName}'...\r\n`);
 
-        const files = await Promise.all(filePromises);
+		try {
+			await vscode.workspace.fs.delete(outputFile);
+		} catch (_) {
+			// Ignore
+		}
 
+        const files = await Promise.all(filePromises);
         const outputs = await Service.compileFiles(files, Language.Cpp, Language.Wasm, this.definition.flags.join(" "));
-		const outputFile = vscode.Uri.parse(`${this.workspaceRoot.toString()}/${outputFileName}`);
+		
 		this.writeEmitter.fire(outputs.console.replace(/\.\//g, `${this.workspaceRoot.path}/`).replace(/\n/g, "\r\n"));
-		await vscode.workspace.fs.writeFile(outputFile, new Uint8Array(outputs.files["a.wasm"] as ArrayBuffer));
 			
 		if (outputs.success) {
+			await vscode.workspace.fs.writeFile(outputFile, new Uint8Array(outputs.files["a.wasm"] as ArrayBuffer));
+
 			this.writeEmitter.fire(`✅ '${outputFileName}' is successfully emitted.\r\n`);
 			this.closeEmitter.fire(0);
 		} else {
