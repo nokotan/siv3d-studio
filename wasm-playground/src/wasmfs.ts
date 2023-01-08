@@ -27,7 +27,7 @@ import {
 	workspace,
 } from 'vscode';
 
-export class WasmMemFs implements FileSystemProvider, FileSearchProvider, Disposable {
+export class WasmMemFs implements FileSystemProvider, FileSearchProvider, TextSearchProvider, Disposable {
 
     wasmFs: WasmFs;
     private readonly disposable: Disposable;
@@ -45,6 +45,11 @@ export class WasmMemFs implements FileSystemProvider, FileSearchProvider, Dispos
         disposables.push(
             workspace.registerFileSearchProvider("memfs", this),
             workspace.registerFileSearchProvider("vscode-remote", this),
+        );
+
+        disposables.push(
+            workspace.registerTextSearchProvider("memfs", this),
+            workspace.registerTextSearchProvider("vscode-remote", this),
         );
 
         this.disposable = Disposable.from(...disposables);
@@ -228,6 +233,37 @@ export class WasmMemFs implements FileSystemProvider, FileSearchProvider, Dispos
 		for (const file of files) {
 			if (!pattern || pattern.exec(file[0].name)) {
 				result.push(file[1]);
+			}
+		}
+
+		return result;
+	}
+
+    private _textDecoder = new TextDecoder();
+
+	provideTextSearchResults(query: TextSearchQuery, options: TextSearchOptions, progress: Progress<TextSearchResult>, _token: CancellationToken) {
+		const result: TextSearchComplete = { limitHit: false };
+
+		const files = this._findFiles(options.includes[0]);
+		if (files) {
+			for (const file of files) {
+				const content = this._textDecoder.decode(this.readFile(file));
+
+				const lines = content.split('\n');
+				for (let i = 0; i < lines.length; i++) {
+					const line = lines[i];
+					const index = line.indexOf(query.pattern);
+					if (index !== -1) {
+						progress.report({
+							uri: file,
+							ranges: new Range(new Position(i, index), new Position(i, index + query.pattern.length)),
+							preview: {
+								text: line,
+								matches: new Range(new Position(0, index), new Position(0, index + query.pattern.length))
+							}
+						});
+					}
+				}
 			}
 		}
 
