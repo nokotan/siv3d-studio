@@ -37,46 +37,49 @@
 	<!-- Startup (do not modify order of script tags!) -->
 	<script>
 		const config = {
-			"additionalBuiltinExtensions": [	
+			additionalBuiltinExtensions: [	
 				{ 
-					"scheme": "https",
-					"authority":"siv3d.dev/dev",
-					"path":"/addon/wasm-playground/extension"
+					scheme: "https",
+					authority: "siv3d.dev/dev",
+					path: "/addon/wasm-playground/extension"
 				},
 				{ 
-					"scheme": "https",
-					"authority":"siv3d.dev/dev",
-					"path":"/addon/siv3d-playground/extension"
+					scheme: "https",
+					authority: "siv3d.dev/dev",
+					path: "/addon/siv3d-playground/extension"
 				},
 				{
-					"scheme": "https",
-					"authority":"siv3d.dev/dev",
-					"path":"/addon/emscripten-remote-build/extension"
+					scheme: "https",
+					authority: "siv3d.dev/dev",
+					path: "/addon/emscripten-remote-build/extension"
 				},	
 				{ 
 					"scheme": "https",
-					"authority":"siv3d.dev/dev",
-					"path":"/addon/gistpad/extension"
+					"authority": "siv3d.dev/dev",
+					"path": "/addon/gistpad/extension"
 				}
 			],
-			"folderUri": {
-				"$mid": 1,
-				"scheme":"vscode-remote",
-				"path":"/siv3d-playground"
+			folderUri: {
+				$mid: 1,
+				scheme: "vscode-remote",
+				path: "/siv3d-playground"
 			},
-			"callbackRoute": "callback",
-			"configurationDefaults": {
-				"workbench.startupEditor": "readme",
+			callbackRoute: "callback",
+			defaultLayout: {
+				views: []
+			},
+			configurationDefaults: {
+				"workbench.startupEditor": "none",
 				"extensions.ignoreRecommendations": true,
 				"siv3d-playground.siv3d-assets-download-url": "https://siv3d-assets.kamenokosoft.com/v6/dev",
 				"editor.fontFamily": "Menlo, Monaco, \"Courier New\", Meiryo, monospace"
 			},
-			"productConfiguration": {
-				"extensionsGallery": {
-					"serviceUrl": "https://open-vsx.org/vscode/gallery",
-					"itemUrl": "https://open-vsx.org/vscode/item"
+			productConfiguration: {
+				extensionsGallery: {
+					serviceUrl: "https://open-vsx.org/vscode/gallery",
+					itemUrl: "https://open-vsx.org/vscode/item"
 				},
-				"extensionEnabledApiProposals": {
+				extensionEnabledApiProposals: {
 					"kamenokosoft.siv3d-playground": [
 						"fileSearchProvider",
 						"textSearchProvider"
@@ -87,8 +90,8 @@
 					]
 				}
 			},
-			"codeExchangeProxyEndpoints": {
-				"github": "https://exchange-code.herokuapp.com/github/"
+			codeExchangeProxyEndpoints: {
+				github: "https://exchange-code.herokuapp.com/github/"
 			}
 		};
 		const configElement = document.querySelector("#vscode-workbench-web-configuration");
