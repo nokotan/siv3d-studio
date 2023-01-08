@@ -54,9 +54,9 @@
 					path: "/addon/emscripten-remote-build/extension"
 				},	
 				{ 
-					"scheme": "https",
-					"authority": "siv3d.dev/dev",
-					"path": "/addon/gistpad/extension"
+					scheme: "https",
+					authority: "siv3d.dev/dev",
+					path: "/addon/gistpad/extension"
 				}
 			],
 			folderUri: {
@@ -65,9 +65,6 @@
 				path: "/siv3d-playground"
 			},
 			callbackRoute: "callback",
-			defaultLayout: {
-				views: []
-			},
 			configurationDefaults: {
 				"workbench.startupEditor": "none",
 				"extensions.ignoreRecommendations": true,
@@ -88,7 +85,9 @@
 						"fileSearchProvider",
 						"textSearchProvider"
 					]
-				}
+				},
+				enableTelemetry: false,
+				openToWelcomeMainPage: false
 			},
 			codeExchangeProxyEndpoints: {
 				github: "https://exchange-code.herokuapp.com/github/"
