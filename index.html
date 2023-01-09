@@ -153,6 +153,23 @@
 			store.put(JSON.stringify(preferredActivityBarStates), "workbench.activity.pinnedViewlets2");
 			store.put(JSON.stringify([ "status.feedback" ]), "workbench.statusbar.hidden");
 			store.put("false", "workbench.activity.showAccounts");
+			store.put("", "workbench.sidebar.activeviewletid");
+		};
+	</script>
+	<script>
+		const workspaceDBOpenRequest = indexedDB.open("vscode-web-state-db--5b40c8f4", 1);
+
+		workspaceDBOpenRequest.onupgradeneeded = function(e) {
+			const db = e.target.result;
+			db.createObjectStore("ItemTable");
+		};
+
+		workspaceDBOpenRequest.onsuccess = function(e) {
+			const db = e.target.result;
+			const transaction = db.transaction("ItemTable", "readwrite")
+			const store = transaction.objectStore("ItemTable");
+
+			store.put("", "workbench.sidebar.activeviewletid");
 		};
 	</script>
 	<script>
