@@ -6,7 +6,7 @@
         {
             "type": "emcc",
             "label": "emcc build",
-            "files": [ "src/*.cpp", "include/*.h", "include/*.hpp" ],
+            "files": [ "**/*.cpp", "include/*.h", "include/*.hpp" ],
             "flags": [ 
                 "-Wall", "-std=c++2a", "-O2", "-fcolor-diagnostics",
                 "-include-pch /include/OpenSiv3Dv0.6/Siv3D.O2.pch",

@@ -97,10 +97,16 @@ async function seedWorkspace(context: vscode.ExtensionContext, workspaceUri: vsc
 		}
 
 		await vscode.workspace.fs.copy(gistFsPath, workspaceUri, { overwrite: true });
+
+		const cppFiles = await vscode.workspace.findFiles("**/*.cpp");
+
+		if (cppFiles.length > 0) {
+			vscode.commands.executeCommand('vscode.open', cppFiles[0], openOptions);
+		}
 	} else {
 		await loadInitialAssets(workspaceUri, context.extensionUri);
 		vscode.commands.executeCommand('vscode.open', vscode.Uri.joinPath(workspaceUri, "src/Main.cpp"), openOptions);
 		// vscode.commands.executeCommand("emcc.preview.show", vscode.Uri.joinPath(workspaceUri, "main.html"), "Siv3D Preview");
 	}
-	await loadAdditionalAssets(workspaceUri);
+	await loadAdditionalAssets(workspaceUri, context.extensionUri);
 }

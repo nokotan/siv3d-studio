@@ -21,11 +21,7 @@ export async function loadInitialAssets(workspaceRoot: Uri, extensionBase: Uri) 
     const promises: Promise<void>[] = [];
 
     //workspace.fs.createDirectory(workspaceRoot);
-    promises.push(readFileFromTemplate(workspaceRoot, extensionBase, "main.html"));
     promises.push(readFileFromTemplate(workspaceRoot, extensionBase, "README.md"));
-        
-    workspace.fs.createDirectory(Uri.joinPath(workspaceRoot, ".vscode"));
-    promises.push(readFileFromTemplate(workspaceRoot, extensionBase, ".vscode/tasks.json"));
     
     workspace.fs.createDirectory(Uri.joinPath(workspaceRoot, "src"));
     promises.push(readFileFromTemplate(workspaceRoot, extensionBase, "src/Main.cpp"));
@@ -35,10 +31,15 @@ export async function loadInitialAssets(workspaceRoot: Uri, extensionBase: Uri) 
     await Promise.all(promises);
 }
 
-export async function loadAdditionalAssets(workspaceRoot: Uri) {
+export async function loadAdditionalAssets(workspaceRoot: Uri, extensionBase: Uri) {
     const promises: Promise<void>[] = [];
 
     const downloadUrl = workspace.getConfiguration("siv3d-playground").get<string>("siv3d-assets-download-url");
+
+    promises.push(readFileFromTemplate(workspaceRoot, extensionBase, "main.html"));
+
+    workspace.fs.createDirectory(Uri.joinPath(workspaceRoot, ".vscode"));
+    promises.push(readFileFromTemplate(workspaceRoot, extensionBase, ".vscode/tasks.json"));
 
     promises.push(fetchFile(workspaceRoot, downloadUrl, "lib/Siv3D.wasm", "Siv3D.wasm"));
     promises.push(fetchFile(workspaceRoot, downloadUrl, "lib/Siv3D.js", "Siv3D.js"));
