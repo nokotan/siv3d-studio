@@ -152,6 +152,8 @@ class PreviewPalel {
     public dispose() {
 		PreviewPalel.currentPanel = undefined;
 
+		this.setPreviewActiveContext(false);
+
 		// Clean up our resources
 		this._panel.dispose();
 
@@ -161,11 +163,15 @@ class PreviewPalel {
 				x.dispose();
 			}
 		}
-
-		this.setPreviewActiveContext(false);
 	}
 
 	private setPreviewActiveContext(value: boolean) {
+		if (value) {
+			this.outputChannel.show(true);
+		} else {
+			this.outputChannel.hide();
+		}
+
 		vscode.commands.executeCommand('setContext', PreviewPalel.emccPreviewActiveContextKey, value);
 	}
 }
