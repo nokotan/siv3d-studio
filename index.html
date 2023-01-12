@@ -37,46 +37,46 @@
 	<!-- Startup (do not modify order of script tags!) -->
 	<script>
 		const config = {
-			"additionalBuiltinExtensions": [	
+			additionalBuiltinExtensions: [	
 				{ 
-					"scheme": "https",
-					"authority":"siv3d.dev",
-					"path":"/addon/wasm-playground/extension"
+					scheme: "https",
+					authority: "siv3d.dev",
+					path: "/addon/wasm-playground/extension"
 				},
 				{ 
-					"scheme": "https",
-					"authority":"siv3d.dev",
-					"path":"/addon/siv3d-playground/extension"
+					scheme: "https",
+					authority: "siv3d.dev",
+					path: "/addon/siv3d-playground/extension"
 				},
 				{
-					"scheme": "https",
-					"authority":"siv3d.dev",
-					"path":"/addon/emscripten-remote-build/extension"
+					scheme: "https",
+					authority: "siv3d.dev",
+					path: "/addon/emscripten-remote-build/extension"
 				},	
 				{ 
-					"scheme": "https",
-					"authority":"siv3d.dev",
-					"path":"/addon/gistpad/extension"
+					scheme: "https",
+					authority: "siv3d.dev",
+					path: "/addon/gistpad/extension"
 				}
 			],
-			"folderUri": {
-				"$mid": 1,
-				"scheme":"vscode-remote",
-				"path":"/siv3d-playground"
+			folderUri: {
+				$mid: 1,
+				scheme: "vscode-remote",
+				path: "/siv3d-playground"
 			},
-			"callbackRoute": "callback",
-			"configurationDefaults": {
-				"workbench.startupEditor": "readme",
+			callbackRoute: "callback",
+			configurationDefaults: {
+				"workbench.startupEditor": "none",
 				"extensions.ignoreRecommendations": true,
 				"siv3d-playground.siv3d-assets-download-url": "https://siv3d-assets.kamenokosoft.com/v6",
 				"editor.fontFamily": "Menlo, Monaco, \"Courier New\", Meiryo, monospace"
 			},
-			"productConfiguration": {
-				"extensionsGallery": {
-					"serviceUrl": "https://open-vsx.org/vscode/gallery",
-					"itemUrl": "https://open-vsx.org/vscode/item"
+			productConfiguration: {
+				extensionsGallery: {
+					serviceUrl: "https://open-vsx.org/vscode/gallery",
+					itemUrl: "https://open-vsx.org/vscode/item"
 				},
-				"extensionEnabledApiProposals": {
+				extensionEnabledApiProposals: {
 					"kamenokosoft.siv3d-playground": [
 						"fileSearchProvider",
 						"textSearchProvider"
@@ -85,10 +85,12 @@
 						"fileSearchProvider",
 						"textSearchProvider"
 					]
-				}
+				},
+				enableTelemetry: false,
+				openToWelcomeMainPage: false
 			},
-			"codeExchangeProxyEndpoints": {
-				"github": "https://exchange-code.herokuapp.com/github/"
+			codeExchangeProxyEndpoints: {
+				github: "https://exchange-code.herokuapp.com/github/"
 			}
 		};
 		const configElement = document.querySelector("#vscode-workbench-web-configuration");
@@ -151,7 +153,30 @@
 			store.put(JSON.stringify(preferredActivityBarStates), "workbench.activity.pinnedViewlets2");
 			store.put(JSON.stringify([ "status.feedback" ]), "workbench.statusbar.hidden");
 			store.put("false", "workbench.activity.showAccounts");
+			store.put("", "workbench.sidebar.activeviewletid");
 		};
+	</script>
+	<script>
+		function updateWorkspaceDataBase(databaseName) {
+			const workspaceDBOpenRequest = indexedDB.open(databaseName, 1);
+
+			workspaceDBOpenRequest.onupgradeneeded = function(e) {
+				const db = e.target.result;
+				db.createObjectStore("ItemTable");
+			};
+
+			workspaceDBOpenRequest.onsuccess = function(e) {
+				const db = e.target.result;
+				const transaction = db.transaction("ItemTable", "readwrite")
+				const store = transaction.objectStore("ItemTable");
+
+				store.put("", "workbench.sidebar.activeviewletid");
+			};
+		}
+		
+		if (window.matchMedia("(max-width: 400px)").matches) {
+			updateWorkspaceDataBase("vscode-web-state-db--5b40c8f4");
+		}
 	</script>
 	<script>
 		const baseUrl = 'https://siv3d.dev';
