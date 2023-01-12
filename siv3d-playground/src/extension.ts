@@ -16,56 +16,57 @@ import * as vscode from 'vscode';
 import { loadAdditionalAssets, loadInitialAssets } from './initialFiles';
 import { ExtensionContext } from '../../wasm-playground/src/extension';
 
-declare const navigator: unknown;
-
 export async function activate(context: vscode.ExtensionContext) {
-	if (typeof navigator === 'object') {	// do not run under node.js
-		let compilePromiseResolver: ((resultCode: number) => void) | null;
-
-		context.subscriptions.push(
-			vscode.commands.registerCommand("siv3d-playground.compile.run", async () => {
-				const compilePromise = new Promise<number>((resolve, _) => {
-					compilePromiseResolver = resolve;
-				});
-				vscode.commands.executeCommand("workbench.action.tasks.runTask", "emcc build");
-
-				if ((await compilePromise) === 0) {
-					const workspaceRoot = (vscode.workspace.workspaceFolders && (vscode.workspace.workspaceFolders.length > 0))
-						? vscode.workspace.workspaceFolders[0].uri : undefined;
-					vscode.commands.executeCommand("emcc.preview.show", vscode.Uri.joinPath(workspaceRoot, "main.html"), "Siv3D Preview");
-				}
-				compilePromiseResolver = null;
-			})
-		);
-
-		vscode.tasks.onDidEndTaskProcess(e => {
-			if (e.execution.task.name == "emcc build") {
-				compilePromiseResolver && compilePromiseResolver(e.exitCode);
-			}
-		});
-
-		const playgroundExtension = vscode.extensions.getExtension<ExtensionContext>("kamenokosoft.wasm-playground");
-
-		if (!playgroundExtension.isActive) {
-			await playgroundExtension.activate();
-		}
-
-		// const workSpaceUri = vscode.Uri.parse("memfs:/siv3d-playground");
-		// seedWorkspace(context, memFs, workSpaceUri);
-
-		const workspaceRoot = (vscode.workspace.workspaceFolders && (vscode.workspace.workspaceFolders.length > 0))
-			? vscode.workspace.workspaceFolders[0] : undefined;
-
-		if (workspaceRoot) {
-			seedWorkspace(context, workspaceRoot.uri);
-		}
-
-		vscode.workspace.onDidChangeWorkspaceFolders(e => {
-			for (const workspace of e.added) {
-				seedWorkspace(context, workspace.uri);
-			}
-		});
+	
+	if (typeof navigator.serviceWorker === 'undefined') {
+		await vscode.window.showErrorMessage("Siv3D Preview is not available in this browser tab. Please use another browser tab.");
 	}
+
+	let compilePromiseResolver: ((resultCode: number) => void) | null;
+
+	context.subscriptions.push(
+		vscode.commands.registerCommand("siv3d-playground.compile.run", async () => {
+			const compilePromise = new Promise<number>((resolve, _) => {
+				compilePromiseResolver = resolve;
+			});
+			vscode.commands.executeCommand("workbench.action.tasks.runTask", "emcc build");
+
+			if ((await compilePromise) === 0) {
+				const workspaceRoot = (vscode.workspace.workspaceFolders && (vscode.workspace.workspaceFolders.length > 0))
+					? vscode.workspace.workspaceFolders[0].uri : undefined;
+				vscode.commands.executeCommand("emcc.preview.show", vscode.Uri.joinPath(workspaceRoot, "main.html"), "Siv3D Preview");
+			}
+			compilePromiseResolver = null;
+		})
+	);
+
+	vscode.tasks.onDidEndTaskProcess(e => {
+		if (e.execution.task.name == "emcc build") {
+			compilePromiseResolver && compilePromiseResolver(e.exitCode);
+		}
+	});
+
+	const playgroundExtension = vscode.extensions.getExtension<ExtensionContext>("kamenokosoft.wasm-playground");
+
+	if (!playgroundExtension.isActive) {
+		await playgroundExtension.activate();
+	}
+
+	// const workSpaceUri = vscode.Uri.parse("memfs:/siv3d-playground");
+	// seedWorkspace(context, memFs, workSpaceUri);
+
+	const workspaceRoot = (vscode.workspace.workspaceFolders && (vscode.workspace.workspaceFolders.length > 0))
+		? vscode.workspace.workspaceFolders[0] : undefined;
+
+	if (workspaceRoot) {
+		seedWorkspace(context, workspaceRoot.uri);
+	}
+
+	vscode.workspace.onDidChangeWorkspaceFolders(e => {
+		for (const workspace of e.added) {
+			seedWorkspace(context, workspace.uri);
+		}
+	});
 }
 
 async function seedWorkspace(context: vscode.ExtensionContext, workspaceUri: vscode.Uri) {
