@@ -18,8 +18,8 @@ import { ExtensionContext } from '../../wasm-playground/src/extension';
 
 export async function activate(context: vscode.ExtensionContext) {
 	
-	if (typeof navigator.serviceWorker === 'undefined') {
-		await vscode.window.showErrorMessage("Siv3D Preview is not available in this browser tab. Please use another browser tab.");
+	if (!vscode.workspace.getConfiguration("siv3d-playground").get<boolean>("enable-siv3d-preview")) {
+		vscode.window.showErrorMessage("Siv3D Preview is not available in this browser tab. Please use another browser tab.");
 	}
 
 	let compilePromiseResolver: ((resultCode: number) => void) | null;
@@ -90,20 +90,25 @@ async function seedWorkspace(context: vscode.ExtensionContext, workspaceUri: vsc
 	}
 
 	if (folders.length > 0 && folders[0] === "gist") {
-		const gistFsPath = vscode.Uri.parse(`gist://${folders.slice(1).join("/")}/`);
-		const gistExtension = vscode.extensions.getExtension<void>("vsls-contrib.gistfs");
+		await vscode.window.withProgress({
+			location: vscode.ProgressLocation.Notification,
+			title: "downloading files from GitHub Gist..."
+		}, async _ => {
+			const gistFsPath = vscode.Uri.parse(`gist://${folders.slice(1).join("/")}/`);
+			const gistExtension = vscode.extensions.getExtension<void>("vsls-contrib.gistfs");
 
-		if (!gistExtension.isActive) {
-			await gistExtension.activate();
-		}
+			if (!gistExtension.isActive) {
+				await gistExtension.activate();
+			}
 
-		await vscode.workspace.fs.copy(gistFsPath, workspaceUri, { overwrite: true });
+			await vscode.workspace.fs.copy(gistFsPath, workspaceUri, { overwrite: true });
 
-		const cppFiles = await vscode.workspace.findFiles("**/*.cpp");
+			const cppFiles = await vscode.workspace.findFiles("**/*.cpp");
 
-		if (cppFiles.length > 0) {
-			vscode.commands.executeCommand('vscode.open', cppFiles[0], openOptions);
-		}
+			if (cppFiles.length > 0) {
+				vscode.commands.executeCommand('vscode.open', cppFiles[0], openOptions);
+			}
+		});
 	} else {
 		await loadInitialAssets(workspaceUri, context.extensionUri);
 		vscode.commands.executeCommand('vscode.open', vscode.Uri.joinPath(workspaceUri, "src/Main.cpp"), openOptions);

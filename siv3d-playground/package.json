@@ -34,6 +34,11 @@
             "type": "string",
             "default": "https://siv3d-assets.kamenokosoft.com/v6",
             "description": "Download URL of Siv3D for Web Assets"
+          },
+          "siv3d-playground.enable-siv3d-preview": {
+            "type": "boolean",
+            "default": true,
+            "description": "Internal use. Do not modify."
           }
         }
       }
