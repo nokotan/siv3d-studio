@@ -60,6 +60,71 @@ export class WasmMemFs implements FileSystemProvider, FileSearchProvider, TextSe
         this.disposable.dispose();
     }
 
+    async backup() {
+        const fs = this.wasmFs;
+
+        const db = await new Promise<IDBDatabase>(function (resolve, reject) {
+            const workspaceDBOpenRequest = indexedDB.open("WasmFS", 1);
+
+            workspaceDBOpenRequest.onupgradeneeded = function() {
+                const db = workspaceDBOpenRequest.result;
+                db.createObjectStore("DirectoryEntries");
+            };
+
+            workspaceDBOpenRequest.onsuccess = function() {
+                resolve(workspaceDBOpenRequest.result);       
+            };
+
+            workspaceDBOpenRequest.onerror = reject;
+        });
+
+        await new Promise<void>(function (resolve, reject) {
+            const transaction = db.transaction("DirectoryEntries", "readwrite")
+            const store = transaction.objectStore("DirectoryEntries");
+            const storeRequest = store.put(fs.toJSON(), "SavedData");
+
+            storeRequest.onsuccess = function() {
+                resolve();
+            };
+
+            storeRequest.onerror = reject;
+        });
+    }
+
+    async restore() {
+        const fs = this.wasmFs;
+
+        const db = await new Promise<IDBDatabase>(function (resolve, reject) {
+            const workspaceDBOpenRequest = indexedDB.open("WasmFS", 1);
+
+            workspaceDBOpenRequest.onupgradeneeded = function() {
+                const db = workspaceDBOpenRequest.result;
+                db.createObjectStore("DirectoryEntries");
+            };
+
+            workspaceDBOpenRequest.onsuccess = function() {
+                resolve(workspaceDBOpenRequest.result);       
+            };
+
+            workspaceDBOpenRequest.onerror = reject;
+        });
+
+        await new Promise<void>(function (resolve, reject) {
+            const transaction = db.transaction("DirectoryEntries", "readwrite")
+            const store = transaction.objectStore("DirectoryEntries");
+            const readRequest = store.get("SavedData");
+
+            readRequest.onsuccess = function() {
+                if (readRequest.result) {
+                    fs.fromJSON(readRequest.result);
+                }
+                resolve();
+            };
+
+            readRequest.onerror = reject;
+        });
+    }
+
     // --- manage file metadata
 
     stat(uri: Uri): Promise<FileStat> {
@@ -139,6 +204,8 @@ export class WasmMemFs implements FileSystemProvider, FileSearchProvider, TextSe
         } else {
             this._fireSoon({ type: FileChangeType.Changed, uri });
         }
+
+        this.backup();
     }
 
 	// --- manage files/folders

@@ -1,20 +1,40 @@
 import {
+    FileSystemError,
 	FileSystemProvider,
 	Uri,
 	workspace,
 } from 'vscode';
 
 async function readFileFromTemplate(workspaceRoot: Uri, extensionBase: Uri, sourcePath: string, targetPath?: string): Promise<void> {
-    const fileContent = await workspace.fs.readFile(Uri.joinPath(extensionBase, "template", sourcePath));
-    const targetFilePath = targetPath || sourcePath;
-    await workspace.fs.writeFile(Uri.joinPath(workspaceRoot, targetFilePath), fileContent);
+    const targetFilePath = Uri.joinPath(workspaceRoot, targetPath || sourcePath);
+
+    try {
+        await workspace.fs.stat(targetFilePath);
+    } catch (e) {
+        if (!(e instanceof FileSystemError)) {
+            throw e;
+        }
+
+        const fileContent = await workspace.fs.readFile(Uri.joinPath(extensionBase, "template", sourcePath));
+        await workspace.fs.writeFile(targetFilePath, fileContent);
+    }
 }
 
 async function fetchFile(workspaceRoot: Uri, fetchBase: string, sourcePath: string, targetPath?: string): Promise<void> {
-    const fileResponse = await fetch(Uri.joinPath(Uri.parse(fetchBase), sourcePath).toString());
-    const fileContent = await fileResponse.arrayBuffer();
-    const targetFilePath = targetPath || sourcePath;
-    await workspace.fs.writeFile(Uri.joinPath(workspaceRoot, targetFilePath), new Uint8Array(fileContent));
+    const targetFilePath = Uri.joinPath(workspaceRoot, targetPath || sourcePath);
+
+    try {
+        await workspace.fs.stat(targetFilePath);
+    } catch (e) {
+        if (!(e instanceof FileSystemError)) {
+            throw e;
+        }
+
+        const fileResponse = await fetch(Uri.joinPath(Uri.parse(fetchBase), sourcePath).toString());
+        const fileContent = await fileResponse.arrayBuffer();
+
+        await workspace.fs.writeFile(targetFilePath, new Uint8Array(fileContent));
+    }
 }
 
 export async function loadInitialAssets(workspaceRoot: Uri, extensionBase: Uri) {

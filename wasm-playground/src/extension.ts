@@ -22,7 +22,7 @@ export interface ExtensionContext {
 
 export async function activate(context: vscode.ExtensionContext): Promise<ExtensionContext> {
 	
-	const memFs = enableFs(context);
+	const memFs = await enableFs(context);
 
 	vscode.window.registerTerminalProfileProvider('wasm.terminal', {
 		provideTerminalProfile(
@@ -60,7 +60,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<Extens
 	return { memFs };
 }
 
-function enableFs(context: vscode.ExtensionContext) {
+async function enableFs(context: vscode.ExtensionContext) {
 	const memFs = new WasmMemFs();
 	context.subscriptions.push(memFs);
 
