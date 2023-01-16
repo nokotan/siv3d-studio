@@ -52,21 +52,12 @@ export async function activate(context: vscode.ExtensionContext) {
 		await playgroundExtension.activate();
 	}
 
-	// const workSpaceUri = vscode.Uri.parse("memfs:/siv3d-playground");
-	// seedWorkspace(context, memFs, workSpaceUri);
-
 	const workspaceRoot = (vscode.workspace.workspaceFolders && (vscode.workspace.workspaceFolders.length > 0))
 		? vscode.workspace.workspaceFolders[0] : undefined;
 
 	if (workspaceRoot) {
 		seedWorkspace(context, workspaceRoot.uri);
 	}
-
-	vscode.workspace.onDidChangeWorkspaceFolders(e => {
-		for (const workspace of e.added) {
-			seedWorkspace(context, workspace.uri);
-		}
-	});
 }
 
 async function seedWorkspace(context: vscode.ExtensionContext, workspaceUri: vscode.Uri) {
