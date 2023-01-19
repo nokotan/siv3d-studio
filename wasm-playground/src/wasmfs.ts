@@ -204,8 +204,6 @@ export class WasmMemFs implements FileSystemProvider, FileSearchProvider, TextSe
         } else {
             this._fireSoon({ type: FileChangeType.Changed, uri });
         }
-
-        this.backup();
     }
 
 	// --- manage files/folders

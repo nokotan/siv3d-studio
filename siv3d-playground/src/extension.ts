@@ -52,7 +52,12 @@ export async function activate(context: vscode.ExtensionContext) {
 		await playgroundExtension.activate();
 	}
 
-	await playgroundExtension.exports.memFs.restore().catch(e => console.error(e));
+	const memFs = playgroundExtension.exports.memFs;
+
+	await memFs.restore().catch(e => console.error(e));
+	memFs.onDidChangeFile(function () {
+		memFs.backup();
+	});
 
 	const workspaceRoot = (vscode.workspace.workspaceFolders && (vscode.workspace.workspaceFolders.length > 0))
 		? vscode.workspace.workspaceFolders[0] : undefined;
