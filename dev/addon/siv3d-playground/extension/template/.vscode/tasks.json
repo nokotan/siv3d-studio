@@ -6,10 +6,11 @@
         {
             "type": "emcc",
             "label": "emcc build",
-            "files": [ "**/*.cpp", "include/*.h", "include/*.hpp" ],
+            "files": [ "**/*.cpp", "**/*.h", "**/*.hpp" ],
             "flags": [ 
                 "-Wall", "-std=c++2a", "-O2", "-fcolor-diagnostics",
                 "-include-pch /include/OpenSiv3Dv0.6/Siv3D.O2.pch",
+                "-Iinclude",
                 "-I/include/OpenSiv3Dv0.6/",
                 "-I/include/OpenSiv3Dv0.6/ThirdParty/",
                 "-s SIDE_MODULE=2",
