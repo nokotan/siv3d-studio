@@ -51,6 +51,13 @@
         "category": "navigation"
       }
     ],
+    "keybindings": [
+      {
+        "command": "siv3d-playground.compile.run",
+        "key": "f5",
+        "when": "!debuggersAvailable"
+      }
+    ],
     "menus": {
       "editor/title": [
         {

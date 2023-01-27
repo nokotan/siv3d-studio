@@ -109,7 +109,7 @@
 
 		applicationDBOpenRequest.onsuccess = function(e) {
 			const db = e.target.result;
-			const transaction = db.transaction("ItemTable", "readwrite")
+			const transaction = db.transaction("ItemTable", "readwrite");
 			const store = transaction.objectStore("ItemTable");
 
 			const preferredActivityBarStates = [
@@ -155,6 +155,32 @@
 			store.put(JSON.stringify([ "status.feedback" ]), "workbench.statusbar.hidden");
 			store.put("false", "workbench.activity.showAccounts");
 			store.put("", "workbench.sidebar.activeviewletid");
+		};
+	</script>
+	<script>
+		const applicationDBOpenRequest = indexedDB.open("vscode-web-db", 3);
+
+		applicationDBOpenRequest.onupgradeneeded = function(e) {
+			const db = e.target.result;
+			db.createObjectStore("vscode-userdata-store");
+		};
+
+		applicationDBOpenRequest.onsuccess = function(e) {
+			const db = e.target.result;
+			const transaction = db.transaction("vscode-userdata-store", "readwrite");
+			const store = transaction.objectStore("vscode-userdata-store");
+
+			const desiredKeyBindings = `
+[
+    {
+        "key": "f5",
+        "command": "-debug.openView",
+        "when": "!debuggersAvailable"
+    }
+]`;
+			const encoder = new TextEncoder();
+
+			store.put(encoder.encode(desiredKeyBindings), "/User/keybindings.json");
 		};
 	</script>
 	<script>
