@@ -4,7 +4,7 @@
 			<Identity Language="en-US" Id="siv3d-playground" Version="0.0.19" Publisher="KamenokoSoft" />
 			<DisplayName>siv3d-playground</DisplayName>
 			<Description xml:space="preserve">Siv3D playground for VS Code</Description>
-			<Tags>__web_extension</Tags>
+			<Tags>keybindings,__web_extension</Tags>
 			<Categories></Categories>
 			<GalleryFlags>Public</GalleryFlags>
 			
