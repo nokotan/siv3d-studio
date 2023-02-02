@@ -23,8 +23,6 @@ async function main() {
         projectName: "gistfs"
     });
     
-    fs.copyFileSync("index.html", "vscode/vscode-web/index.html");
-    fs.copyFileSync("callback.html", "vscode/vscode-web/callback.html");
     replaceFileContentSync(
         "vscode/vscode-web/extensions/github-authentication/dist/browser/extension.js", 
         [ 
@@ -33,7 +31,19 @@ async function main() {
             { pattern: "01ab8ac9400c4e429b23", replaced: "49ba0b7a0fa218f5973a" },   
         ]
     );
-    fs.copyFileSync("favicon.ico", "vscode/vscode-web/favicon.ico");
+
+    const copiedFiles = [
+        "index.html",
+        "callback.html",
+        "favicon.ico",
+        "manifest.json",
+        "sw.js",
+        "icon.png",
+    ];
+
+    for (const file of copiedFiles) {
+        fs.copyFileSync(file, "vscode/vscode-web/" + file);
+    }
 }
 
 main();
