@@ -164,6 +164,8 @@
 		configDBOpenRequest.onupgradeneeded = function(e) {
 			const db = e.target.result;
 			db.createObjectStore("vscode-userdata-store");
+			db.createObjectStore("vscode-logs-store");
+			db.createObjectStore("vscode-filehandles-store");
 		};
 
 		configDBOpenRequest.onsuccess = function(e) {
