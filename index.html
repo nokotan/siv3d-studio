@@ -159,14 +159,14 @@
 		};
 	</script>
 	<script>
-		const applicationDBOpenRequest = indexedDB.open("vscode-web-db", 3);
+		const configDBOpenRequest = indexedDB.open("vscode-web-db", 3);
 
-		applicationDBOpenRequest.onupgradeneeded = function(e) {
+		configDBOpenRequest.onupgradeneeded = function(e) {
 			const db = e.target.result;
 			db.createObjectStore("vscode-userdata-store");
 		};
 
-		applicationDBOpenRequest.onsuccess = function(e) {
+		configDBOpenRequest.onsuccess = function(e) {
 			const db = e.target.result;
 			const transaction = db.transaction("vscode-userdata-store", "readwrite");
 			const store = transaction.objectStore("vscode-userdata-store");
