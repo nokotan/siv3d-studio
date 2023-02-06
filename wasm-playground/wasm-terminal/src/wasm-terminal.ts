@@ -26,4 +26,11 @@ export default class WasmTerminal {
   open() {
     this.wasmShell.prompt();
   }
+
+  setDimension(dimensions: {
+    cols: number;
+    rows: number;
+  }) {
+    this.wasmTty.setTermSize(dimensions.cols, dimensions.rows);
+  }
 }

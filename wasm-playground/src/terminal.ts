@@ -30,6 +30,10 @@ export class WasmPseudoTerminal implements vscode.Pseudoterminal {
 
 	open(initialDimensions: vscode.TerminalDimensions | undefined): void {
 		this.terminal.open();
+
+		if (initialDimensions) {
+			this.setDimensions(initialDimensions);
+		}
 	}
 
 	close(): void {
@@ -46,5 +50,9 @@ export class WasmPseudoTerminal implements vscode.Pseudoterminal {
 
 	onData(callback: (data: string) => void) {
 		this.callback = callback;
+	}
+
+	setDimensions(dimensions: vscode.TerminalDimensions): void {
+		this.terminal.setDimension({ cols: dimensions.columns, rows: dimensions.rows });
 	}
 }
