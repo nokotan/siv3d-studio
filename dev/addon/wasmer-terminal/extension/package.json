@@ -1,0 +1,68 @@
+{
+  "name": "wasmer-term",
+  "description": "WebAssembly + WASI + WAPM playground for VS Code",
+  "version": "0.1.0",
+  "publisher": "KamenokoSoft",
+  "author": "John Sharratt <johnathan.sharratt@gmail.com>, nokotan <kamenokonokotan@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nokotan/wasmer-terminal"
+  },
+  "main": "./dist/extension.js",
+  "browser": "./dist/extension.js",
+  "engines": {
+    "vscode": "^1.75.0"
+  },
+  "activationEvents": [
+    "onFileSystem:memfs",
+    "onFileSystem:vscode-remote",
+    "onTerminalProfile:wasmer-term.terminal"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "wasmer-term.openTerminal",
+        "title": "Open Wasmer.sh",
+        "category": "Ternimal"
+      }
+    ],
+    "viewsWelcome": [
+      {
+        "view": "terminal",
+        "contents": "[Create Wasmer.sh](command:wasmer-term.openTerminal)"
+      }
+    ],
+    "terminal": {
+      "profiles": [
+        {
+          "title": "Wasmer Terminal",
+          "id": "wasmer-term.terminal"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "build": "webpack",
+    "dev": "webpack serve",
+    "vscode:prepublish": "npm run build",
+    "vscode:pack": "vsce package --no-dependencies"
+  },
+  "dependencies": {
+    "comlink": "^4",
+    "regenerator-runtime": "^0.13"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.75.1",
+    "@wasm-tool/wasm-pack-plugin": "^1.6.0",
+    "copy-webpack-plugin": "^9.1.0",
+    "html-webpack-plugin": "^5.4.0",
+    "parcel-bundler": "^1.12.5",
+    "ts-loader": "^9.4.2",
+    "typescript": "^4.7.4",
+    "vsce": "^2.15.0",
+    "webpack": "^5.72.1",
+    "webpack-cli": "^4.8",
+    "webpack-dev-server": "^4.9.0"
+  }
+}
