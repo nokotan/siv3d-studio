@@ -14,6 +14,7 @@ function replaceFileContentSync(fileName: string, replacePatterns: { pattern: st
 async function main() {
     await downloadAndUnzipVSCode("stable");
     await downloadExternalRepository("https://github.com/lostintangent/gistpad.git");
+    await downloadExternalRepository("https://github.com/nokotan/wasmer-terminal.git");
 
     await buildExtension("siv3d-playground");
     await buildExtension("wasm-playground");
@@ -21,6 +22,10 @@ async function main() {
     await buildExtension("gistpad", {
         vsceOptions: [ "" ],
         projectName: "gistfs"
+    });
+    await buildExtension("wasmer-terminal", {
+        vsceOptions: [ "--no-dependencies" ],
+        projectName: "wasmer-term"
     });
     
     replaceFileContentSync(
