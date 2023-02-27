@@ -12,7 +12,7 @@
   "main": "./dist/extension.js",
   "browser": "./dist/extension.js",
   "engines": {
-    "vscode": "^1.75.0"
+    "vscode": "^1.74.0"
   },
   "activationEvents": [
     "onFileSystem:memfs",
@@ -53,7 +53,7 @@
     "regenerator-runtime": "^0.13"
   },
   "devDependencies": {
-    "@types/vscode": "^1.75.1",
+    "@types/vscode": "^1.74.0",
     "@wasm-tool/wasm-pack-plugin": "^1.6.0",
     "copy-webpack-plugin": "^9.1.0",
     "html-webpack-plugin": "^5.4.0",
