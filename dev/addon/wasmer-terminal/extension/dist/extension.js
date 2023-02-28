@@ -1631,11 +1631,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 async function activate(context) {
-    __webpack_require__.p = context.extensionUri.toString() + "/dist/";
-    const wasmURL = await Promise.resolve(/* import() */).then(__webpack_require__.t.bind(__webpack_require__, 275, 17));
-    const wasmDecodedURL = decodeURIComponent(wasmURL.default);
-    const wasmContent = await fetch(wasmDecodedURL);
-    await (0,_pkg__WEBPACK_IMPORTED_MODULE_1__["default"])(wasmContent);
+    __webpack_require__.p = decodeURIComponent(context.extensionUri.toString() + "/dist/");
+    await (0,_pkg__WEBPACK_IMPORTED_MODULE_1__["default"])();
     vscode__WEBPACK_IMPORTED_MODULE_0__.window.registerTerminalProfileProvider('wasmer-term.terminal', {
         provideTerminalProfile(token) {
             return new vscode__WEBPACK_IMPORTED_MODULE_0__.TerminalProfile({
