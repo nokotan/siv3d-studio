@@ -2,26 +2,75 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 595:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ 404:
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
 
+__webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
+__webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "Y": () => (/* binding */ WasmPseudoTerminal)
+/* harmony export */   "activate": () => (/* binding */ activate)
 /* harmony export */ });
 /* harmony import */ var vscode__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(496);
 /* harmony import */ var vscode__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vscode__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(972);
+/* harmony import */ var _pkg_snippets_wasmer_vscode_web_7bb130c80b4ace6c_js_terminal__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(595);
+/* harmony import */ var _pkg__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(235);
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_pkg__WEBPACK_IMPORTED_MODULE_1__, _pkg_snippets_wasmer_vscode_web_7bb130c80b4ace6c_js_terminal__WEBPACK_IMPORTED_MODULE_2__]);
+([_pkg__WEBPACK_IMPORTED_MODULE_1__, _pkg_snippets_wasmer_vscode_web_7bb130c80b4ace6c_js_terminal__WEBPACK_IMPORTED_MODULE_2__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
 
 
+
+async function activate(context) {
+    __webpack_require__.p = decodeURIComponent(context.extensionUri.toString() + "/dist/");
+    await (0,_pkg__WEBPACK_IMPORTED_MODULE_1__["default"])();
+    vscode__WEBPACK_IMPORTED_MODULE_0__.window.registerTerminalProfileProvider('wasmer-term.terminal', {
+        provideTerminalProfile(token) {
+            return new vscode__WEBPACK_IMPORTED_MODULE_0__.TerminalProfile({
+                name: "wasm terminal",
+                pty: new _pkg_snippets_wasmer_vscode_web_7bb130c80b4ace6c_js_terminal__WEBPACK_IMPORTED_MODULE_2__/* .WasmPseudoTerminal */ .Y()
+            });
+        }
+    });
+    context.subscriptions.push(vscode__WEBPACK_IMPORTED_MODULE_0__.commands.registerCommand("wasmer-term.openTerminal", function () {
+        const terminal = vscode__WEBPACK_IMPORTED_MODULE_0__.window.createTerminal({
+            name: "wasm terminal",
+            pty: new _pkg_snippets_wasmer_vscode_web_7bb130c80b4ace6c_js_terminal__WEBPACK_IMPORTED_MODULE_2__/* .WasmPseudoTerminal */ .Y()
+        });
+        terminal.show();
+    }));
+}
+
+__webpack_async_result__();
+} catch(e) { __webpack_async_result__(e); } });
+
+/***/ }),
+
+/***/ 595:
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Y": () => (/* binding */ WasmPseudoTerminal)
+/* harmony export */ });
+/* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(235);
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_index__WEBPACK_IMPORTED_MODULE_0__]);
+_index__WEBPACK_IMPORTED_MODULE_0__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
+
+function isWorker() {
+    return 'WorkerGlobalScope' in self;
+}
+class EmptyEventEmitter {
+    fire(_) { }
+}
+const EventEmitter = isWorker() ? EmptyEventEmitter : (await Promise.resolve(/* import() */).then(__webpack_require__.t.bind(__webpack_require__, 496, 23))).EventEmitter;
 class WasmPseudoTerminal {
     constructor() {
-        this.writeEmitter = new vscode__WEBPACK_IMPORTED_MODULE_0__.EventEmitter();
+        this.writeEmitter = new EventEmitter();
         this.onDidWrite = this.writeEmitter.event;
-        this.closeEmitter = new vscode__WEBPACK_IMPORTED_MODULE_0__.EventEmitter();
+        this.closeEmitter = new EventEmitter();
         this.onDidClose = this.closeEmitter.event;
     }
     async open(initialDimensions) {
-        (0,_index__WEBPACK_IMPORTED_MODULE_1__.open)(this);
+        (0,_index__WEBPACK_IMPORTED_MODULE_0__.open)(this);
     }
     close() {
     }
@@ -42,42 +91,37 @@ class WasmPseudoTerminal {
     }
 }
 
+__webpack_async_result__();
+} catch(e) { __webpack_async_result__(e); } }, 1);
 
 /***/ }),
 
-/***/ 972:
+/***/ 235:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
-// ESM COMPAT FLAG
+__webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
-
-// EXPORTS
-__webpack_require__.d(__webpack_exports__, {
-  "AnimationFrameCallbackWrapper": () => (/* binding */ AnimationFrameCallbackWrapper),
-  "LeakyInterval": () => (/* binding */ LeakyInterval),
-  "LoaderHelper": () => (/* binding */ LoaderHelper),
-  "WasiFS": () => (/* binding */ WasiFS),
-  "WasmerRuntimeError": () => (/* binding */ WasmerRuntimeError),
-  "WcWidth": () => (/* binding */ WcWidth),
-  "WebThreadPool": () => (/* binding */ WebThreadPool),
-  "default": () => (/* binding */ pkg),
-  "initSync": () => (/* binding */ initSync),
-  "main": () => (/* binding */ main),
-  "open": () => (/* binding */ pkg_open),
-  "wasm_entry_point": () => (/* binding */ wasm_entry_point),
-  "worker_entry_point": () => (/* binding */ worker_entry_point)
-});
-
-// EXTERNAL MODULE: ./pkg/snippets/wasmer-vscode-web-7bb130c80b4ace6c/js/terminal.ts
-var terminal = __webpack_require__(595);
-;// CONCATENATED MODULE: ./pkg/snippets/wasmer-vscode-web-7bb130c80b4ace6c/js/time.js
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-// EXTERNAL MODULE: ./pkg/snippets/wasmer-vscode-web-7bb130c80b4ace6c/public/worker.js
-var worker = __webpack_require__(911);
-;// CONCATENATED MODULE: ./pkg/index.js
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "AnimationFrameCallbackWrapper": () => (/* binding */ AnimationFrameCallbackWrapper),
+/* harmony export */   "LeakyInterval": () => (/* binding */ LeakyInterval),
+/* harmony export */   "LoaderHelper": () => (/* binding */ LoaderHelper),
+/* harmony export */   "WasiFS": () => (/* binding */ WasiFS),
+/* harmony export */   "WasmerRuntimeError": () => (/* binding */ WasmerRuntimeError),
+/* harmony export */   "WcWidth": () => (/* binding */ WcWidth),
+/* harmony export */   "WebThreadPool": () => (/* binding */ WebThreadPool),
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
+/* harmony export */   "initSync": () => (/* binding */ initSync),
+/* harmony export */   "main": () => (/* binding */ main),
+/* harmony export */   "open": () => (/* binding */ open),
+/* harmony export */   "wasm_entry_point": () => (/* binding */ wasm_entry_point),
+/* harmony export */   "worker_entry_point": () => (/* binding */ worker_entry_point)
+/* harmony export */ });
+/* harmony import */ var _snippets_wasmer_vscode_web_7bb130c80b4ace6c_js_terminal_ts__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(595);
+/* harmony import */ var _snippets_wasmer_vscode_web_7bb130c80b4ace6c_js_time_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(382);
+/* harmony import */ var _snippets_wasmer_vscode_web_7bb130c80b4ace6c_public_worker_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(911);
 /* module decorator */ module = __webpack_require__.hmd(module);
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_snippets_wasmer_vscode_web_7bb130c80b4ace6c_js_terminal_ts__WEBPACK_IMPORTED_MODULE_0__]);
+_snippets_wasmer_vscode_web_7bb130c80b4ace6c_js_terminal_ts__WEBPACK_IMPORTED_MODULE_0__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
 
 
 
@@ -321,7 +365,7 @@ function main() {
 /**
 * @param {any} terminal
 */
-function pkg_open(terminal) {
+function open(terminal) {
     try {
         const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
         wasm.open(retptr, addHeapObject(terminal));
@@ -526,7 +570,7 @@ function getImports() {
     imports.wbg.__wbg_instanceof_Terminal_2078d1d30c107b4d = function(arg0) {
         let result;
         try {
-            result = getObject(arg0) instanceof terminal/* WasmPseudoTerminal */.Y;
+            result = getObject(arg0) instanceof _snippets_wasmer_vscode_web_7bb130c80b4ace6c_js_terminal_ts__WEBPACK_IMPORTED_MODULE_0__/* .WasmPseudoTerminal */ .Y;
         } catch {
             result = false;
         }
@@ -594,11 +638,11 @@ function getImports() {
         console.log(getStringFromWasm0(arg0, arg1));
     };
     imports.wbg.__wbg_sleep_5e94afcbccff2b7e = function(arg0) {
-        const ret = sleep(arg0);
+        const ret = (0,_snippets_wasmer_vscode_web_7bb130c80b4ace6c_js_time_js__WEBPACK_IMPORTED_MODULE_1__/* .sleep */ ._)(arg0);
         return addHeapObject(ret);
     };
     imports.wbg.__wbg_startWasm_ac59d31282e7251b = function(arg0, arg1, arg2, arg3, arg4, arg5, arg6) {
-        const ret = (0,worker.startWasm)(takeObject(arg0), takeObject(arg1), takeObject(arg2), takeObject(arg3), LoaderHelper.__wrap(arg4), takeObject(arg5), takeObject(arg6));
+        const ret = (0,_snippets_wasmer_vscode_web_7bb130c80b4ace6c_public_worker_js__WEBPACK_IMPORTED_MODULE_2__.startWasm)(takeObject(arg0), takeObject(arg1), takeObject(arg2), takeObject(arg3), LoaderHelper.__wrap(arg4), takeObject(arg5), takeObject(arg6));
         return addHeapObject(ret);
     };
     imports.wbg.__wbindgen_string_get = function(arg0, arg1) {
@@ -610,7 +654,7 @@ function getImports() {
         getInt32Memory0()[arg0 / 4 + 0] = ptr0;
     };
     imports.wbg.__wbg_startWorker_225789933f9111ee = function(arg0, arg1, arg2, arg3, arg4) {
-        const ret = (0,worker.startWorker)(takeObject(arg0), takeObject(arg1), takeObject(arg2), takeObject(arg3), LoaderHelper.__wrap(arg4));
+        const ret = (0,_snippets_wasmer_vscode_web_7bb130c80b4ace6c_public_worker_js__WEBPACK_IMPORTED_MODULE_2__.startWorker)(takeObject(arg0), takeObject(arg1), takeObject(arg2), takeObject(arg3), LoaderHelper.__wrap(arg4));
         return addHeapObject(ret);
     };
     imports.wbg.__wbg_log_c9486ca5d8e2cbe8 = function(arg0, arg1) {
@@ -1200,7 +1244,7 @@ function getImports() {
         const ret = makeMutClosure(arg0, arg1, 2932, __wbg_adapter_49);
         return addHeapObject(ret);
     };
-    imports['./snippets/wasmer-vscode-web-7bb130c80b4ace6c/public/worker.js'] = worker;
+    imports['./snippets/wasmer-vscode-web-7bb130c80b4ace6c/public/worker.js'] = _snippets_wasmer_vscode_web_7bb130c80b4ace6c_public_worker_js__WEBPACK_IMPORTED_MODULE_2__;
 
     return imports;
 }
@@ -1252,8 +1296,22 @@ async function init(input, maybe_memory) {
 }
 
 
-/* harmony default export */ const pkg = (init);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (init);
 
+__webpack_async_result__();
+} catch(e) { __webpack_async_result__(e); } });
+
+/***/ }),
+
+/***/ 382:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "_": () => (/* binding */ sleep)
+/* harmony export */ });
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 /***/ }),
 
@@ -1330,7 +1388,7 @@ if (isWorker()) {
         if (event.data.length == 5) {
             let [moduleUrl, module, memory, state, mainJS] = event.data;
             __webpack_require__.p = moduleUrl;
-            const importFrom = ( true) ? __webpack_require__.e(/* import() */ 972).then(__webpack_require__.bind(__webpack_require__, 972)) : 0;
+            const importFrom = ( true) ? __webpack_require__.e(/* import() */ 235).then(__webpack_require__.bind(__webpack_require__, 235)) : 0;
             try {
                 const {
                     default: init,
@@ -1357,7 +1415,7 @@ if (isWorker()) {
         } else {
             let [moduleUrl, module, memory, ctx, mainJS, wasm_module, wasm_memory] = event.data;
             __webpack_require__.p = moduleUrl;
-            const importFrom = ( true) ? __webpack_require__.e(/* import() */ 972).then(__webpack_require__.bind(__webpack_require__, 972)) : 0;
+            const importFrom = ( true) ? __webpack_require__.e(/* import() */ 235).then(__webpack_require__.bind(__webpack_require__, 235)) : 0;
             try {
                 const {
                     default: init,
@@ -1390,7 +1448,7 @@ if (isWorker()) {
 /***/ 275:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-module.exports = __webpack_require__.p + "f6cb95d64805caf83e05.wasm";
+module.exports = __webpack_require__.p + "293401732e8a910297fd.wasm";
 
 /***/ }),
 
@@ -1434,6 +1492,75 @@ module.exports = require("vscode");
 /******/ 	__webpack_require__.m = __webpack_modules__;
 /******/ 	
 /************************************************************************/
+/******/ 	/* webpack/runtime/async module */
+/******/ 	(() => {
+/******/ 		var webpackQueues = typeof Symbol === "function" ? Symbol("webpack queues") : "__webpack_queues__";
+/******/ 		var webpackExports = typeof Symbol === "function" ? Symbol("webpack exports") : "__webpack_exports__";
+/******/ 		var webpackError = typeof Symbol === "function" ? Symbol("webpack error") : "__webpack_error__";
+/******/ 		var resolveQueue = (queue) => {
+/******/ 			if(queue && !queue.d) {
+/******/ 				queue.d = 1;
+/******/ 				queue.forEach((fn) => (fn.r--));
+/******/ 				queue.forEach((fn) => (fn.r-- ? fn.r++ : fn()));
+/******/ 			}
+/******/ 		}
+/******/ 		var wrapDeps = (deps) => (deps.map((dep) => {
+/******/ 			if(dep !== null && typeof dep === "object") {
+/******/ 				if(dep[webpackQueues]) return dep;
+/******/ 				if(dep.then) {
+/******/ 					var queue = [];
+/******/ 					queue.d = 0;
+/******/ 					dep.then((r) => {
+/******/ 						obj[webpackExports] = r;
+/******/ 						resolveQueue(queue);
+/******/ 					}, (e) => {
+/******/ 						obj[webpackError] = e;
+/******/ 						resolveQueue(queue);
+/******/ 					});
+/******/ 					var obj = {};
+/******/ 					obj[webpackQueues] = (fn) => (fn(queue));
+/******/ 					return obj;
+/******/ 				}
+/******/ 			}
+/******/ 			var ret = {};
+/******/ 			ret[webpackQueues] = x => {};
+/******/ 			ret[webpackExports] = dep;
+/******/ 			return ret;
+/******/ 		}));
+/******/ 		__webpack_require__.a = (module, body, hasAwait) => {
+/******/ 			var queue;
+/******/ 			hasAwait && ((queue = []).d = 1);
+/******/ 			var depQueues = new Set();
+/******/ 			var exports = module.exports;
+/******/ 			var currentDeps;
+/******/ 			var outerResolve;
+/******/ 			var reject;
+/******/ 			var promise = new Promise((resolve, rej) => {
+/******/ 				reject = rej;
+/******/ 				outerResolve = resolve;
+/******/ 			});
+/******/ 			promise[webpackExports] = exports;
+/******/ 			promise[webpackQueues] = (fn) => (queue && fn(queue), depQueues.forEach(fn), promise["catch"](x => {}));
+/******/ 			module.exports = promise;
+/******/ 			body((deps) => {
+/******/ 				currentDeps = wrapDeps(deps);
+/******/ 				var fn;
+/******/ 				var getResult = () => (currentDeps.map((d) => {
+/******/ 					if(d[webpackError]) throw d[webpackError];
+/******/ 					return d[webpackExports];
+/******/ 				}))
+/******/ 				var promise = new Promise((resolve) => {
+/******/ 					fn = () => (resolve(getResult));
+/******/ 					fn.r = 0;
+/******/ 					var fnQueue = (q) => (q !== queue && !depQueues.has(q) && (depQueues.add(q), q && !q.d && (fn.r++, q.push(fn))));
+/******/ 					currentDeps.map((dep) => (dep[webpackQueues](fnQueue)));
+/******/ 				});
+/******/ 				return fn.r ? promise : getResult();
+/******/ 			}, (err) => ((err ? reject(promise[webpackError] = err) : outerResolve(exports)), resolveQueue(queue)));
+/******/ 			queue && (queue.d = 0);
+/******/ 		};
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/compat get default export */
 /******/ 	(() => {
 /******/ 		// getDefaultExport function for compatibility with non-harmony modules
@@ -1443,6 +1570,36 @@ module.exports = require("vscode");
 /******/ 				() => (module);
 /******/ 			__webpack_require__.d(getter, { a: getter });
 /******/ 			return getter;
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/create fake namespace object */
+/******/ 	(() => {
+/******/ 		var getProto = Object.getPrototypeOf ? (obj) => (Object.getPrototypeOf(obj)) : (obj) => (obj.__proto__);
+/******/ 		var leafPrototypes;
+/******/ 		// create a fake namespace object
+/******/ 		// mode & 1: value is a module id, require it
+/******/ 		// mode & 2: merge all properties of value into the ns
+/******/ 		// mode & 4: return value when already ns object
+/******/ 		// mode & 16: return value when it's Promise-like
+/******/ 		// mode & 8|1: behave like require
+/******/ 		__webpack_require__.t = function(value, mode) {
+/******/ 			if(mode & 1) value = this(value);
+/******/ 			if(mode & 8) return value;
+/******/ 			if(typeof value === 'object' && value) {
+/******/ 				if((mode & 4) && value.__esModule) return value;
+/******/ 				if((mode & 16) && typeof value.then === 'function') return value;
+/******/ 			}
+/******/ 			var ns = Object.create(null);
+/******/ 			__webpack_require__.r(ns);
+/******/ 			var def = {};
+/******/ 			leafPrototypes = leafPrototypes || [null, getProto({}), getProto([]), getProto(getProto)];
+/******/ 			for(var current = mode & 2 && value; typeof current == 'object' && !~leafPrototypes.indexOf(current); current = getProto(current)) {
+/******/ 				Object.getOwnPropertyNames(current).forEach((key) => (def[key] = () => (value[key])));
+/******/ 			}
+/******/ 			def['default'] = () => (value);
+/******/ 			__webpack_require__.d(ns, def);
+/******/ 			return ns;
 /******/ 		};
 /******/ 	})();
 /******/ 	
@@ -1476,7 +1633,7 @@ module.exports = require("vscode");
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames based on template
-/******/ 			return "" + chunkId + ".extension.js";
+/******/ 			return "" + chunkId + ".js";
 /******/ 		};
 /******/ 	})();
 /******/ 	
@@ -1553,7 +1710,7 @@ module.exports = require("vscode");
 /******/ 			898: 1,
 /******/ 			712: 1,
 /******/ 			140: 1,
-/******/ 			972: 1
+/******/ 			235: 1
 /******/ 		};
 /******/ 		
 /******/ 		// importScripts chunk loading
@@ -1588,42 +1745,12 @@ module.exports = require("vscode");
 /******/ 	})();
 /******/ 	
 /************************************************************************/
-var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
-(() => {
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "activate": () => (/* binding */ activate)
-/* harmony export */ });
-/* harmony import */ var vscode__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(496);
-/* harmony import */ var vscode__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vscode__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _pkg_snippets_wasmer_vscode_web_7bb130c80b4ace6c_js_terminal__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(595);
-/* harmony import */ var _pkg__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(972);
-
-
-
-async function activate(context) {
-    __webpack_require__.p = decodeURIComponent(context.extensionUri.toString() + "/dist/");
-    await (0,_pkg__WEBPACK_IMPORTED_MODULE_1__["default"])();
-    vscode__WEBPACK_IMPORTED_MODULE_0__.window.registerTerminalProfileProvider('wasmer-term.terminal', {
-        provideTerminalProfile(token) {
-            return new vscode__WEBPACK_IMPORTED_MODULE_0__.TerminalProfile({
-                name: "wasm terminal",
-                pty: new _pkg_snippets_wasmer_vscode_web_7bb130c80b4ace6c_js_terminal__WEBPACK_IMPORTED_MODULE_2__/* .WasmPseudoTerminal */ .Y()
-            });
-        }
-    });
-    context.subscriptions.push(vscode__WEBPACK_IMPORTED_MODULE_0__.commands.registerCommand("wasmer-term.openTerminal", function () {
-        const terminal = vscode__WEBPACK_IMPORTED_MODULE_0__.window.createTerminal({
-            name: "wasm terminal",
-            pty: new _pkg_snippets_wasmer_vscode_web_7bb130c80b4ace6c_js_terminal__WEBPACK_IMPORTED_MODULE_2__/* .WasmPseudoTerminal */ .Y()
-        });
-        terminal.show();
-    }));
-}
-
-})();
-
-module.exports = __webpack_exports__;
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module used 'module' so it can't be inlined
+/******/ 	var __webpack_exports__ = __webpack_require__(404);
+/******/ 	module.exports = __webpack_exports__;
+/******/ 	
 /******/ })()
 ;
