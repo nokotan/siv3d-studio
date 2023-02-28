@@ -1274,7 +1274,7 @@ function startWorker(module, memory, state, opts, helper) {
     const worker = new Worker(new URL(/* worker import */ __webpack_require__.p + __webpack_require__.u(712), __webpack_require__.b), Object.assign({}, opts, { type: undefined }));
 
     try {
-        worker.postMessage([module, memory, state, helper.mainJS()]);
+        worker.postMessage([__webpack_require__.p, module, memory, state, helper.mainJS()]);
     } catch(err) {
         return new Promise((res, rej) => {
             rej(err);
@@ -1292,7 +1292,7 @@ function startWasm(module, memory, ctx, opts, helper, wasm_module, wasm_memory) 
     const worker = new Worker(new URL(/* worker import */ __webpack_require__.p + __webpack_require__.u(140), __webpack_require__.b), Object.assign({}, opts, { type: undefined }));
 
     try {
-        worker.postMessage([module, memory, ctx, helper.mainJS(), wasm_module, wasm_memory]);
+        worker.postMessage([__webpack_require__.p, module, memory, ctx, helper.mainJS(), wasm_module, wasm_memory]);
     } catch(err) {
         return new Promise((res, rej) => {
             rej(err);
@@ -1327,8 +1327,9 @@ if (isWorker()) {
         // When using it without any bundlers, the module that
         // provided the `helper` object below is loaded; in other words
         // the main wasm module.
-        if (event.data.length == 4) {
-            let [module, memory, state, mainJS] = event.data;
+        if (event.data.length == 5) {
+            let [moduleUrl, module, memory, state, mainJS] = event.data;
+            __webpack_require__.p = moduleUrl;
             const importFrom = ( true) ? __webpack_require__.e(/* import() */ 972).then(__webpack_require__.bind(__webpack_require__, 972)) : 0;
             try {
                 const {
@@ -1354,7 +1355,8 @@ if (isWorker()) {
                 throw err;
             }   
         } else {
-            let [module, memory, ctx, mainJS, wasm_module, wasm_memory] = event.data;
+            let [moduleUrl, module, memory, ctx, mainJS, wasm_module, wasm_memory] = event.data;
+            __webpack_require__.p = moduleUrl;
             const importFrom = ( true) ? __webpack_require__.e(/* import() */ 972).then(__webpack_require__.bind(__webpack_require__, 972)) : 0;
             try {
                 const {
@@ -1388,7 +1390,7 @@ if (isWorker()) {
 /***/ 275:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-module.exports = __webpack_require__.p + "43e5dac2ef5361deae73.wasm";
+module.exports = __webpack_require__.p + "f6cb95d64805caf83e05.wasm";
 
 /***/ }),
 
@@ -1441,36 +1443,6 @@ module.exports = require("vscode");
 /******/ 				() => (module);
 /******/ 			__webpack_require__.d(getter, { a: getter });
 /******/ 			return getter;
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/create fake namespace object */
-/******/ 	(() => {
-/******/ 		var getProto = Object.getPrototypeOf ? (obj) => (Object.getPrototypeOf(obj)) : (obj) => (obj.__proto__);
-/******/ 		var leafPrototypes;
-/******/ 		// create a fake namespace object
-/******/ 		// mode & 1: value is a module id, require it
-/******/ 		// mode & 2: merge all properties of value into the ns
-/******/ 		// mode & 4: return value when already ns object
-/******/ 		// mode & 16: return value when it's Promise-like
-/******/ 		// mode & 8|1: behave like require
-/******/ 		__webpack_require__.t = function(value, mode) {
-/******/ 			if(mode & 1) value = this(value);
-/******/ 			if(mode & 8) return value;
-/******/ 			if(typeof value === 'object' && value) {
-/******/ 				if((mode & 4) && value.__esModule) return value;
-/******/ 				if((mode & 16) && typeof value.then === 'function') return value;
-/******/ 			}
-/******/ 			var ns = Object.create(null);
-/******/ 			__webpack_require__.r(ns);
-/******/ 			var def = {};
-/******/ 			leafPrototypes = leafPrototypes || [null, getProto({}), getProto([]), getProto(getProto)];
-/******/ 			for(var current = mode & 2 && value; typeof current == 'object' && !~leafPrototypes.indexOf(current); current = getProto(current)) {
-/******/ 				Object.getOwnPropertyNames(current).forEach((key) => (def[key] = () => (value[key])));
-/******/ 			}
-/******/ 			def['default'] = () => (value);
-/******/ 			__webpack_require__.d(ns, def);
-/******/ 			return ns;
 /******/ 		};
 /******/ 	})();
 /******/ 	

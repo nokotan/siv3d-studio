@@ -19,7 +19,7 @@ function startWorker(module, memory, state, opts, helper) {
     const worker = new Worker(new URL(/* worker import */ __webpack_require__.p + __webpack_require__.u(712), __webpack_require__.b), Object.assign({}, opts, { type: undefined }));
 
     try {
-        worker.postMessage([module, memory, state, helper.mainJS()]);
+        worker.postMessage([__webpack_require__.p, module, memory, state, helper.mainJS()]);
     } catch(err) {
         return new Promise((res, rej) => {
             rej(err);
@@ -37,7 +37,7 @@ function startWasm(module, memory, ctx, opts, helper, wasm_module, wasm_memory) 
     const worker = new Worker(new URL(/* worker import */ __webpack_require__.p + __webpack_require__.u(140), __webpack_require__.b), Object.assign({}, opts, { type: undefined }));
 
     try {
-        worker.postMessage([module, memory, ctx, helper.mainJS(), wasm_module, wasm_memory]);
+        worker.postMessage([__webpack_require__.p, module, memory, ctx, helper.mainJS(), wasm_module, wasm_memory]);
     } catch(err) {
         return new Promise((res, rej) => {
             rej(err);
@@ -72,8 +72,9 @@ if (isWorker()) {
         // When using it without any bundlers, the module that
         // provided the `helper` object below is loaded; in other words
         // the main wasm module.
-        if (event.data.length == 4) {
-            let [module, memory, state, mainJS] = event.data;
+        if (event.data.length == 5) {
+            let [moduleUrl, module, memory, state, mainJS] = event.data;
+            __webpack_require__.p = moduleUrl;
             const importFrom = ( true) ? __webpack_require__.e(/* import() */ 972).then(__webpack_require__.bind(__webpack_require__, 972)) : 0;
             try {
                 const {
@@ -99,7 +100,8 @@ if (isWorker()) {
                 throw err;
             }   
         } else {
-            let [module, memory, ctx, mainJS, wasm_module, wasm_memory] = event.data;
+            let [moduleUrl, module, memory, ctx, mainJS, wasm_module, wasm_memory] = event.data;
+            __webpack_require__.p = moduleUrl;
             const importFrom = ( true) ? __webpack_require__.e(/* import() */ 972).then(__webpack_require__.bind(__webpack_require__, 972)) : 0;
             try {
                 const {
