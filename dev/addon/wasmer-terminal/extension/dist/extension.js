@@ -12,28 +12,31 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var vscode__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(496);
 /* harmony import */ var vscode__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vscode__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _pkg_snippets_wasmer_vscode_web_7bb130c80b4ace6c_js_terminal__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(595);
-/* harmony import */ var _pkg__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(235);
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_pkg__WEBPACK_IMPORTED_MODULE_1__, _pkg_snippets_wasmer_vscode_web_7bb130c80b4ace6c_js_terminal__WEBPACK_IMPORTED_MODULE_2__]);
-([_pkg__WEBPACK_IMPORTED_MODULE_1__, _pkg_snippets_wasmer_vscode_web_7bb130c80b4ace6c_js_terminal__WEBPACK_IMPORTED_MODULE_2__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+/* harmony import */ var _pkg_snippets_wasmer_vscode_web_7bb130c80b4ace6c_js_terminal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(595);
+/* harmony import */ var _pkg__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(235);
+/* harmony import */ var _pkg_snippets_wasmer_vscode_web_7bb130c80b4ace6c_public_worker__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(685);
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_pkg__WEBPACK_IMPORTED_MODULE_2__, _pkg_snippets_wasmer_vscode_web_7bb130c80b4ace6c_js_terminal__WEBPACK_IMPORTED_MODULE_3__]);
+([_pkg__WEBPACK_IMPORTED_MODULE_2__, _pkg_snippets_wasmer_vscode_web_7bb130c80b4ace6c_js_terminal__WEBPACK_IMPORTED_MODULE_3__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
 
 
 
+
+_pkg_snippets_wasmer_vscode_web_7bb130c80b4ace6c_public_worker__WEBPACK_IMPORTED_MODULE_1__.inWorker.value = false;
 async function activate(context) {
     __webpack_require__.p = decodeURIComponent(context.extensionUri.toString() + "/dist/");
-    await (0,_pkg__WEBPACK_IMPORTED_MODULE_1__["default"])();
+    await (0,_pkg__WEBPACK_IMPORTED_MODULE_2__["default"])();
     vscode__WEBPACK_IMPORTED_MODULE_0__.window.registerTerminalProfileProvider('wasmer-term.terminal', {
         provideTerminalProfile(token) {
             return new vscode__WEBPACK_IMPORTED_MODULE_0__.TerminalProfile({
                 name: "wasm terminal",
-                pty: new _pkg_snippets_wasmer_vscode_web_7bb130c80b4ace6c_js_terminal__WEBPACK_IMPORTED_MODULE_2__/* .WasmPseudoTerminal */ .Y()
+                pty: new _pkg_snippets_wasmer_vscode_web_7bb130c80b4ace6c_js_terminal__WEBPACK_IMPORTED_MODULE_3__/* .WasmPseudoTerminal */ .Y()
             });
         }
     });
     context.subscriptions.push(vscode__WEBPACK_IMPORTED_MODULE_0__.commands.registerCommand("wasmer-term.openTerminal", function () {
         const terminal = vscode__WEBPACK_IMPORTED_MODULE_0__.window.createTerminal({
             name: "wasm terminal",
-            pty: new _pkg_snippets_wasmer_vscode_web_7bb130c80b4ace6c_js_terminal__WEBPACK_IMPORTED_MODULE_2__/* .WasmPseudoTerminal */ .Y()
+            pty: new _pkg_snippets_wasmer_vscode_web_7bb130c80b4ace6c_js_terminal__WEBPACK_IMPORTED_MODULE_3__/* .WasmPseudoTerminal */ .Y()
         });
         terminal.show();
     }));
@@ -100,6 +103,7 @@ __webpack_async_result__();
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "inWorker": () => (/* binding */ inWorker),
 /* harmony export */   "isWorker": () => (/* binding */ isWorker),
 /* harmony export */   "startWasm": () => (/* binding */ startWasm),
 /* harmony export */   "startWorker": () => (/* binding */ startWorker)
@@ -140,9 +144,11 @@ function startWasm(module, memory, ctx, opts, helper, wasm_module, wasm_memory) 
         worker.onerror = rej;
     });
 }
-let inWorker = false;
+let inWorker = {
+    value: true
+};
 function isWorker() {
-    return inWorker;
+    return inWorker.value;
 }
 // Second: Entry script for the actual web worker.
 //console.log("pool::worker(entry) started");
@@ -150,7 +156,6 @@ Error.stackTraceLimit = 50;
 // Initialize wasm module, and memory. `state` is the shared state,
 // to be used with `worker_entry_point`.
 self.onmessage = async (event) => {
-    inWorker = true;
     // This crate only works with bundling via webpack or not
     // using a bundler at all:
     // When bundling with webpack, this file is relative to the wasm
@@ -1434,7 +1439,7 @@ function sleep(ms) {
 /***/ 275:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-module.exports = __webpack_require__.p + "a00de44e85afdea3f142.wasm";
+module.exports = __webpack_require__.p + "0d7cf79b04f8a5436052.wasm";
 
 /***/ }),
 

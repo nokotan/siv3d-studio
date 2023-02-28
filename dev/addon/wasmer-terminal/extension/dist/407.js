@@ -7,6 +7,7 @@
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "inWorker": () => (/* binding */ inWorker),
 /* harmony export */   "isWorker": () => (/* binding */ isWorker),
 /* harmony export */   "startWasm": () => (/* binding */ startWasm),
 /* harmony export */   "startWorker": () => (/* binding */ startWorker)
@@ -47,9 +48,11 @@ function startWasm(module, memory, ctx, opts, helper, wasm_module, wasm_memory) 
         worker.onerror = rej;
     });
 }
-let inWorker = false;
+let inWorker = {
+    value: true
+};
 function isWorker() {
-    return inWorker;
+    return inWorker.value;
 }
 // Second: Entry script for the actual web worker.
 //console.log("pool::worker(entry) started");
@@ -57,7 +60,6 @@ Error.stackTraceLimit = 50;
 // Initialize wasm module, and memory. `state` is the shared state,
 // to be used with `worker_entry_point`.
 self.onmessage = async (event) => {
-    inWorker = true;
     // This crate only works with bundling via webpack or not
     // using a bundler at all:
     // When bundling with webpack, this file is relative to the wasm
