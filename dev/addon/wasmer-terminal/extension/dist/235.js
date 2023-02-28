@@ -8,17 +8,16 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "Y": () => (/* binding */ WasmPseudoTerminal)
 /* harmony export */ });
-/* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(235);
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_index__WEBPACK_IMPORTED_MODULE_0__]);
-_index__WEBPACK_IMPORTED_MODULE_0__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
+/* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(235);
+/* harmony import */ var _public_worker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(685);
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_index__WEBPACK_IMPORTED_MODULE_1__]);
+_index__WEBPACK_IMPORTED_MODULE_1__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
 
-function isWorker() {
-    return 'WorkerGlobalScope' in self;
-}
+
 class EmptyEventEmitter {
     fire(_) { }
 }
-const EventEmitter = isWorker() ? EmptyEventEmitter : (await Promise.resolve(/* import() */).then(__webpack_require__.t.bind(__webpack_require__, 496, 23))).EventEmitter;
+const EventEmitter = (0,_public_worker__WEBPACK_IMPORTED_MODULE_0__.isWorker)() ? EmptyEventEmitter : (await Promise.resolve(/* import() */).then(__webpack_require__.t.bind(__webpack_require__, 496, 23))).EventEmitter;
 class WasmPseudoTerminal {
     constructor() {
         this.writeEmitter = new EventEmitter();
@@ -27,7 +26,7 @@ class WasmPseudoTerminal {
         this.onDidClose = this.closeEmitter.event;
     }
     async open(initialDimensions) {
-        (0,_index__WEBPACK_IMPORTED_MODULE_0__.open)(this);
+        (0,_index__WEBPACK_IMPORTED_MODULE_1__.open)(this);
     }
     close() {
     }
@@ -75,7 +74,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _snippets_wasmer_vscode_web_7bb130c80b4ace6c_js_terminal_ts__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(595);
 /* harmony import */ var _snippets_wasmer_vscode_web_7bb130c80b4ace6c_js_time_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(382);
-/* harmony import */ var _snippets_wasmer_vscode_web_7bb130c80b4ace6c_public_worker_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(911);
+/* harmony import */ var _snippets_wasmer_vscode_web_7bb130c80b4ace6c_public_worker_ts__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(685);
 /* module decorator */ module = __webpack_require__.hmd(module);
 var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_snippets_wasmer_vscode_web_7bb130c80b4ace6c_js_terminal_ts__WEBPACK_IMPORTED_MODULE_0__]);
 _snippets_wasmer_vscode_web_7bb130c80b4ace6c_js_terminal_ts__WEBPACK_IMPORTED_MODULE_0__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
@@ -598,8 +597,8 @@ function getImports() {
         const ret = (0,_snippets_wasmer_vscode_web_7bb130c80b4ace6c_js_time_js__WEBPACK_IMPORTED_MODULE_1__/* .sleep */ ._)(arg0);
         return addHeapObject(ret);
     };
-    imports.wbg.__wbg_startWasm_ac59d31282e7251b = function(arg0, arg1, arg2, arg3, arg4, arg5, arg6) {
-        const ret = (0,_snippets_wasmer_vscode_web_7bb130c80b4ace6c_public_worker_js__WEBPACK_IMPORTED_MODULE_2__.startWasm)(takeObject(arg0), takeObject(arg1), takeObject(arg2), takeObject(arg3), LoaderHelper.__wrap(arg4), takeObject(arg5), takeObject(arg6));
+    imports.wbg.__wbg_startWasm_b915212fd5d32fd7 = function(arg0, arg1, arg2, arg3, arg4, arg5, arg6) {
+        const ret = (0,_snippets_wasmer_vscode_web_7bb130c80b4ace6c_public_worker_ts__WEBPACK_IMPORTED_MODULE_2__.startWasm)(takeObject(arg0), takeObject(arg1), takeObject(arg2), takeObject(arg3), LoaderHelper.__wrap(arg4), takeObject(arg5), takeObject(arg6));
         return addHeapObject(ret);
     };
     imports.wbg.__wbindgen_string_get = function(arg0, arg1) {
@@ -610,8 +609,8 @@ function getImports() {
         getInt32Memory0()[arg0 / 4 + 1] = len0;
         getInt32Memory0()[arg0 / 4 + 0] = ptr0;
     };
-    imports.wbg.__wbg_startWorker_225789933f9111ee = function(arg0, arg1, arg2, arg3, arg4) {
-        const ret = (0,_snippets_wasmer_vscode_web_7bb130c80b4ace6c_public_worker_js__WEBPACK_IMPORTED_MODULE_2__.startWorker)(takeObject(arg0), takeObject(arg1), takeObject(arg2), takeObject(arg3), LoaderHelper.__wrap(arg4));
+    imports.wbg.__wbg_startWorker_4eed1f938aa0fcef = function(arg0, arg1, arg2, arg3, arg4) {
+        const ret = (0,_snippets_wasmer_vscode_web_7bb130c80b4ace6c_public_worker_ts__WEBPACK_IMPORTED_MODULE_2__.startWorker)(takeObject(arg0), takeObject(arg1), takeObject(arg2), takeObject(arg3), LoaderHelper.__wrap(arg4));
         return addHeapObject(ret);
     };
     imports.wbg.__wbg_log_c9486ca5d8e2cbe8 = function(arg0, arg1) {
@@ -1201,7 +1200,7 @@ function getImports() {
         const ret = makeMutClosure(arg0, arg1, 2932, __wbg_adapter_49);
         return addHeapObject(ret);
     };
-    imports['./snippets/wasmer-vscode-web-7bb130c80b4ace6c/public/worker.js'] = _snippets_wasmer_vscode_web_7bb130c80b4ace6c_public_worker_js__WEBPACK_IMPORTED_MODULE_2__;
+    imports['./snippets/wasmer-vscode-web-7bb130c80b4ace6c/public/worker.ts'] = _snippets_wasmer_vscode_web_7bb130c80b4ace6c_public_worker_ts__WEBPACK_IMPORTED_MODULE_2__;
 
     return imports;
 }
@@ -1275,7 +1274,7 @@ function sleep(ms) {
 /***/ 275:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-module.exports = __webpack_require__.p + "293401732e8a910297fd.wasm";
+module.exports = __webpack_require__.p + "a00de44e85afdea3f142.wasm";
 
 /***/ })
 
