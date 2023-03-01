@@ -11,18 +11,19 @@
 /* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(972);
 
 class WasmPseudoTerminal {
-    constructor(writeEmitter, closeEmitter) {
+    constructor(writeEmitter, closeEmitter, location) {
         this.writeEmitter = writeEmitter;
         this.closeEmitter = closeEmitter;
+        this.location = location;
         this.onDidWrite = this.writeEmitter.event;
         this.onDidClose = this.closeEmitter.event;
     }
-    static async createWasmPseudoTerminal() {
+    static async createWasmPseudoTerminal(location) {
         const vscode = await Promise.resolve(/* import() */).then(__webpack_require__.t.bind(__webpack_require__, 496, 23));
-        return new WasmPseudoTerminal(new vscode.EventEmitter(), new vscode.EventEmitter());
+        return new WasmPseudoTerminal(new vscode.EventEmitter(), new vscode.EventEmitter(), location);
     }
     async open(initialDimensions) {
-        (0,_index__WEBPACK_IMPORTED_MODULE_0__.open)(this);
+        (0,_index__WEBPACK_IMPORTED_MODULE_0__.open)(this, this.location);
     }
     close() {
     }
@@ -46,7 +47,7 @@ class WasmPseudoTerminal {
 
 /***/ }),
 
-/***/ 685:
+/***/ 372:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -59,7 +60,7 @@ function isWorker() {
     return true;
 }
 function startWorker(module, memory, state, opts, helper) {
-    const worker = new Worker(new URL(/* worker import */ __webpack_require__.p + __webpack_require__.u(407), __webpack_require__.b), Object.assign({}, opts, { type: undefined }));
+    const worker = new Worker(new URL(/* worker import */ __webpack_require__.p + __webpack_require__.u(618), __webpack_require__.b), Object.assign({}, opts, { type: undefined }));
     try {
         worker.postMessage([__webpack_require__.p, module, memory, state, helper.mainJS()]);
     }
@@ -77,7 +78,7 @@ function startWorker(module, memory, state, opts, helper) {
     });
 }
 function startWasm(module, memory, ctx, opts, helper, wasm_module, wasm_memory) {
-    const worker = new Worker(new URL(/* worker import */ __webpack_require__.p + __webpack_require__.u(230), __webpack_require__.b), Object.assign({}, opts, { type: undefined }));
+    const worker = new Worker(new URL(/* worker import */ __webpack_require__.p + __webpack_require__.u(868), __webpack_require__.b), Object.assign({}, opts, { type: undefined }));
     try {
         worker.postMessage([__webpack_require__.p, module, memory, ctx, helper.mainJS(), wasm_module, wasm_memory]);
     }
@@ -192,8 +193,8 @@ var terminal = __webpack_require__(595);
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
-// EXTERNAL MODULE: ./pkg/snippets/wasmer-vscode-web-7bb130c80b4ace6c/public/worker.ts
-var worker = __webpack_require__(685);
+// EXTERNAL MODULE: ./pkg/snippets/wasmer-vscode-web-7bb130c80b4ace6c/js/worker.ts
+var worker = __webpack_require__(372);
 ;// CONCATENATED MODULE: ./pkg/index.js
 /* module decorator */ module = __webpack_require__.hmd(module);
 
@@ -438,11 +439,14 @@ function main() {
 
 /**
 * @param {any} terminal
+* @param {string} location
 */
-function pkg_open(terminal) {
+function pkg_open(terminal, location) {
     try {
         const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
-        wasm.open(retptr, addHeapObject(terminal));
+        const ptr0 = passStringToWasm0(location, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+        const len0 = WASM_VECTOR_LEN;
+        wasm.open(retptr, addHeapObject(terminal), ptr0, len0);
         var r0 = getInt32Memory0()[retptr / 4 + 0];
         var r1 = getInt32Memory0()[retptr / 4 + 1];
         if (r1) {
@@ -715,7 +719,7 @@ function getImports() {
         const ret = sleep(arg0);
         return addHeapObject(ret);
     };
-    imports.wbg.__wbg_startWasm_b915212fd5d32fd7 = function(arg0, arg1, arg2, arg3, arg4, arg5, arg6) {
+    imports.wbg.__wbg_startWasm_f2d3e6782a2d171f = function(arg0, arg1, arg2, arg3, arg4, arg5, arg6) {
         const ret = (0,worker.startWasm)(takeObject(arg0), takeObject(arg1), takeObject(arg2), takeObject(arg3), LoaderHelper.__wrap(arg4), takeObject(arg5), takeObject(arg6));
         return addHeapObject(ret);
     };
@@ -727,7 +731,7 @@ function getImports() {
         getInt32Memory0()[arg0 / 4 + 1] = len0;
         getInt32Memory0()[arg0 / 4 + 0] = ptr0;
     };
-    imports.wbg.__wbg_startWorker_4eed1f938aa0fcef = function(arg0, arg1, arg2, arg3, arg4) {
+    imports.wbg.__wbg_startWorker_d92069a0e13ba392 = function(arg0, arg1, arg2, arg3, arg4) {
         const ret = (0,worker.startWorker)(takeObject(arg0), takeObject(arg1), takeObject(arg2), takeObject(arg3), LoaderHelper.__wrap(arg4));
         return addHeapObject(ret);
     };
@@ -1318,7 +1322,7 @@ function getImports() {
         const ret = makeMutClosure(arg0, arg1, 2930, __wbg_adapter_49);
         return addHeapObject(ret);
     };
-    imports['./snippets/wasmer-vscode-web-7bb130c80b4ace6c/public/worker.ts'] = worker;
+    imports['./snippets/wasmer-vscode-web-7bb130c80b4ace6c/js/worker.ts'] = worker;
 
     return imports;
 }
@@ -1378,7 +1382,7 @@ async function init(input, maybe_memory) {
 /***/ 275:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-module.exports = __webpack_require__.p + "538f1726784c9c581817.wasm";
+module.exports = __webpack_require__.p + "aab0c60e9b634dbee1b3.wasm";
 
 /***/ }),
 
@@ -1569,8 +1573,8 @@ module.exports = require("vscode");
 /******/ 		// "1" means "already loaded"
 /******/ 		var installedChunks = {
 /******/ 			898: 1,
-/******/ 			407: 1,
-/******/ 			230: 1,
+/******/ 			618: 1,
+/******/ 			868: 1,
 /******/ 			972: 1
 /******/ 		};
 /******/ 		
@@ -1627,14 +1631,14 @@ async function activate(context) {
         provideTerminalProfile(token) {
             return (async () => new vscode__WEBPACK_IMPORTED_MODULE_0__.TerminalProfile({
                 name: "wasm terminal",
-                pty: await _pkg_snippets_wasmer_vscode_web_7bb130c80b4ace6c_js_terminal__WEBPACK_IMPORTED_MODULE_2__/* .WasmPseudoTerminal.createWasmPseudoTerminal */ .Y.createWasmPseudoTerminal()
+                pty: await _pkg_snippets_wasmer_vscode_web_7bb130c80b4ace6c_js_terminal__WEBPACK_IMPORTED_MODULE_2__/* .WasmPseudoTerminal.createWasmPseudoTerminal */ .Y.createWasmPseudoTerminal(__webpack_require__.p)
             }))();
         }
     });
     context.subscriptions.push(vscode__WEBPACK_IMPORTED_MODULE_0__.commands.registerCommand("wasmer-term.openTerminal", async function () {
         const terminal = vscode__WEBPACK_IMPORTED_MODULE_0__.window.createTerminal({
             name: "wasm terminal",
-            pty: await _pkg_snippets_wasmer_vscode_web_7bb130c80b4ace6c_js_terminal__WEBPACK_IMPORTED_MODULE_2__/* .WasmPseudoTerminal.createWasmPseudoTerminal */ .Y.createWasmPseudoTerminal()
+            pty: await _pkg_snippets_wasmer_vscode_web_7bb130c80b4ace6c_js_terminal__WEBPACK_IMPORTED_MODULE_2__/* .WasmPseudoTerminal.createWasmPseudoTerminal */ .Y.createWasmPseudoTerminal(__webpack_require__.p)
         });
         terminal.show();
     }));
