@@ -51,9 +51,13 @@ class WasmPseudoTerminal {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "isWorker": () => (/* binding */ isWorker),
 /* harmony export */   "startWasm": () => (/* binding */ startWasm),
 /* harmony export */   "startWorker": () => (/* binding */ startWorker)
 /* harmony export */ });
+function isWorker() {
+    return true;
+}
 function startWorker(module, memory, state, opts, helper) {
     const worker = new Worker(new URL(/* worker import */ __webpack_require__.p + __webpack_require__.u(407), __webpack_require__.b), Object.assign({}, opts, { type: undefined }));
     try {
@@ -1374,7 +1378,7 @@ async function init(input, maybe_memory) {
 /***/ 275:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-module.exports = __webpack_require__.p + "8f84258563504330b36c.wasm";
+module.exports = __webpack_require__.p + "538f1726784c9c581817.wasm";
 
 /***/ }),
 
