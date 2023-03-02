@@ -7,12 +7,16 @@
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "getWorkerLocation": () => (/* binding */ getWorkerLocation),
 /* harmony export */   "isWorker": () => (/* binding */ isWorker),
 /* harmony export */   "startWasm": () => (/* binding */ startWasm),
 /* harmony export */   "startWorker": () => (/* binding */ startWorker)
 /* harmony export */ });
 function isWorker() {
     return true;
+}
+function getWorkerLocation() {
+    return __webpack_require__.p;
 }
 function startWorker(module, memory, state, opts, helper) {
     const worker = new Worker(new URL(/* worker import */ __webpack_require__.p + __webpack_require__.u(618), __webpack_require__.b), Object.assign({}, opts, { type: undefined }));
