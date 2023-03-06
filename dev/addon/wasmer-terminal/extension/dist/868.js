@@ -72,7 +72,7 @@ if (!self.onmessage) {
         if (event.data.length == 5) {
             let [moduleUrl, module, memory, state, mainJS] = event.data;
             __webpack_require__.p = moduleUrl;
-            const importFrom = ( true) ? __webpack_require__.e(/* import() */ 972).then(__webpack_require__.bind(__webpack_require__, 972)) : 0;
+            const importFrom = ( true) ? __webpack_require__.e(/* import() */ 688).then(__webpack_require__.bind(__webpack_require__, 688)) : 0;
             try {
                 const { default: init, worker_entry_point, worker_entry_point_with_val } = await importFrom;
                 await init(module, memory);
@@ -96,7 +96,7 @@ if (!self.onmessage) {
         else {
             let [moduleUrl, module, memory, ctx, mainJS, wasm_module, wasm_memory] = event.data;
             __webpack_require__.p = moduleUrl;
-            const importFrom = ( true) ? __webpack_require__.e(/* import() */ 972).then(__webpack_require__.bind(__webpack_require__, 972)) : 0;
+            const importFrom = ( true) ? __webpack_require__.e(/* import() */ 688).then(__webpack_require__.bind(__webpack_require__, 688)) : 0;
             try {
                 const { default: init, wasm_entry_point, } = await importFrom;
                 await init(module, memory);

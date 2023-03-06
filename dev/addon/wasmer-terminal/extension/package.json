@@ -15,9 +15,7 @@
     "vscode": "^1.74.0"
   },
   "activationEvents": [
-    "onFileSystem:memfs",
-    "onFileSystem:vscode-remote",
-    "onTerminalProfile:wasmer-term.terminal"
+    "onFileSystem:wasmfs"
   ],
   "contributes": {
     "commands": [
