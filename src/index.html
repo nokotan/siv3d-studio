@@ -1,0 +1,86 @@
+<!-- Copyright (C) Microsoft Corporation. All rights reserved. -->
+<!DOCTYPE html>
+<html>
+	<head>
+		<script>
+			performance.mark('code/didStartRenderer')
+		</script>
+		<meta charset="utf-8" />
+
+		<!-- Mobile tweaks -->
+		<meta name="mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-title" content="Siv3D Studio">
+		<link rel="apple-touch-icon" href="./icon.png" />
+		<link rel="manifest" href="./manifest.json">
+
+		<!-- Disable pinch zooming -->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+
+		<!-- Workbench Configuration -->
+		<meta id="vscode-workbench-web-configuration" data-settings="">
+
+		<!-- Workbench Auth Session -->
+		<meta id="vscode-workbench-auth-session" data-settings="">
+
+		<!-- Builtin Extensions (running out of sources) -->
+		<meta id="vscode-workbench-builtin-extensions" data-settings="">
+
+		<!-- Workbench Icon/Manifest/CSS -->
+		<link rel="icon" href="./favicon.ico" type="image/x-icon" />
+		<link rel="manifest" href="./manifest.json">
+		<link data-name="vs/workbench/workbench.web.main" rel="stylesheet" href="./out/vs/workbench/workbench.web.main.css" />
+	</head>
+
+	<body aria-label="">
+	</body>
+
+	<!-- Startup (do not modify order of script tags!) -->
+	<script src="./config.js"></script>
+	<script src="./out/vs/loader.js"></script>
+	<script src="./out/vs/webPackagePaths.js"></script>
+	<script src="./patches/activityBar.js"></script>
+	<script src="./patches/explorerView.js"></script>
+	<script src="./patches/keyBinding.js"></script>
+	<script>
+		const baseUrl = 'https://siv3d.dev';
+		Object.keys(self.webPackagePaths).map(function (key, index) {
+			self.webPackagePaths[key] = `${baseUrl}/node_modules/${key}/${self.webPackagePaths[key]}`;
+		});
+
+		// Set up nls if the user is not using the default language (English)
+		const nlsConfig = {};
+		const locale = window.localStorage.getItem('vscode.nls.locale') || navigator.language;
+		if (!locale.startsWith('en')) {
+			nlsConfig['vs/nls'] = {
+				availableLanguages: {
+					'*': locale
+				},
+				translationServiceUrl: 'https://www.vscode-unpkg.net/_lp/1ad8d514439d5077d2b0b7ee64d2ce82a9308e5a/1.74.1'
+			};
+		}
+
+		require.config({
+			baseUrl: `${baseUrl}/out`,
+			recordStats: true,
+			trustedTypesPolicy: window.trustedTypes?.createPolicy('amdLoader', {
+				createScriptURL(value) {
+					return value;
+				}
+			}),
+			paths: self.webPackagePaths,
+			...nlsConfig
+		});
+	</script>
+	<script>
+		performance.mark('code/willLoadWorkbenchMain');
+	</script>
+	<script src="./out/vs/workbench/workbench.web.main.nls.js"></script>
+    <script src="./out/vs/workbench/workbench.web.main.js"></script>
+    <script src="./out/vs/code/browser/workbench/workbench.js"></script>
+	<script>
+		if ("serviceWorker" in navigator) {
+    		navigator.serviceWorker.register("./sw.js");
+		}
+	</script>
+</html>

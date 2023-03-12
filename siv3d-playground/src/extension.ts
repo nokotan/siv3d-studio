@@ -14,7 +14,6 @@
 
 import * as vscode from 'vscode';
 import { loadAdditionalAssets, loadInitialAssets } from './initialFiles';
-import { ExtensionContext } from '../../wasm-playground/src/extension';
 
 export async function activate(context: vscode.ExtensionContext) {
 	
@@ -46,18 +45,18 @@ export async function activate(context: vscode.ExtensionContext) {
 		}
 	});
 
-	const playgroundExtension = vscode.extensions.getExtension<ExtensionContext>("kamenokosoft.wasm-playground");
+	const playgroundExtension = vscode.extensions.getExtension<{}>("kamenokosoft.wasm-playground");
 
 	if (!playgroundExtension.isActive) {
 		await playgroundExtension.activate();
 	}
 
-	const memFs = playgroundExtension.exports.memFs;
+	// const memFs = playgroundExtension.exports.memFs;
 
-	await memFs.restore().catch(e => console.error(e));
-	memFs.onDidChangeFile(function () {
-		memFs.backup();
-	});
+	// await memFs.restore().catch(e => console.error(e));
+	// memFs.onDidChangeFile(function () {
+	// 	memFs.backup();
+	// });
 
 	const workspaceRoot = (vscode.workspace.workspaceFolders && (vscode.workspace.workspaceFolders.length > 0))
 		? vscode.workspace.workspaceFolders[0] : undefined;

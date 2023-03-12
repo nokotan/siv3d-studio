@@ -1,9 +1,0 @@
-node_modules/**
-out/**
-src/**
-wapm/**
-wasm-terminal/**
-.gitignore
-webpack.config.js
-tsconfig.json
-extension.zip

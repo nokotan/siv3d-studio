@@ -2,26 +2,25 @@
   "name": "siv3d-studio",
   "version": "0.0.4",
   "description": "",
-  "main": "out/main.js",
+  "main": "build/dist/main.js",
   "scripts": {
-    "compile": "tsc",
-    "pack": "node out/main.js",
-    "serve": "cd vscode/vscode-web && http-server --cors --ssl"
+    "build": "tsc -p build",
+    "pack": "tsc -p src && node build/dist/main.js",
+    "serve": "webpack serve"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "private": true,
   "workspaces": [
-    "emscripten-remote-build",
-    "siv3d-playground",
-    "wasm-playground"
+    "siv3d-playground"
   ],
   "devDependencies": {
     "@types/decompress": "^4.2.4",
     "@types/node": "^18.6.4",
     "http-server": "^14.1.1",
-    "typescript": "^4.7.4"
+    "typescript": "^4.7.4",
+    "webpack-dev-server": "^4.11.1"
   },
   "dependencies": {
     "decompress": "^4.2.1",

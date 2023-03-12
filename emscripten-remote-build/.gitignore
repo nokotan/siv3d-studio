@@ -1,7 +1,0 @@
-out
-dist
-extension
-node_modules
-.vscode-test/
-*.vsix
-package.nls.*.json
