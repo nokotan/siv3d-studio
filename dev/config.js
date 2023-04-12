@@ -3,27 +3,27 @@ const config = {
     additionalBuiltinExtensions: [
         {
             scheme: "https",
-            authority: "siv3d.dev",
+            authority: "siv3d.dev/dev",
             path: "/addon/wasm-playground/extension"
         },
         {
             scheme: "https",
-            authority: "siv3d.dev",
+            authority: "siv3d.dev/dev",
             path: "/addon/siv3d-playground/extension"
         },
         {
             scheme: "https",
-            authority: "siv3d.dev",
+            authority: "siv3d.dev/dev",
             path: "/addon/emscripten-remote-build/extension"
         },
         {
             scheme: "https",
-            authority: "siv3d.dev",
+            authority: "siv3d.dev/dev",
             path: "/addon/gistpad/extension"
         },
         {
             scheme: "https",
-            authority: "siv3d.dev",
+            authority: "siv3d.dev/dev",
             path: "/addon/wasmer-terminal/extension"
         }
     ],
