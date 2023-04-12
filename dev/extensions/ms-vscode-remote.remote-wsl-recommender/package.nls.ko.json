@@ -1,1 +1,1 @@
-{"description":"Recommends using the Windows Subsystem for Linux (WSL) and the WSL extension.","displayName":"WSL: Recommender","gettingStartedCommand":"WSL 시작하기","openFolderCommand":"WSL에서 폴더 열기..."}
+{"description":"WSL(Linux용 Windows 하위 시스템) 및 WSL 확장을 사용할 것을 권장합니다.","displayName":"WSL: 추천","gettingStartedCommand":"WSL 시작하기","openFolderCommand":"WSL에서 폴더 열기..."}

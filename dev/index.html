@@ -36,183 +36,12 @@
 	</body>
 
 	<!-- Startup (do not modify order of script tags!) -->
-	<script>
-		const config = {
-			additionalBuiltinExtensions: [	
-				{ 
-					scheme: "https",
-					authority: "siv3d.dev/dev",
-					path: "/addon/wasm-playground/extension"
-				},
-				{ 
-					scheme: "https",
-					authority: "siv3d.dev/dev",
-					path: "/addon/siv3d-playground/extension"
-				},
-				{
-					scheme: "https",
-					authority: "siv3d.dev/dev",
-					path: "/addon/emscripten-remote-build/extension"
-				},	
-				{ 
-					scheme: "https",
-					authority: "siv3d.dev/dev",
-					path: "/addon/gistpad/extension"
-				},
-				{ 
-					scheme: "https",
-					authority: "siv3d.dev/dev",
-					path: "/addon/wasmer-terminal/extension"
-				}
-			],
-			folderUri: {
-				$mid: 1,
-				scheme: "vscode-remote",
-				path: "/siv3d-playground"
-			},
-			callbackRoute: "callback",
-			configurationDefaults: {
-				"workbench.startupEditor": "none",
-				"extensions.ignoreRecommendations": true,
-				"siv3d-playground.siv3d-assets-download-url": "https://siv3d-assets.kamenokosoft.com/v6/dev",
-				"siv3d-playground.enable-siv3d-preview": typeof navigator.serviceWorker === "object",
-				"editor.fontFamily": "Menlo, Monaco, \"Courier New\", Meiryo, monospace"
-			},
-			productConfiguration: {
-				extensionsGallery: {
-					serviceUrl: "https://open-vsx.org/vscode/gallery",
-					itemUrl: "https://open-vsx.org/vscode/item"
-				},
-				extensionEnabledApiProposals: {
-					"kamenokosoft.siv3d-playground": [
-						"fileSearchProvider",
-						"textSearchProvider"
-					],
-					"kamenokosoft.wasm-playground": [
-						"fileSearchProvider",
-						"textSearchProvider"
-					]
-				},
-				enableTelemetry: false,
-				openToWelcomeMainPage: false
-			},
-			codeExchangeProxyEndpoints: {
-				github: "https://exchange-code.herokuapp.com/github/"
-			}
-		};
-		const configElement = document.querySelector("#vscode-workbench-web-configuration");
-		configElement.setAttribute("data-settings", JSON.stringify(config));
-	</script>
+	<script src="./config.js"></script>
 	<script src="./out/vs/loader.js"></script>
 	<script src="./out/vs/webPackagePaths.js"></script>
-	<script>
-		const applicationDBOpenRequest = indexedDB.open("vscode-web-state-db-global", 1);
-
-		applicationDBOpenRequest.onupgradeneeded = function(e) {
-			const db = e.target.result;
-			db.createObjectStore("ItemTable");
-		};
-
-		applicationDBOpenRequest.onsuccess = function(e) {
-			const db = e.target.result;
-			const transaction = db.transaction("ItemTable", "readwrite");
-			const store = transaction.objectStore("ItemTable");
-
-			const preferredActivityBarStates = [
-				{
-					id: "workbench.view.explorer",
-					pinned: true,
-					visible: true,
-					order: 0
-				},
-				{
-					id: "workbench.view.search",
-					pinned: true,
-					visible: true,
-					order: 1
-				},
-				{
-					id: "workbench.view.scm",
-					pinned: false,
-					visible: true,
-					order: 2
-				},
-				{
-					id: "workbench.view.debug",
-					pinned: false,
-					visible: true,
-					order: 3
-				},
-				{
-					id: "workbench.view.extensions",
-					pinned: false,
-					visible: true,
-					order: 4
-				},
-				{
-					id: "workbench.view.extension.gistpad",
-					pinned: false,
-					visible: true,
-					order: 5
-				}
-			];
-
-			store.put(JSON.stringify(preferredActivityBarStates), "workbench.activity.pinnedViewlets2");
-			store.put(JSON.stringify([ "status.feedback" ]), "workbench.statusbar.hidden");
-			store.put("false", "workbench.activity.showAccounts");
-			store.put("", "workbench.sidebar.activeviewletid");
-		};
-	</script>
-	<script>
-		const configDBOpenRequest = indexedDB.open("vscode-web-db", 3);
-
-		configDBOpenRequest.onupgradeneeded = function(e) {
-			const db = e.target.result;
-			db.createObjectStore("vscode-userdata-store");
-			db.createObjectStore("vscode-logs-store");
-			db.createObjectStore("vscode-filehandles-store");
-		};
-
-		configDBOpenRequest.onsuccess = function(e) {
-			const db = e.target.result;
-			const transaction = db.transaction("vscode-userdata-store", "readwrite");
-			const store = transaction.objectStore("vscode-userdata-store");
-
-			const desiredKeyBindings = `
-[
-    {
-        "key": "f5",
-        "command": "-debug.openView",
-        "when": "!debuggersAvailable"
-    }
-]`;
-			const encoder = new TextEncoder();
-
-			store.put(encoder.encode(desiredKeyBindings), "/User/keybindings.json");
-		};
-	</script>
-	<script>
-		function updateWorkspaceDataBase(databaseName) {
-			const workspaceDBOpenRequest = indexedDB.open(databaseName, 1);
-
-			workspaceDBOpenRequest.onupgradeneeded = function(e) {
-				const db = e.target.result;
-				db.createObjectStore("ItemTable");
-			};
-
-			workspaceDBOpenRequest.onsuccess = function(e) {
-				const db = e.target.result;
-				const transaction = db.transaction("ItemTable", "readwrite")
-				const store = transaction.objectStore("ItemTable");
-
-				store.put("", "workbench.sidebar.activeviewletid");
-			};
-		}
-		
-		if (window.matchMedia("(max-width: 400px)").matches) {
-			updateWorkspaceDataBase("vscode-web-state-db--5b40c8f4");
-		}
-	</script>
+	<script src="./patches/activityBar.js"></script>
+	<script src="./patches/explorerView.js"></script>
+	<script src="./patches/keyBinding.js"></script>
 	<script>
 		const baseUrl = 'https://siv3d.dev/dev';
 		Object.keys(self.webPackagePaths).map(function (key, index) {
@@ -227,7 +56,7 @@
 				availableLanguages: {
 					'*': locale
 				},
-				translationServiceUrl: 'https://www.vscode-unpkg.net/_lp/1ad8d514439d5077d2b0b7ee64d2ce82a9308e5a/1.74.1'
+				translationServiceUrl: 'https://www.vscode-unpkg.net/_lp/e344f1f539a80912a0e9357cec841f36ce97a4e2/1.77.2'
 			};
 		}
 

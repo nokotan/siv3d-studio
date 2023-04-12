@@ -7,7 +7,7 @@ Use it here (https://wasmer.sh/)
 
 # Screenshots
 
-![Browser Screenshot](https://github.com/nokotan/wasmer-terminal/raw/HEAD/screenshots/browser.png)
+![Browser Screenshot](https://github.com/nokotan/wasm-playground/raw/HEAD/screenshots/browser.png)
 
 # Functionality
 

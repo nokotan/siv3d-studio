@@ -1,1 +1,1 @@
-{"description":"Recommends using the Windows Subsystem for Linux (WSL) and the WSL extension.","displayName":"WSL: Recommender","gettingStartedCommand":"Wprowadzenie do podsieci WSL","openFolderCommand":"Otwórz folder w podsystemie WSL..."}
+{"description":"Proponuje się używanie podsystemu Windows dla systemu Linux (WSL) i rozszerzenia zdalnego WSL.","displayName":"WSL: Moduł polecający","gettingStartedCommand":"Wprowadzenie do podsieci WSL","openFolderCommand":"Otwórz folder w podsystemie WSL..."}

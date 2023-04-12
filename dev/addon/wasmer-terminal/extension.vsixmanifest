@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 	<PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
 		<Metadata>
-			<Identity Language="en-US" Id="wasmer-term" Version="0.1.0" Publisher="KamenokoSoft" />
+			<Identity Language="en-US" Id="wasmer-term" Version="0.1.4" Publisher="KamenokoSoft" />
 			<DisplayName>wasmer-term</DisplayName>
-			<Description xml:space="preserve">WebAssembly + WASI + WAPM playground for VS Code</Description>
+			<Description xml:space="preserve">Wasmer.sh for VSCode</Description>
 			<Tags>__web_extension</Tags>
 			<Categories></Categories>
 			<GalleryFlags>Public</GalleryFlags>
@@ -16,11 +16,11 @@
 				<Property Id="Microsoft.VisualStudio.Code.LocalizedLanguages" Value="" />
 				
 				
-				<Property Id="Microsoft.VisualStudio.Services.Links.Source" Value="https://github.com/nokotan/wasmer-terminal.git" />
-				<Property Id="Microsoft.VisualStudio.Services.Links.Getstarted" Value="https://github.com/nokotan/wasmer-terminal.git" />
-				<Property Id="Microsoft.VisualStudio.Services.Links.GitHub" Value="https://github.com/nokotan/wasmer-terminal.git" />
-				<Property Id="Microsoft.VisualStudio.Services.Links.Support" Value="https://github.com/nokotan/wasmer-terminal/issues" />
-				<Property Id="Microsoft.VisualStudio.Services.Links.Learn" Value="https://github.com/nokotan/wasmer-terminal#readme" />
+				<Property Id="Microsoft.VisualStudio.Services.Links.Source" Value="https://github.com/nokotan/wasm-playground.git" />
+				<Property Id="Microsoft.VisualStudio.Services.Links.Getstarted" Value="https://github.com/nokotan/wasm-playground.git" />
+				<Property Id="Microsoft.VisualStudio.Services.Links.GitHub" Value="https://github.com/nokotan/wasm-playground.git" />
+				<Property Id="Microsoft.VisualStudio.Services.Links.Support" Value="https://github.com/nokotan/wasm-playground/issues" />
+				<Property Id="Microsoft.VisualStudio.Services.Links.Learn" Value="https://github.com/nokotan/wasm-playground#readme" />
 				
 				
 				<Property Id="Microsoft.VisualStudio.Services.GitHubFlavoredMarkdown" Value="true" />

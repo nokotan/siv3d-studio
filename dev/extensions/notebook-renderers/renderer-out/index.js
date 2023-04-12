@@ -509,6 +509,12 @@ for (const id in ansiColorMap) {
   ansiColorIdentifiers[entry.index] = { colorName, colorValue: "var(--vscode-" + id.replace(".", "-") + ")" };
 }
 
+// extensions/notebook-renderers/src/htmlHelper.ts
+var ttPolicy = typeof window !== "undefined" ? window.trustedTypes?.createPolicy("notebookRenderer", {
+  createHTML: (value) => value,
+  createScript: (value) => value
+}) : void 0;
+
 // extensions/notebook-renderers/src/linkify.ts
 var CONTROL_CODES = "\\u0000-\\u0020\\u007f-\\u009f";
 var WEB_LINK_REGEX = new RegExp("(?:[a-zA-Z][a-zA-Z0-9+.-]{2,}:\\/\\/|data:|www\\.)[^\\s" + CONTROL_CODES + '"]{2,}[^\\s' + CONTROL_CODES + `"')}\\],:;.!?]`, "ug");
@@ -517,7 +523,7 @@ var WIN_RELATIVE_PATH = /(?:(?:\~|\.)(?:(?:\\|\/)[\w\.-]*)+)/;
 var WIN_PATH = new RegExp(`(${WIN_ABSOLUTE_PATH.source}|${WIN_RELATIVE_PATH.source})`);
 var POSIX_PATH = /((?:\~|\.)?(?:\/[\w\.-]*)+)/;
 var LINE_COLUMN = /(?:\:([\d]+))?(?:\:([\d]+))?/;
-var isWindows = navigator.userAgent.indexOf("Windows") >= 0;
+var isWindows = typeof navigator !== "undefined" ? navigator.userAgent && navigator.userAgent.indexOf("Windows") >= 0 : false;
 var PATH_LINK_REGEX = new RegExp(`${isWindows ? WIN_PATH.source : POSIX_PATH.source}${LINE_COLUMN.source}`, "g");
 var MAX_LENGTH = 2e3;
 var LinkDetector = class {
@@ -548,12 +554,9 @@ var LinkDetector = class {
             container.appendChild(document.createTextNode(part.value));
             break;
           case "web":
+          case "path":
             container.appendChild(this.createWebLink(part.value));
             break;
-          case "path": {
-            container.appendChild(document.createTextNode(part.value));
-            break;
-          }
         }
       } catch (e) {
         container.appendChild(document.createTextNode(part.value));
@@ -563,6 +566,7 @@ var LinkDetector = class {
   }
   createWebLink(url) {
     const link = this.createLink(url);
+    link.href = url;
     return link;
   }
   createLink(text) {
@@ -614,7 +618,7 @@ function linkify(text, splitLines, workspaceFolder) {
 }
 
 // extensions/notebook-renderers/src/ansi.ts
-function handleANSIOutput(text) {
+function handleANSIOutput(text, trustHtml) {
   const workspaceFolder = void 0;
   const root = document.createElement("span");
   const textLength = text.length;
@@ -641,7 +645,7 @@ function handleANSIOutput(text) {
         }
       }
       if (sequenceFound) {
-        appendStylizedStringToContainer(root, buffer, styleNames, workspaceFolder, customFgColor, customBgColor, customUnderlineColor);
+        appendStylizedStringToContainer(root, buffer, trustHtml, styleNames, workspaceFolder, customFgColor, customBgColor, customUnderlineColor);
         buffer = "";
         if (ansiSequence.match(/^(?:[34][0-8]|9[0-7]|10[0-7]|[0-9]|2[1-5,7-9]|[34]9|5[8,9]|1[0-9])(?:;[349][0-7]|10[0-7]|[013]|[245]|[34]9)?(?:;[012]?[0-9]?[0-9])*;?m$/)) {
           const styleCodes = ansiSequence.slice(0, -1).split(";").filter((elem) => elem !== "").map((elem) => parseInt(elem, 10));
@@ -667,7 +671,7 @@ function handleANSIOutput(text) {
     }
   }
   if (buffer) {
-    appendStylizedStringToContainer(root, buffer, styleNames, workspaceFolder, customFgColor, customBgColor, customUnderlineColor);
+    appendStylizedStringToContainer(root, buffer, trustHtml, styleNames, workspaceFolder, customFgColor, customBgColor, customUnderlineColor);
   }
   return root;
   function changeColor(colorType, color) {
@@ -887,11 +891,18 @@ function handleANSIOutput(text) {
     }
   }
 }
-function appendStylizedStringToContainer(root, stringContent, cssClasses, workspaceFolder, customTextColor, customBackgroundColor, customUnderlineColor) {
+function appendStylizedStringToContainer(root, stringContent, trustHtml, cssClasses, workspaceFolder, customTextColor, customBackgroundColor, customUnderlineColor) {
   if (!root || !stringContent) {
     return;
   }
-  const container = linkify(stringContent, true, workspaceFolder);
+  let container = document.createElement("span");
+  if (trustHtml) {
+    const trustedHtml = ttPolicy?.createHTML(stringContent) ?? stringContent;
+    container.innerHTML = trustedHtml;
+  }
+  if (container.childElementCount === 0) {
+    container = linkify(stringContent, true, workspaceFolder);
+  }
   container.className = cssClasses.join(" ");
   if (customTextColor) {
     container.style.color = typeof customTextColor === "string" ? customTextColor : Color.Format.CSS.formatRGB(new Color(customTextColor));
@@ -930,20 +941,16 @@ function calcANSI8bitColor(colorNumber) {
 }
 
 // extensions/notebook-renderers/src/textHelper.ts
-function generateViewMoreElement(outputId, adjustableSize) {
-  const container = document.createElement("span");
+var scrollableClass = "scrollable";
+function generateViewMoreElement(outputId) {
+  const container = document.createElement("div");
   const first = document.createElement("span");
-  if (adjustableSize) {
-    first.textContent = "Output exceeds the ";
-    const second = document.createElement("a");
-    second.textContent = "size limit";
-    second.href = `command:workbench.action.openSettings?%5B%22notebook.output.textLineLimit%22%5D`;
-    container.appendChild(first);
-    container.appendChild(second);
-  } else {
-    first.textContent = "Output exceeds the maximium size limit";
-    container.appendChild(first);
-  }
+  first.textContent = "Output exceeds the ";
+  const second = document.createElement("a");
+  second.textContent = "size limit";
+  second.href = `command:workbench.action.openSettings?%5B%22notebook.output.textLineLimit%22%5D`;
+  container.appendChild(first);
+  container.appendChild(second);
   const third = document.createElement("span");
   third.textContent = ". Open the full output data ";
   const forth = document.createElement("a");
@@ -951,42 +958,59 @@ function generateViewMoreElement(outputId, adjustableSize) {
   forth.href = `command:workbench.action.openLargeOutput?${outputId}`;
   container.appendChild(third);
   container.appendChild(forth);
+  const refreshSpan = document.createElement("span");
+  refreshSpan.classList.add("scroll-refresh");
+  const fifth = document.createElement("span");
+  fifth.textContent = ". Refresh to view ";
+  const sixth = document.createElement("a");
+  sixth.textContent = "scrollable element";
+  sixth.href = `command:cellOutput.enableScrolling?${outputId}`;
+  refreshSpan.appendChild(fifth);
+  refreshSpan.appendChild(sixth);
+  container.appendChild(refreshSpan);
   return container;
 }
-function truncatedArrayOfString(id, buffer, linesLimit, container) {
-  const lineCount = buffer.length;
-  container.appendChild(generateViewMoreElement(id, true));
-  const div = document.createElement("div");
-  container.appendChild(div);
-  div.appendChild(handleANSIOutput(buffer.slice(0, linesLimit - 5).join("\n")));
-  const viewMoreSpan = document.createElement("span");
-  viewMoreSpan.innerText = "...";
-  container.appendChild(viewMoreSpan);
-  const div2 = document.createElement("div");
-  container.appendChild(div2);
-  div2.appendChild(handleANSIOutput(buffer.slice(lineCount - 5).join("\n")));
+function generateNestedViewAllElement(outputId) {
+  const container = document.createElement("div");
+  const link = document.createElement("a");
+  link.textContent = "...";
+  link.href = `command:workbench.action.openLargeOutput?${outputId}`;
+  link.ariaLabel = "Open full output in text editor";
+  link.title = "Open full output in text editor";
+  link.style.setProperty("text-decoration", "none");
+  container.appendChild(link);
+  return container;
 }
-function scrollableArrayOfString(id, buffer, container) {
-  container.classList.add("scrollable");
-  if (buffer.length > 5e3) {
-    container.appendChild(generateViewMoreElement(id, false));
-  }
-  const div = document.createElement("div");
-  container.appendChild(div);
-  div.appendChild(handleANSIOutput(buffer.slice(0, 5e3).join("\n")));
-}
-function insertOutput(id, outputs, linesLimit, scrollable, container) {
-  const buffer = outputs.join("\n").split(/\r\n|\r|\n/g);
+function truncatedArrayOfString(id, buffer, linesLimit, trustHtml) {
+  const container = document.createElement("div");
   const lineCount = buffer.length;
-  if (lineCount < linesLimit) {
-    const spanElement = handleANSIOutput(buffer.join("\n"));
+  if (lineCount <= linesLimit) {
+    const spanElement = handleANSIOutput(buffer.join("\n"), trustHtml);
     container.appendChild(spanElement);
-    return;
+    return container;
   }
+  container.appendChild(generateViewMoreElement(id));
+  container.appendChild(handleANSIOutput(buffer.slice(0, linesLimit - 5).join("\n"), trustHtml));
+  const elipses = document.createElement("div");
+  elipses.innerText = "...";
+  container.appendChild(elipses);
+  container.appendChild(handleANSIOutput(buffer.slice(lineCount - 5).join("\n"), trustHtml));
+  return container;
+}
+function scrollableArrayOfString(id, buffer, trustHtml) {
+  const element = document.createElement("div");
+  if (buffer.length > 5e3) {
+    element.appendChild(generateNestedViewAllElement(id));
+  }
+  element.appendChild(handleANSIOutput(buffer.slice(-5e3).join("\n"), trustHtml));
+  return element;
+}
+function createOutputContent(id, outputs, linesLimit, scrollable, trustHtml) {
+  const buffer = outputs.join("\n").split(/\r\n|\r|\n/g);
   if (scrollable) {
-    scrollableArrayOfString(id, buffer, container);
+    return scrollableArrayOfString(id, buffer, trustHtml);
   } else {
-    truncatedArrayOfString(id, buffer, linesLimit, container);
+    return truncatedArrayOfString(id, buffer, linesLimit, trustHtml);
   }
 }
 
@@ -1004,6 +1028,13 @@ function renderImage(outputInfo, element) {
       URL.revokeObjectURL(src);
     }
   };
+  if (element.firstChild) {
+    const display2 = element.firstChild;
+    if (display2.firstChild && display2.firstChild.nodeName === "IMG" && display2.firstChild instanceof HTMLImageElement) {
+      display2.firstChild.src = src;
+      return disposable;
+    }
+  }
   const image = document.createElement("img");
   image.src = src;
   const display = document.createElement("div");
@@ -1012,10 +1043,6 @@ function renderImage(outputInfo, element) {
   element.appendChild(display);
   return disposable;
 }
-var ttPolicy = window.trustedTypes?.createPolicy("notebookRenderer", {
-  createHTML: (value) => value,
-  createScript: (value) => value
-});
 var preservedScriptAttributes = [
   "type",
   "src",
@@ -1071,70 +1098,154 @@ async function renderJavascript(outputInfo, container, signal, hooks) {
   container.appendChild(element);
   domEval(element);
 }
-function renderError(outputInfo, container, ctx) {
-  const element = document.createElement("div");
-  container.appendChild(element);
+function createDisposableStore() {
+  const localDisposables = [];
+  const disposable = {
+    push: (...disposables) => {
+      localDisposables.push(...disposables);
+    },
+    dispose: () => {
+      localDisposables.forEach((d) => d.dispose());
+    }
+  };
+  return disposable;
+}
+function renderError(outputInfo, outputElement, ctx) {
+  const disposableStore = createDisposableStore();
+  clearContainer(outputElement);
   let err;
   try {
     err = JSON.parse(outputInfo.text());
   } catch (e) {
     console.log(e);
-    return;
+    return disposableStore;
   }
   if (err.stack) {
-    const stack = document.createElement("pre");
-    stack.classList.add("traceback");
-    stack.style.margin = "8px 0";
-    const element2 = document.createElement("span");
-    insertOutput(outputInfo.id, [err.stack ?? ""], ctx.settings.lineLimit, false, element2);
-    stack.appendChild(element2);
-    container.appendChild(stack);
+    outputElement.classList.add("traceback");
+    const outputScrolling = ctx.settings.outputScrolling;
+    const content = createOutputContent(outputInfo.id, [err.stack ?? ""], ctx.settings.lineLimit, outputScrolling, true);
+    const contentParent = document.createElement("div");
+    contentParent.classList.toggle("word-wrap", ctx.settings.outputWordWrap);
+    disposableStore.push(ctx.onDidChangeSettings((e) => {
+      contentParent.classList.toggle("word-wrap", e.outputWordWrap);
+    }));
+    contentParent.classList.toggle("scrollable", outputScrolling);
+    outputElement.classList.toggle("hide-refresh", !outputScrolling);
+    disposableStore.push(ctx.onDidChangeSettings((e) => {
+      outputElement.classList.toggle("hide-refresh", !e.outputScrolling);
+    }));
+    outputElement.classList.toggle("remove-padding", outputScrolling);
+    contentParent.appendChild(content);
+    outputElement.appendChild(contentParent);
+    initializeScroll(contentParent, disposableStore);
   } else {
     const header = document.createElement("div");
     const headerMessage = err.name && err.message ? `${err.name}: ${err.message}` : err.name || err.message;
     if (headerMessage) {
       header.innerText = headerMessage;
-      container.appendChild(header);
+      outputElement.appendChild(header);
     }
   }
-  container.classList.add("error");
+  outputElement.classList.add("error");
+  return disposableStore;
 }
-function renderStream(outputInfo, container, error, ctx) {
-  const outputContainer = container.parentElement;
-  if (!outputContainer) {
-    return;
-  }
-  const prev = outputContainer.previousSibling;
-  if (prev) {
-    const outputElement = prev.firstChild;
-    if (outputElement && outputElement.getAttribute("output-mime-type") === outputInfo.mime) {
-      const text2 = outputInfo.text();
-      const element2 = document.createElement("span");
-      insertOutput(outputInfo.id, [text2], ctx.settings.lineLimit, ctx.settings.outputScrolling, element2);
-      outputElement.appendChild(element2);
-      return;
+function getPreviousMatchingContentGroup(outputElement) {
+  const outputContainer = outputElement.parentElement;
+  let match = void 0;
+  let previous = outputContainer?.previousSibling;
+  while (previous) {
+    const outputElement2 = previous.firstChild;
+    if (!outputElement2 || !outputElement2.classList.contains("output-stream")) {
+      break;
     }
+    match = outputElement2.firstChild;
+    previous = previous?.previousSibling;
   }
-  const element = document.createElement("span");
-  element.classList.add("output-stream");
+  return match;
+}
+function onScrollHandler(e) {
+  const target = e.target;
+  if (target.scrollTop === 0) {
+    target.classList.remove("more-above");
+  } else {
+    target.classList.add("more-above");
+  }
+}
+function initializeScroll(scrollableElement, disposables, scrollTop) {
+  if (scrollableElement.classList.contains(scrollableClass)) {
+    scrollableElement.classList.toggle("scrollbar-visible", scrollableElement.scrollHeight > scrollableElement.clientHeight);
+    scrollableElement.scrollTop = scrollTop !== void 0 ? scrollTop : scrollableElement.scrollHeight;
+    scrollableElement.addEventListener("scroll", onScrollHandler);
+    disposables.push({ dispose: () => scrollableElement.removeEventListener("scroll", onScrollHandler) });
+  }
+}
+function findScrolledHeight(scrollableElement) {
+  if (scrollableElement && scrollableElement.scrollHeight - scrollableElement.scrollTop - scrollableElement.clientHeight > 2) {
+    return scrollableElement.scrollTop;
+  }
+  return void 0;
+}
+function renderStream(outputInfo, outputElement, error, ctx) {
+  const disposableStore = createDisposableStore();
+  const outputScrolling = ctx.settings.outputScrolling;
+  outputElement.classList.add("output-stream");
+  outputElement.classList.toggle("remove-padding", outputScrolling);
   const text = outputInfo.text();
-  insertOutput(outputInfo.id, [text], ctx.settings.lineLimit, ctx.settings.outputScrolling, element);
-  while (container.firstChild) {
-    container.removeChild(container.firstChild);
-  }
-  container.appendChild(element);
-  container.setAttribute("output-mime-type", outputInfo.mime);
+  const content = createOutputContent(outputInfo.id, [text], ctx.settings.lineLimit, outputScrolling, false);
+  content.setAttribute("output-item-id", outputInfo.id);
   if (error) {
-    container.classList.add("error");
+    content.classList.add("error");
   }
+  const scrollTop = outputScrolling ? findScrolledHeight(outputElement) : void 0;
+  const existingContentParent = getPreviousMatchingContentGroup(outputElement);
+  if (existingContentParent) {
+    const existing = existingContentParent.querySelector(`[output-item-id="${outputInfo.id}"]`);
+    if (existing) {
+      existing.replaceWith(content);
+    } else {
+      existingContentParent.appendChild(content);
+    }
+    existingContentParent.classList.toggle("scrollbar-visible", existingContentParent.scrollHeight > existingContentParent.clientHeight);
+    existingContentParent.scrollTop = scrollTop !== void 0 ? scrollTop : existingContentParent.scrollHeight;
+  } else {
+    const contentParent = document.createElement("div");
+    contentParent.appendChild(content);
+    contentParent.classList.toggle("scrollable", outputScrolling);
+    outputElement.classList.toggle("hide-refresh", !outputScrolling);
+    disposableStore.push(ctx.onDidChangeSettings((e) => {
+      outputElement.classList.toggle("hide-refresh", !e.outputScrolling);
+    }));
+    contentParent.classList.toggle("word-wrap", ctx.settings.outputWordWrap);
+    disposableStore.push(ctx.onDidChangeSettings((e) => {
+      contentParent.classList.toggle("word-wrap", e.outputWordWrap);
+    }));
+    while (outputElement.firstChild) {
+      outputElement.removeChild(outputElement.firstChild);
+    }
+    outputElement.appendChild(contentParent);
+    initializeScroll(contentParent, disposableStore, scrollTop);
+  }
+  return disposableStore;
 }
-function renderText(outputInfo, container, ctx) {
-  clearContainer(container);
-  const contentNode = document.createElement("div");
-  contentNode.classList.add("output-plaintext");
+function renderText(outputInfo, outputElement, ctx) {
+  const disposableStore = createDisposableStore();
+  clearContainer(outputElement);
   const text = outputInfo.text();
-  insertOutput(outputInfo.id, [text], ctx.settings.lineLimit, ctx.settings.outputScrolling, contentNode);
-  container.appendChild(contentNode);
+  const content = createOutputContent(outputInfo.id, [text], ctx.settings.lineLimit, ctx.settings.outputScrolling, false);
+  content.classList.add("output-plaintext");
+  if (ctx.settings.outputWordWrap) {
+    content.classList.add("word-wrap");
+  }
+  const outputScrolling = ctx.settings.outputScrolling;
+  content.classList.toggle("scrollable", outputScrolling);
+  outputElement.classList.toggle("hide-refresh", !outputScrolling);
+  disposableStore.push(ctx.onDidChangeSettings((e) => {
+    outputElement.classList.toggle("hide-refresh", !e.outputScrolling);
+  }));
+  outputElement.classList.toggle("remove-padding", outputScrolling);
+  outputElement.appendChild(content);
+  initializeScroll(content, disposableStore);
+  return disposableStore;
 }
 var activate = (ctx) => {
   const disposables = /* @__PURE__ */ new Map();
@@ -1143,11 +1254,14 @@ var activate = (ctx) => {
   const latestContext = ctx;
   const style = document.createElement("style");
   style.textContent = `
+	#container div.output.remove-padding {
+		padding-left: 0;
+		padding-right: 0;
+	}
 	.output-plaintext,
 	.output-stream,
 	.traceback {
 		display: inline-block;
-		white-space: pre-wrap;
 		width: 100%;
 		line-height: var(--notebook-cell-output-line-height);
 		font-family: var(--notebook-cell-output-font-family);
@@ -1156,19 +1270,38 @@ var activate = (ctx) => {
 		-webkit-user-select: text;
 		-ms-user-select: text;
 		cursor: auto;
-	}
-	output-plaintext,
-	.traceback {
 		word-wrap: break-word;
+		/* text/stream output container should scroll but preserve newline character */
+		white-space: pre;
 	}
-	.output > span.scrollable {
+	/* When wordwrap turned on, force it to pre-wrap */
+	#container div.output_container .word-wrap span {
+		white-space: pre-wrap;
+	}
+	#container div.output .scrollable {
+		padding-left: var(--notebook-output-node-left-padding);
+		padding-right: var(--notebook-output-node-padding);
 		overflow-y: scroll;
 		max-height: var(--notebook-cell-output-max-height);
-		border: var(--vscode-editorWidget-border);
 		border-style: solid;
-		padding-left: 4px;
 		box-sizing: border-box;
 		border-width: 1px;
+		border-color: transparent;
+	}
+	#container div.output .scrollable div {
+		cursor: text;
+	}
+	#container div.output .scrollable div a {
+		cursor: pointer;
+	}
+	#container div.output .scrollable.more-above {
+		box-shadow: var(--vscode-scrollbar-shadow) 0 6px 6px -6px inset
+	}
+	#container div.output .scrollable.scrollbar-visible {
+		border-color: var(--vscode-editorWidget-border);
+	}
+	#container div.output.hide-refresh .scroll-refresh {
+		display: none;
 	}
 	.output-plaintext .code-bold,
 	.output-stream .code-bold,
@@ -1215,31 +1348,40 @@ var activate = (ctx) => {
         case "image/jpeg":
         case "image/git":
           {
+            disposables.get(outputInfo.id)?.dispose();
             const disposable = renderImage(outputInfo, element);
             disposables.set(outputInfo.id, disposable);
           }
           break;
         case "application/vnd.code.notebook.error":
           {
-            renderError(outputInfo, element, latestContext);
+            disposables.get(outputInfo.id)?.dispose();
+            const disposable = renderError(outputInfo, element, latestContext);
+            disposables.set(outputInfo.id, disposable);
           }
           break;
         case "application/vnd.code.notebook.stdout":
         case "application/x.notebook.stdout":
         case "application/x.notebook.stream":
           {
-            renderStream(outputInfo, element, false, latestContext);
+            disposables.get(outputInfo.id)?.dispose();
+            const disposable = renderStream(outputInfo, element, false, latestContext);
+            disposables.set(outputInfo.id, disposable);
           }
           break;
         case "application/vnd.code.notebook.stderr":
         case "application/x.notebook.stderr":
           {
-            renderStream(outputInfo, element, true, latestContext);
+            disposables.get(outputInfo.id)?.dispose();
+            const disposable = renderStream(outputInfo, element, true, latestContext);
+            disposables.set(outputInfo.id, disposable);
           }
           break;
         case "text/plain":
           {
-            renderText(outputInfo, element, latestContext);
+            disposables.get(outputInfo.id)?.dispose();
+            const disposable = renderText(outputInfo, element, latestContext);
+            disposables.set(outputInfo.id, disposable);
           }
           break;
         default:

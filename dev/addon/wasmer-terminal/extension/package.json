@@ -1,13 +1,13 @@
 {
   "name": "wasmer-term",
-  "description": "WebAssembly + WASI + WAPM playground for VS Code",
-  "version": "0.1.0",
+  "description": "Wasmer.sh for VSCode",
+  "version": "0.1.4",
   "publisher": "KamenokoSoft",
   "author": "John Sharratt <johnathan.sharratt@gmail.com>, nokotan <kamenokonokotan@gmail.com>",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/nokotan/wasmer-terminal"
+    "url": "https://github.com/nokotan/wasm-playground"
   },
   "main": "./dist/extension.js",
   "browser": "./dist/extension.js",
@@ -22,6 +22,11 @@
       {
         "command": "wasmer-term.openTerminal",
         "title": "Open Wasmer.sh",
+        "category": "Ternimal"
+      },
+      {
+        "command": "wasmer-term.fs.backUp",
+        "title": "Back up",
         "category": "Ternimal"
       }
     ],

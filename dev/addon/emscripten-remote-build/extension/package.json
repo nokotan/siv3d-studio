@@ -5,7 +5,7 @@
   "description": "",
   "repository": {
     "type": "git",
-    "url": "https://github.com/nokotan/siv3d-studio/tree/main/emscripten-remote-build"
+    "url": "https://github.com/nokotan/wasm-playground/tree/main/emscripten-remote-build"
   },
   "license": "MIT",
   "version": "0.0.6",
