@@ -10,8 +10,17 @@ function updateWorkspaceDataBase(databaseName) {
         const db = (e.target as IDBOpenDBRequest).result;
         const transaction = db.transaction("ItemTable", "readwrite")
         const store = transaction.objectStore("ItemTable");
+        const keyName = "workbench.sidebar.activeviewletid";
 
-        store.put("", "workbench.sidebar.activeviewletid");
+        const request = store.getKey(keyName);
+        request.onsuccess = function(_) {
+            if (!!request.result) {
+                // key found, do nothing
+                return;
+            }
+
+            store.put("", keyName);
+        };
     };
 }
 

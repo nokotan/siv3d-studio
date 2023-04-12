@@ -7,12 +7,19 @@ configDBOpenRequest.onupgradeneeded = function(e) {
     db.createObjectStore("vscode-filehandles-store");
 };
 
-configDBOpenRequest.onsuccess = function(e) {
-    const db = (e.target as IDBOpenDBRequest).result;
+configDBOpenRequest.onsuccess = function(_) {
+    const db = configDBOpenRequest.result;
     const transaction = db.transaction("vscode-userdata-store", "readwrite");
     const store = transaction.objectStore("vscode-userdata-store");
+    const keyName = "/User/keybindings.json";
 
-    const desiredKeyBindings = `
+    const request = store.getKey(keyName);
+    request.onsuccess = function(_) {
+        if (!!request.result) {
+            // key found, do nothing
+            return;
+        }
+        const desiredKeyBindings = `
 [
     {
         "key": "f5",
@@ -20,7 +27,8 @@ configDBOpenRequest.onsuccess = function(e) {
         "when": "!debuggersAvailable"
     }
 ]`;
-    const encoder = new TextEncoder();
-
-    store.put(encoder.encode(desiredKeyBindings), "/User/keybindings.json");
+        const encoder = new TextEncoder();
+        
+        store.put(encoder.encode(desiredKeyBindings), keyName);
+    };
 };

@@ -19,6 +19,7 @@ export interface Static {
 	readonly type: 'static';
 	readonly location: string;
 	readonly quality: 'stable' | 'insider';
+	readonly productVersion: string;
 	readonly version: string;
 }
 
@@ -96,12 +97,14 @@ async function unzip(source: string, destination: string, message: string, strip
 	process.stdout.write(`${reset}${message}: complete\n`);
 }
 
-export async function downloadAndUnzipVSCode(version: string): Promise<void> {
+export async function downloadAndUnzipVSCode(version: string): Promise<Static> {
 
 	const installationPath = path.resolve(process.cwd(), "dist");
 
 	if (existsSync(installationPath) && existsSync(path.join(installationPath, 'version'))) {
-		return;
+		const versionPath = path.join(installationPath, 'version');
+		const versionInfo = await fs.readFile(versionPath, { encoding: 'utf8' });
+		return JSON.parse(versionInfo);
 	}
 
 	const downloadURL = `https://github.com/nokotan/wasm-playground/releases/download/${version}/wasm-playground.tar.gz`;
@@ -119,8 +122,12 @@ export async function downloadAndUnzipVSCode(version: string): Promise<void> {
 		} catch (e) {
 			// ignore
 		}
-
 	}
+
+	const versionPath = path.join(installationPath, 'version');
+	const versionInfo = await fs.readFile(versionPath, { encoding: 'utf8' });
+	
+	return JSON.parse(versionInfo);
 }
 
 function hasStdOut(object: unknown): object is { stdout: string, stderr: string } {

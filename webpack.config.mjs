@@ -6,7 +6,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 export default {
     devServer: {
         static: {
-            directory: path.join(__dirname, 'vscode/vscode-web'),
+            directory: path.join(__dirname, 'dist'),
         },
         compress: true,
         headers: {
