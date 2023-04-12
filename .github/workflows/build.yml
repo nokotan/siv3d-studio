@@ -24,9 +24,9 @@ jobs:
       - run: npm run build
 
       - if: ${{ contains(github.ref, 'tags/v') }}
-        run: node out/main.js --release
+        run: node build/dist/main.js --release
       - if: ${{ !contains(github.ref, 'tags/v') }}
-        run: node out/main.js
+        run: node build/dist/main.js
 
       - name: Save App Bundle
         uses: actions/upload-artifact@v2
