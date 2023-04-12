@@ -33,7 +33,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: siv3d-studio-app-bundle
-          path: vscode/vscode-web
+          path: dist
 
   deploy-development:
     needs: [ build ]
