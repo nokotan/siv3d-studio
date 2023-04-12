@@ -21,7 +21,7 @@ jobs:
           node-version: 16.x
           cache: 'npm'
       - run: npm install
-      - run: npm run compile
+      - run: npm run build
 
       - if: ${{ contains(github.ref, 'tags/v') }}
         run: node out/main.js --release
