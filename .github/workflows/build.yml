@@ -49,6 +49,7 @@ jobs:
           path: dev
       - run: |
           sed -i -e "s|siv3d.dev|siv3d.dev/dev|g" dev/index.html
+          sed -i -e "s|siv3d.dev|siv3d.dev/dev|g" dev/config.js
           sed -i -e "s|https://siv3d.dev/callback|https://siv3d.dev/dev/callback|g" dev/extensions/github-authentication/dist/browser/extension.js
           sed -i -e "s|https://siv3d-assets.kamenokosoft.com/v6|https://siv3d-assets.kamenokosoft.com/v6/dev|g" dev/index.html
       - name: Deploy
