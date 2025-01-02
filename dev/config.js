@@ -20,11 +20,6 @@ const config = {
             scheme: "https",
             authority: "siv3d.dev/dev",
             path: "/addon/gistpad/extension"
-        },
-        {
-            scheme: "https",
-            authority: "siv3d.dev/dev",
-            path: "/addon/wasmer-terminal/extension"
         }
     ],
     folderUri: {

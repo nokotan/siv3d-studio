@@ -10,7 +10,7 @@
 		<!-- Mobile tweaks -->
 		<meta name="mobile-web-app-capable" content="yes" />
 		<meta name="apple-mobile-web-app-capable" content="yes" />
-		<meta name="apple-mobile-web-app-title" content="Siv3D Studio">
+		<meta name="apple-mobile-web-app-title" content="WebAssembly Playground">
 		<link rel="apple-touch-icon" href="./icon.png" />
 		<link rel="manifest" href="./manifest.json">
 
@@ -39,26 +39,11 @@
 	<script src="./config.js"></script>
 	<script src="./out/vs/loader.js"></script>
 	<script src="./out/vs/webPackagePaths.js"></script>
-	<script src="./patches/activityBar.js"></script>
-	<script src="./patches/explorerView.js"></script>
-	<script src="./patches/keyBinding.js"></script>
 	<script>
 		const baseUrl = 'https://siv3d.dev/dev';
 		Object.keys(self.webPackagePaths).map(function (key, index) {
 			self.webPackagePaths[key] = `${baseUrl}/node_modules/${key}/${self.webPackagePaths[key]}`;
 		});
-
-		// Set up nls if the user is not using the default language (English)
-		const nlsConfig = {};
-		const locale = window.localStorage.getItem('vscode.nls.locale') || navigator.language;
-		if (!locale.startsWith('en')) {
-			nlsConfig['vs/nls'] = {
-				availableLanguages: {
-					'*': locale
-				},
-				translationServiceUrl: 'https://www.vscode-unpkg.net/_lp/e344f1f539a80912a0e9357cec841f36ce97a4e2/1.77.2'
-			};
-		}
 
 		require.config({
 			baseUrl: `${baseUrl}/out`,
@@ -68,16 +53,15 @@
 					return value;
 				}
 			}),
-			paths: self.webPackagePaths,
-			...nlsConfig
+			paths: self.webPackagePaths
 		});
 	</script>
 	<script>
 		performance.mark('code/willLoadWorkbenchMain');
 	</script>
 	<script src="./out/vs/workbench/workbench.web.main.nls.js"></script>
-    <script src="./out/vs/workbench/workbench.web.main.js"></script>
-    <script src="./out/vs/code/browser/workbench/workbench.js"></script>
+	<script src="./out/vs/workbench/workbench.web.main.js"></script>
+	<script src="./out/vs/code/browser/workbench/workbench.js"></script>
 	<script>
 		if ("serviceWorker" in navigator) {
     		navigator.serviceWorker.register("./sw.js");
