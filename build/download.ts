@@ -23,21 +23,6 @@ export interface Static {
 	readonly version: string;
 }
 
-interface DownloadInfo {
-	url: string;
-	version: string;
-}
-
-const extensionRoot = process.cwd();
-const vscodeTestDir = path.resolve(extensionRoot, 'vscode');
-
-
-async function getLatestVersion(quality: 'stable' | 'insider'): Promise<DownloadInfo> {
-	// const update: DownloadInfo = await fetchJSON(`https://update.code.visualstudio.com/api/update/web-standalone/${quality}/latest`);
-	// return update;
-	return Promise.resolve({ url: `https://update.code.visualstudio.com/commit:1ad8d514439d5077d2b0b7ee64d2ce82a9308e5a/web-standalone/${quality}`, version: "64bbfbf67ada9953918d72e1df2f4d8e537d340e" });
-}
-
 const reset = '\x1b[G\x1b[0K';
 
 async function download(downloadUrl: string, destination: string, message: string) {

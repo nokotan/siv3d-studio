@@ -13,11 +13,10 @@ async function replaceFileContent(fileName: string, replacePatterns: { pattern: 
 
 async function main() {
 
-    const info = await downloadAndUnzipVSCode("v0.0.5");
+    await downloadAndUnzipVSCode("v0.1.0");
     await buildExtension("siv3d-playground");
 
     const copiedFiles = [
-        "index.html",
         "callback.html",
         "favicon.ico",
         "manifest.json",
@@ -41,10 +40,7 @@ async function main() {
     await replaceFileContent(
         "dist/index.html",
         [
-            {
-                pattern: "5e805b79fcb6ba4c2d23712967df89a089da575b/1.76.1",
-                replaced: `${info.version}/${info.productVersion}`
-            }
+            { pattern: "wasm-playground.kamenokosoft.com", replaced: "siv3d.dev" },
         ]
     );
     await replaceFileContent(
