@@ -30,7 +30,7 @@ jobs:
         run: node build/dist/main.js
 
       - name: Save App Bundle
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: siv3d-studio-app-bundle
           path: dist
@@ -43,7 +43,7 @@ jobs:
     steps:
       - run: mkdir dev
       - name: Restore Bundles
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           name: siv3d-studio-app-bundle
           path: dev
@@ -66,7 +66,7 @@ jobs:
 
     steps:
       - name: Restore Bundles
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           name: siv3d-studio-app-bundle
           path: .
