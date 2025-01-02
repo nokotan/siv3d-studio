@@ -16,11 +16,11 @@
 				<Property Id="Microsoft.VisualStudio.Code.LocalizedLanguages" Value="" />
 				
 				
-				<Property Id="Microsoft.VisualStudio.Services.Links.Source" Value="https://github.com/nokotan/siv3d-studio.git#main" />
-				<Property Id="Microsoft.VisualStudio.Services.Links.Getstarted" Value="https://github.com/nokotan/siv3d-studio.git#main" />
-				<Property Id="Microsoft.VisualStudio.Services.Links.GitHub" Value="https://github.com/nokotan/siv3d-studio.git#main" />
-				<Property Id="Microsoft.VisualStudio.Services.Links.Support" Value="https://github.com/nokotan/siv3d-studio/issues" />
-				<Property Id="Microsoft.VisualStudio.Services.Links.Learn" Value="https://github.com/nokotan/siv3d-studio/tree/main#readme" />
+				<Property Id="Microsoft.VisualStudio.Services.Links.Source" Value="https://github.com/nokotan/wasm-playground.git#main" />
+				<Property Id="Microsoft.VisualStudio.Services.Links.Getstarted" Value="https://github.com/nokotan/wasm-playground.git#main" />
+				<Property Id="Microsoft.VisualStudio.Services.Links.GitHub" Value="https://github.com/nokotan/wasm-playground.git#main" />
+				<Property Id="Microsoft.VisualStudio.Services.Links.Support" Value="https://github.com/nokotan/wasm-playground/issues" />
+				<Property Id="Microsoft.VisualStudio.Services.Links.Learn" Value="https://github.com/nokotan/wasm-playground/tree/main#readme" />
 				
 				
 				<Property Id="Microsoft.VisualStudio.Services.GitHubFlavoredMarkdown" Value="true" />

@@ -1,19 +1,16 @@
 {
-	"name": "Visual Studio Code",
-	"short_name": "Code",
-	"start_url": "/",
-	"lang": "en-US",
-	"display": "standalone",
-	"icons": [
-		{
-			"src": "code-192.png",
-			"type": "image/png",
-			"sizes": "192x192"
-		},
-		{
-			"src": "code-512.png",
-			"type": "image/png",
-			"sizes": "512x512"
-		}
-	]
+    "name": "Siv3D Studio",
+    "short_name": "siv3d.dev",
+    "description": "Siv3D Instant Playground",
+    "icons": [
+        {
+            "src": "icon.png",
+            "sizes": "200x200",
+            "type": "image/png"
+        }
+    ],
+    "start_url": "./index.html",
+    "display": "fullscreen",
+    "theme_color": "#dff0d8",
+    "background_color": "#dff0d8"
 }
